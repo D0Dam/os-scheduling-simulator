@@ -7,13 +7,42 @@ import prettier from 'eslint-plugin-prettier';
 import globals from 'globals';
 
 export default [
-  js.configs.recommended,
-  react.configs.recommended,
-  reactHooks.configs.recommended,
-  tseslint.configs.recommendedTypeChecked,
-  jsxA11y.configs.recommended,
   {
+    files: ['src/**/*.{js,ts,jsx,tsx}'], // src 안쪽 tsx/ts/js/jsx 파일들
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      parser: tseslint.parser,
+      parserOptions: {
+        project: ['./tsconfig.app.json'], // 앱용 tsconfig 사용
+        tsconfigRootDir: process.cwd(),
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+    plugins: {
+      react,
+      'react-hooks': reactHooks,
+      'jsx-a11y': jsxA11y,
+      prettier,
+      '@typescript-eslint': tseslint.plugin,
+    },
     rules: {
+      ...js.configs.recommended.rules,
+      ...react.configs.recommended.rules,
+      ...reactHooks.configs.recommended.rules,
+      ...jsxA11y.configs.recommended.rules,
+      ...tseslint.configs.recommendedTypeChecked.rules,
       'prettier/prettier': 'error',
       'react/react-in-jsx-scope': 'off',
       'react/require-default-props': 'off',
@@ -27,32 +56,28 @@ export default [
       'react/no-unstable-nested-components': 'off',
       'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
+  },
+  {
+    files: ['vite.config.ts'], // vite.config.ts 파일은 따로 처리
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
       parser: tseslint.parser,
       parserOptions: {
-        project: ['./tsconfig.json'],
-        ecmaFeatures: {
-          jsx: true,
-        },
+        project: ['./tsconfig.node.json'], // Node용 tsconfig 사용
+        tsconfigRootDir: process.cwd(),
       },
       globals: {
-        ...globals.browser,
         ...globals.node,
       },
     },
     plugins: {
-      react,
-      'react-hooks': reactHooks,
-      'jsx-a11y': jsxA11y,
-      prettier,
       '@typescript-eslint': tseslint.plugin,
     },
-    settings: {
-      react: {
-        version: 'detect',
-      },
+    rules: {
+      ...js.configs.recommended.rules,
+      ...tseslint.configs.recommendedTypeChecked.rules,
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   },
 ];
