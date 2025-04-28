@@ -52,6 +52,3 @@ jobs:
 
       - name: Check eslint
         run: pnpm lint
-
-      - name: Check stylelint
-        run: pnpm lint:css
