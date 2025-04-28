@@ -4,14 +4,10 @@ on:
     branches:
       - main
       - develop
-      - develop2
-      - hotfix
   pull_request:
     branches:
       - main
       - develop
-      - develop2
-      - hotfix
 
 jobs:
   check:
