@@ -46,7 +46,7 @@ export const SelectButton = styled.button<{ $isOpen: boolean }>`
   justify-content: space-between;
 
   width: 100%;
-  padding: 10px 10px 10px 20px;
+  padding: 4px 8px 4px 16px;
 
   color: ${colors.secondary200};
 
@@ -106,7 +106,7 @@ export const HiddenSelect = styled.div`
 export const OptionList = styled.ul<{ $isOpen: boolean; $hasLabel: boolean }>`
   ${shadow.box2}
   position: absolute;
-  top: 52px;
+  top: 42px;
   left: 0;
 
   display: flex;
