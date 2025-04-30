@@ -1,20 +1,16 @@
 import styled from 'styled-components';
 
-export const RulerTrack = styled.div<{ count: number; scale: number }>`
+export const RulerTrack = styled.div`
   display: flex;
   height: 50px;
-  width: ${({ count, scale }) => `${count * scale}px`};
   position: relative;
 
   transition: all 0.3s linear;
 `;
 
-export const TickWrapper = styled.div<{ scale: number }>`
+export const TickWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
-  width: ${({ scale }) => `${scale}px`};
-
   transition: all 0.3s linear;
 `;
 

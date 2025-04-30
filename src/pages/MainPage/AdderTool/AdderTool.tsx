@@ -76,13 +76,13 @@ function AdderTool({ onAddProcess }: AdderToolProps) {
               type="number"
             />
           </S.InputWrapper>
-          <S.Button
+          <S.ProcessButton
             type="button"
             onClick={() => handleSubmit()}
             disabled={!processNameValue || !processArrivalValue || !processBurstValue}
           >
             Add Process
-          </S.Button>
+          </S.ProcessButton>
         </S.ProcessInputWrapper>
         <S.ProcessDeleteWrapper>
           <S.InputTitle>Process Name :</S.InputTitle>

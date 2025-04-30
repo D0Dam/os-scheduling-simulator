@@ -5,10 +5,12 @@ import GanttChart from './GanttChart';
 import * as S from './MainPage.styled';
 import Process from './Process';
 import Processor from './Processor';
-import ReadyQueue from './ReadyQueue';
+// import ReadyQueue from './ReadyQueue';
 import ResultChart from './ResultChart';
 
 import Header from '@/components/Header/Header';
+import useMediaQuery from '@/hooks/utils/useMediaQuery';
+import { xXLarge } from '@/styles/mediaQueries';
 
 interface ProcessType {
   name: string;
@@ -23,6 +25,7 @@ function MainPage() {
     setProcessList((prev) => [...prev, process]);
   };
 
+  const isXXLarge = useMediaQuery(xXLarge);
   return (
     <S.Container>
       <Header />
@@ -31,9 +34,10 @@ function MainPage() {
         <S.MiddleContainer>
           <Processor />
           <Process processList={processList} />
-          <ResultChart />
+          {isXXLarge && <ResultChart />}
         </S.MiddleContainer>
-        <ReadyQueue />
+        {/* <ReadyQueue /> */}
+        {!isXXLarge && <ResultChart />}
         <GanttChart />
       </S.ContentContainer>
     </S.Container>

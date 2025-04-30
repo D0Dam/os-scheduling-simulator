@@ -75,4 +75,16 @@ export const LineBlockWrapper = styled.div`
 
 export const HeaderWrapper = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const ScaleLevel = styled.div`
+  ${typo['subtitle-3-sb']};
+`;
+
+export const ScaleLevelWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
 `;

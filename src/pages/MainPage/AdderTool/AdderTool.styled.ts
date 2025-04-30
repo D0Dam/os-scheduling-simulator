@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { onNotXXLarge } from '@/styles/mediaQueries';
 import typo from '@/styles/typo';
 
 export const Container = styled.div`
@@ -22,7 +23,11 @@ export const MainContainer = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: #fff;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.04);
-  min-width: 1400px;
+
+  ${onNotXXLarge} {
+    flex-direction: column;
+    align-items: flex-end;
+  }
 `;
 
 export const ProcessDeleteWrapper = styled.div`
@@ -72,6 +77,24 @@ export const Button = styled.button`
     background: #f0f0f0;
     color: #b0b0b0;
   }
+`;
+
+export const ProcessButton = styled.button`
+  display: flex;
+  min-width: 112px;
+  height: 36px;
+  padding: 2px 0px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: #202020;
+  color: #f9f9f9;
+  white-space: nowrap;
+  font-family: 'SUIT Variable';
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  border: none;
 `;
 
 export const InputWrapper = styled.div`

@@ -59,8 +59,16 @@ function GanttChart() {
     <S.Container>
       <S.HeaderWrapper>
         <S.Title>Gantt Chart</S.Title>
-        <IconButton size="small" icon={PlusIcon} onClick={plusLevel} />
-        <IconButton size="small" icon={MinusIcon} onClick={minusLevel} />
+        <S.ScaleLevelWrapper>
+          <IconButton
+            size="small"
+            icon={MinusIcon}
+            onClick={minusLevel}
+            disabled={scaleLevel <= 4}
+          />
+          <S.ScaleLevel>Scale Level: {scaleLevel / 4}</S.ScaleLevel>
+          <IconButton size="small" icon={PlusIcon} onClick={plusLevel} />
+        </S.ScaleLevelWrapper>
       </S.HeaderWrapper>
 
       <S.MainContainer>

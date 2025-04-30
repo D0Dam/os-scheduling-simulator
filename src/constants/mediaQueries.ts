@@ -4,5 +4,5 @@ export const BREAK_POINTS = {
   M: 768,
   L: 992,
   XL: 1200,
-  XXL: 1400,
+  XXL: 1440,
 };
