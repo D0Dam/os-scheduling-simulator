@@ -64,7 +64,7 @@ export const Input = styled.input<{ $removeTransition: boolean }>`
   }
 
   &[type='radio']:checked {
-    border: 6px solid ${colors.blue400};
+    border: 6px solid #1f2d5c;
   }
 
   &[type='radio']:disabled {
@@ -73,11 +73,11 @@ export const Input = styled.input<{ $removeTransition: boolean }>`
   }
 
   &[type='radio']:checked:hover {
-    border: 6px solid ${colors.blue500};
+    border: 6px solid #1f2d5c;
   }
 
   &[type='radio']:checked:active {
-    border: 6px solid ${colors.blue700};
+    border: 6px solid #1f2d5c;
   }
 
   &[type='radio']:checked:disabled {
