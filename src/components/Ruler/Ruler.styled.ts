@@ -5,6 +5,8 @@ export const RulerTrack = styled.div<{ count: number; scale: number }>`
   height: 50px;
   width: ${({ count, scale }) => `${count * scale}px`};
   position: relative;
+
+  transition: all 0.3s linear;
 `;
 
 export const TickWrapper = styled.div<{ scale: number }>`
@@ -12,6 +14,8 @@ export const TickWrapper = styled.div<{ scale: number }>`
   flex-direction: column;
 
   width: ${({ scale }) => `${scale}px`};
+
+  transition: all 0.3s linear;
 `;
 
 export const TickLine = styled.div<{ isMajor: boolean }>`

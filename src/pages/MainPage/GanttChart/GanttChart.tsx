@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import * as S from './GanttChart.styled';
 import { mock1, mock2, mock3, mock4, mock5 } from './mock';
@@ -6,8 +6,30 @@ import { mock1, mock2, mock3, mock4, mock5 } from './mock';
 import LineBlock from '@/components/LineBlock';
 import Ruler from '@/components/Ruler';
 
+const scrollToLinear = (element: HTMLElement, target: number, duration = 300) => {
+  const start = element.scrollLeft;
+  const change = target - start;
+  const startTime = performance.now();
+
+  const animateScroll = (currentTime: number) => {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const position = start + change * progress;
+
+    // eslint-disable-next-line no-param-reassign
+    element.scrollLeft = position;
+
+    if (progress < 1) {
+      requestAnimationFrame(animateScroll);
+    }
+  };
+
+  requestAnimationFrame(animateScroll);
+};
+
 function GanttChart() {
   const [scaleLevel, setScaleLevel] = useState(24);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const plusLevel = () => {
     setScaleLevel((prev) => prev + 4);
@@ -15,6 +37,19 @@ function GanttChart() {
 
   const minusLevel = () => {
     setScaleLevel((prev) => prev - 4);
+  };
+
+  const handleScrollOnTick = (current: number) => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const renderedWidth = current * scaleLevel;
+    const halfVisibleWidth = container.clientWidth / 2;
+
+    if (renderedWidth > halfVisibleWidth) {
+      const targetScrollLeft = renderedWidth - halfVisibleWidth;
+      scrollToLinear(container, targetScrollLeft, 100);
+    }
   };
 
   return (
@@ -36,9 +71,9 @@ function GanttChart() {
             <S.LineTitle>Core4</S.LineTitle>
             <S.LineTitle>Seconds</S.LineTitle>
           </S.LineBlockTitleContainer>
-          <S.LineBlockContainer>
+          <S.LineBlockContainer ref={scrollRef}>
             <S.LineBlockWrapper>
-              <LineBlock processes={mock1} xScale={scaleLevel} />
+              <LineBlock processes={mock1} xScale={scaleLevel} onTick={handleScrollOnTick} />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
               <LineBlock processes={mock2} xScale={scaleLevel} />
