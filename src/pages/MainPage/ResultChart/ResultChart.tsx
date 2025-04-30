@@ -5,7 +5,7 @@ import { RESULT_HEADER, RESULT_PROCESS_ITEM } from '@/constants/mock';
 function ResultChart() {
   return (
     <S.Container>
-      <S.Title>ResultChart</S.Title>
+      <S.Title>Result</S.Title>
       <S.MainContainer>
         <S.ResultChartContainer>
           <S.ResultChartHeader>
