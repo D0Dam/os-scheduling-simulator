@@ -25,7 +25,7 @@ export const MainContainer = styled.div`
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.04);
   min-height: 320px;
   max-height: 320px;
-  width: 340px;
+  min-width: 340px;
 `;
 
 export const ProcessItemContainer = styled.div`
@@ -37,19 +37,22 @@ export const ProcessItemContainer = styled.div`
   border-radius: 4px;
   max-height: 300px;
   overflow-x: hidden;
+  width: 100%;
 `;
 
 export const ProcessContainerHeader = styled.div`
   display: flex;
   border-bottom: 1px solid #e8ebef;
   min-height: 30px;
+  width: 100%;
 `;
 
 export const TitleWrapper = styled.div`
   display: flex;
-  width: 100px;
+  flex: 1;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 
   & + & {
     border-left: 1px solid var(--Indigo-25, #e8ebef);
@@ -70,6 +73,7 @@ export const ProcessWrapper = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
   height: 270px;
+  width: 100%;
 `;
 
 export const ProcessItemList = styled.div`
@@ -78,8 +82,8 @@ export const ProcessItemList = styled.div`
 
 export const ProcessItem = styled.div`
   display: flex;
-  width: 100px;
-  height: w0px;
+  flex: 1;
+  height: 30px;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
