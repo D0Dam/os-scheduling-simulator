@@ -7,5 +7,6 @@ export const fontFace = css`
     font-family: 'SUIT-Variable';
     font-weight: 100 300 900;
     src: url(${SUITVariable}) format('woff2');
+    font-display: block;
   }
 `;
