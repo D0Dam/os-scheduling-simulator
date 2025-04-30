@@ -1,6 +1,8 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 import * as S from './LineBlock.styled';
+
+import { useInterval } from '@/hooks/utils/useInterval';
 
 interface ProcessBlock {
   name: string;
@@ -21,27 +23,8 @@ const getRandomPastelColor = (): string => {
   return `#${r.toString(16)}${g.toString(16)}${b.toString(16)}`.padEnd(7, '0');
 };
 
-function useInterval(callback: VoidFunction, delay: number | null, dependencies: unknown[] = []) {
-  const savedCallback = useRef(callback);
-
-  useLayoutEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  useEffect(() => {
-    if (delay === null || delay === 0) {
-      return () => {};
-    }
-
-    const id = setInterval(() => savedCallback.current(), delay);
-
-    return () => clearInterval(id);
-  }, [delay, ...dependencies]);
-}
-
 function LineBlock({ processes, interval = 100, xScale = 24 }: LineBlockProps) {
   const [currentTime, setCurrentTime] = useState(0);
-  const [intervalNumber, setIntervalNumber] = useState<number | null>(interval);
   const [colors] = useState<Record<string, string>>(() => {
     const map: Record<string, string> = {};
     processes.forEach((p) => {
@@ -56,17 +39,9 @@ function LineBlock({ processes, interval = 100, xScale = 24 }: LineBlockProps) {
     () => {
       setCurrentTime((prev) => (prev >= maxEnd ? prev : prev + 1));
     },
-    interval,
+    currentTime >= maxEnd ? null : interval,
     [currentTime, maxEnd]
   );
-
-  // useEffect(() => {
-  //   const id = setInterval(() => {
-  //     setCurrentTime((prev) => (prev >= maxEnd ? prev : prev + 1));
-  //   }, 300);
-
-  //   return () => clearInterval(id);
-  // }, [maxEnd]);
 
   return (
     <>
@@ -78,9 +53,6 @@ function LineBlock({ processes, interval = 100, xScale = 24 }: LineBlockProps) {
         return (
           <S.Block
             key={`${proc.name}${proc.start}${proc.end}`}
-            // left={left}
-            // width={shownWidth}
-            // color={colors[proc.name]}
             style={{
               backgroundColor: colors[proc.name],
               left,
