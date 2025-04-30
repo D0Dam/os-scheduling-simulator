@@ -5,12 +5,15 @@ import TextField from '../common/TextField';
 
 import * as S from './Header.styled';
 
+import KoreatechIcon from '@/assets/svg/koreatech.svg?react';
+
 function Header() {
   const [value, setValue] = useState('');
 
   return (
     <S.Header>
       <S.HeaderTitleWrapper>
+        <KoreatechIcon />
         <S.HeaderTitle>
           바지사장 <strong>김혜준</strong>
         </S.HeaderTitle>

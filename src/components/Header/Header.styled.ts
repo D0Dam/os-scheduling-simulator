@@ -12,6 +12,8 @@ export const Header = styled.header`
 export const HeaderTitleWrapper = styled.div`
   display: flex;
   gap: 4px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const HeaderTitle = styled.h1`
@@ -30,13 +32,11 @@ export const HeaderTitle = styled.h1`
 
 export const HeaderSubTitle = styled.h2`
   color: #154978;
-  text-align: right;
   font-family: 'SUIT Variable';
   font-size: 10px;
-  font-style: normal;
   font-weight: 400;
   line-height: 14px;
-  margin-top: 14px;
+  margin-top: 3px;
 
   & > strong {
     color: #fcb036;

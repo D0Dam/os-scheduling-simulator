@@ -5,7 +5,7 @@ import { PROCESS_HEADER, RESULT_PROCESS_ITEM } from '@/constants/mock';
 function Process() {
   return (
     <S.Container>
-      <S.Title>Process</S.Title>
+      <S.Title>Processes</S.Title>
       <S.MainContainer>
         <S.ProcessItemContainer>
           <S.ProcessContainerHeader>
