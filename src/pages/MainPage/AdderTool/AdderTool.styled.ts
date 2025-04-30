@@ -67,6 +67,11 @@ export const Button = styled.button`
 
   margin-left: 24px;
   border: none;
+
+  &:disabled {
+    background: #f0f0f0;
+    color: #b0b0b0;
+  }
 `;
 
 export const InputWrapper = styled.div`

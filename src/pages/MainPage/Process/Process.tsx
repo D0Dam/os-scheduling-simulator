@@ -1,8 +1,16 @@
 import * as S from './Process.styled';
 
-import { PROCESS_HEADER, RESULT_PROCESS_ITEM } from '@/constants/mock';
+import { PROCESS_HEADER } from '@/constants/mock';
 
-function Process() {
+interface ProcessProps {
+  processList: {
+    name: string;
+    at: number;
+    bt: number;
+  }[];
+}
+
+function Process({ processList }: ProcessProps) {
   return (
     <S.Container>
       <S.Title>Processes</S.Title>
@@ -16,9 +24,10 @@ function Process() {
             ))}
           </S.ProcessContainerHeader>
           <S.ProcessWrapper>
-            {RESULT_PROCESS_ITEM.map(({ id, name, at, bt, color }) => (
-              <S.ProcessItemList key={id}>
-                <S.ProcessItem style={{ backgroundColor: color }}>
+            {processList.map(({ name, at, bt }) => (
+              <S.ProcessItemList key={name}>
+                <S.ProcessItem>
+                  {/* style={{ backgroundColor: color }} */}
                   <span>{name}</span>
                 </S.ProcessItem>
                 <S.ProcessItem>
