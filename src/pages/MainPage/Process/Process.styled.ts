@@ -23,4 +23,78 @@ export const MainContainer = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: #fff;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.04);
+  min-height: 320px;
+  max-height: 320px;
+  width: 340px;
+`;
+
+export const ProcessItemContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #e8ebef;
+  background: #fcfcfc;
+  border-radius: 4px;
+  max-height: 300px;
+  overflow-x: hidden;
+`;
+
+export const ProcessContainerHeader = styled.div`
+  display: flex;
+  border-bottom: 1px solid #e8ebef;
+  min-height: 30px;
+`;
+
+export const TitleWrapper = styled.div`
+  display: flex;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+
+  & + & {
+    border-left: 1px solid var(--Indigo-25, #e8ebef);
+  }
+
+  & > span {
+    color: #222;
+    font-family: 'SUIT Variable';
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+  }
+`;
+
+export const ProcessWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 270px;
+`;
+
+export const ProcessItemList = styled.div`
+  display: flex;
+`;
+
+export const ProcessItem = styled.div`
+  display: flex;
+  width: 100px;
+  height: w0px;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+
+  & + & {
+    border-left: 1px solid var(--Indigo-25, #e8ebef);
+  }
+
+  border-bottom: 1px solid var(--Indigo-25, #e8ebef);
+
+  & > span {
+    color: #222;
+    font-family: 'SUIT Variable';
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+  }
 `;
