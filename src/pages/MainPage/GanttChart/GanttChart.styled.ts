@@ -11,6 +11,7 @@ export const Container = styled.div`
 export const Title = styled.h2`
   ${typo['subtitle-3-b']};
   color: #222;
+  margin-right: 8px;
 `;
 
 export const MainContainer = styled.div`
@@ -70,4 +71,8 @@ export const LineBlockContainer = styled.div`
 export const LineBlockWrapper = styled.div`
   position: relative;
   height: 36px;
+`;
+
+export const HeaderWrapper = styled.div`
+  display: flex;
 `;

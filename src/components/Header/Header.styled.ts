@@ -43,6 +43,13 @@ export const HeaderSubTitle = styled.h2`
   }
 `;
 
+export const SelectorWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-width: 252px;
+`;
+
 export const AlgorithmSettingWrapper = styled.div`
   display: flex;
   align-items: center;

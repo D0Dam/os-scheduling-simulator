@@ -3,8 +3,11 @@ import { useRef, useState } from 'react';
 import * as S from './GanttChart.styled';
 import { mock1, mock2, mock3, mock4, mock5 } from './mock';
 
+import MinusIcon from '@/assets/svg/minus.svg?react';
+import PlusIcon from '@/assets/svg/plus.svg?react';
 import LineBlock from '@/components/LineBlock';
 import Ruler from '@/components/Ruler';
+import IconButton from '@/components/common/IconButton';
 
 const scrollToLinear = (element: HTMLElement, target: number, duration = 300) => {
   const start = element.scrollLeft;
@@ -54,13 +57,12 @@ function GanttChart() {
 
   return (
     <S.Container>
-      <S.Title>Gantt Chart</S.Title>
-      <button type="button" onClick={plusLevel}>
-        plus
-      </button>
-      <button type="button" onClick={minusLevel}>
-        minus
-      </button>
+      <S.HeaderWrapper>
+        <S.Title>Gantt Chart</S.Title>
+        <IconButton size="small" icon={PlusIcon} onClick={plusLevel} />
+        <IconButton size="small" icon={MinusIcon} onClick={minusLevel} />
+      </S.HeaderWrapper>
+
       <S.MainContainer>
         <S.LineBlockContainerWrapper>
           <S.LineBlockTitleContainer>

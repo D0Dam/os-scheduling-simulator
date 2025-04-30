@@ -19,14 +19,16 @@ function Header() {
         </S.HeaderSubTitle>
       </S.HeaderTitleWrapper>
       <S.AlgorithmSettingWrapper>
-        <S.AlgorithmSelectorTitle>Algorithm :</S.AlgorithmSelectorTitle>
-        <Select name="example" placeholder="Select Algorithm" required>
-          <Select.Slot value="1">FCFS</Select.Slot>
-          <Select.Slot value="2">RR</Select.Slot>
-          <Select.Slot value="3">SPN</Select.Slot>
-          <Select.Slot value="4">SRTN</Select.Slot>
-          <Select.Slot value="5">HRRN</Select.Slot>
-        </Select>
+        <S.SelectorWrapper>
+          <S.AlgorithmSelectorTitle>Algorithm :</S.AlgorithmSelectorTitle>
+          <Select name="example" placeholder="Select Algorithm" required>
+            <Select.Slot value="1">FCFS</Select.Slot>
+            <Select.Slot value="2">RR</Select.Slot>
+            <Select.Slot value="3">SPN</Select.Slot>
+            <Select.Slot value="4">SRTN</Select.Slot>
+            <Select.Slot value="5">HRRN</Select.Slot>
+          </Select>
+        </S.SelectorWrapper>
 
         <S.AlgorithmSelectorTitle>δ :</S.AlgorithmSelectorTitle>
         <TextField

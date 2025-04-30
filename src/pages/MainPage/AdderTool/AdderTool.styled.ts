@@ -25,7 +25,7 @@ export const MainContainer = styled.div`
   min-width: 1400px;
 `;
 
-export const ProcessorNameInputWrapper = styled.div`
+export const ProcessDeleteWrapper = styled.div`
   display: flex;
   width: 372px;
   align-items: center;
@@ -66,6 +66,7 @@ export const Button = styled.button`
   line-height: 20px;
 
   margin-left: 24px;
+  border: none;
 `;
 
 export const InputWrapper = styled.div`

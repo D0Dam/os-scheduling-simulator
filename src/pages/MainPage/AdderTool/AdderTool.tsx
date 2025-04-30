@@ -9,20 +9,11 @@ function AdderTool() {
   const [processNameValue, setProcessNameValue] = useState('');
   const [processArrivalValue, setProcessArrivalValue] = useState('');
   const [processBurstValue, setProcessBurstValue] = useState('');
+
   return (
     <S.Container>
       <S.Title>Adder Tool</S.Title>
       <S.MainContainer>
-        <S.ProcessorNameInputWrapper>
-          <S.InputTitle>Processor Name :</S.InputTitle>
-          <TextField
-            value={processorValue}
-            onChange={(e) => setProcessorValue(e.currentTarget.value)}
-            name="Processor Name"
-            required
-          />
-          <S.Button type="button">Add Processor</S.Button>
-        </S.ProcessorNameInputWrapper>
         <S.ProcessInputWrapper>
           <S.InputWrapper>
             <S.InputTitle>Process Name :</S.InputTitle>
@@ -53,6 +44,16 @@ function AdderTool() {
           </S.InputWrapper>
           <S.Button type="button">Add Process</S.Button>
         </S.ProcessInputWrapper>
+        <S.ProcessDeleteWrapper>
+          <S.InputTitle>Process Name :</S.InputTitle>
+          <TextField
+            value={processorValue}
+            onChange={(e) => setProcessorValue(e.currentTarget.value)}
+            name="Process Name"
+            required
+          />
+          <S.Button type="button">Delete Process</S.Button>
+        </S.ProcessDeleteWrapper>
       </S.MainContainer>
     </S.Container>
   );
