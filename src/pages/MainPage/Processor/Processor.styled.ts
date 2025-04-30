@@ -25,6 +25,7 @@ export const MainContainer = styled.div`
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.04);
   min-height: 320px;
   max-height: 320px;
+  min-width: 365px;
 `;
 
 export const CoreContainer = styled.div`

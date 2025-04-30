@@ -22,6 +22,7 @@ export const MainContainer = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: #fff;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.04);
+  min-width: 1400px;
 `;
 
 export const ProcessorNameInputWrapper = styled.div`
