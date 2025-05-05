@@ -1,4 +1,4 @@
-import { Scheduler } from './Scheduler';
+import { Scheduler } from '@/scheduler';
 
 export class SRTN extends Scheduler {
   protected run(): void {

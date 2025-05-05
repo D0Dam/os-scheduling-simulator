@@ -1,4 +1,5 @@
-import { Scheduler } from './Scheduler';
+import { Core } from '@/models';
+import { Scheduler } from '@/scheduler';
 
 export class RR extends Scheduler {
   readonly #timeQuantum;
@@ -16,7 +17,7 @@ export class RR extends Scheduler {
     });
   }
 
-  protected afterRun(): void {
-    this.#core;
+  protected isOccupancyOver(core: Core): boolean {
+    return core.isOccupancyOver(this.#timeQuantum);
   }
 }

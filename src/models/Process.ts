@@ -7,11 +7,14 @@ export class Process {
 
   public tt: number;
 
+  public rt: number;
+
   constructor(props: { name: string; at: number; bt: number }) {
     this.name = props.name;
     this.at = props.at;
     this.bt = props.bt;
     this.tt = 0;
+    this.rt = 0;
   }
 
   get wt(): number {

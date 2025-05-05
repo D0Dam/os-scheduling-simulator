@@ -1,9 +1,9 @@
-import { Core, Result, Process, processCompare } from '../models';
+import { Core, Result, Process, processCompare } from '@/models';
 
 export abstract class Scheduler {
   readonly #createQueue: Process[];
 
-  readonly #cores: Core[];
+  protected readonly cores: Core[];
 
   readonly readyQueue: Process[];
 
@@ -15,15 +15,11 @@ export abstract class Scheduler {
 
   constructor() {
     this.#createQueue = [];
-    this.#cores = [];
+    this.cores = [];
     this.readyQueue = [];
     this.endQueue = [];
     this.#result = new Result();
     this.time = 0;
-  }
-
-  get cores(): Core[] {
-    return this.#cores;
   }
 
   get result(): Result {
@@ -46,12 +42,12 @@ export abstract class Scheduler {
   }
 
   setCores(cores: Core[]) {
-    this.#cores.length = 0;
-    this.#cores.push(...cores);
+    this.cores.length = 0;
+    this.cores.push(...cores);
   }
 
   isDone(): boolean {
-    return this.#createQueue.length === 0 && this.#cores.every((core) => core.process === null);
+    return this.#createQueue.length === 0 && this.cores.every((core) => core.process === null);
   }
 
   #readyProcess() {
@@ -61,15 +57,21 @@ export abstract class Scheduler {
   }
 
   protected beforeRun(): void {
-    this.readyQueue.forEach((process) => {
-      s;
-    });
+    this.readyQueue.forEach(
+      (process) => process.at - process.bt
+      // process.
+    );
   }
 
-  protected afterRun(): void {
-    this.#cores.forEach((core) => {
+  // eslint-disable-next-line class-methods-use-this
+  protected isOccupancyOver(core: Core) {
+    return core.isOccupancyOver();
+  }
+
+  #afterRun(): void {
+    this.cores.forEach((core) => {
       if (core.process !== undefined) {
-        if (core.process.tt - core.process.wt === core.process.bt) {
+        if (core.isOccupancyOver()) {
           this.endQueue.push(core.process);
           core.setProcess(undefined);
         }
@@ -77,19 +79,24 @@ export abstract class Scheduler {
     });
   }
 
-  #updateResult(): void {}
-
   start(): void {
     this.#createQueue.sort(processCompare);
-    this.#cores.sort((a: Core, b: Core) => a.compare(b));
+    this.cores.sort((a: Core, b: Core) => a.compare(b));
+    this.#result.setCore(this.cores);
 
     while (!this.isDone()) {
       this.#readyProcess();
       this.beforeRun();
       this.run();
-      this.#updateGanttChart();
-      this.afterRun();
-      this.#updateResult();
+      this.#result.updateGanttChart(this.time, this.cores);
+      this.#result.updatePowerUsage(this.cores);
+      this.#afterRun();
+      this.#result.updateReadyQueue(this.readyQueue);
+
+      this.cores.forEach((core) => {
+        // TODO : real busrted time 구하기
+        core.increaseOccupancyTime();
+      });
       this.time += 1;
     }
   }
