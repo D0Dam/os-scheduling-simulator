@@ -10,9 +10,8 @@ export class RR extends Scheduler {
 
   protected assignProcess(): void {
     this.cores.forEach((core) => {
-      if (!core.process || core.process.isEnd()) {
-        core.setProcess(this.readyQueue.shift());
-        core.process?.setStart(this.time);
+      if (!core.hasProcess) {
+        core.setProcess(this.readyQueue.shift(), this.time);
       }
     });
   }
@@ -21,12 +20,9 @@ export class RR extends Scheduler {
     this.cores.forEach((core) => {
       if (core.process) {
         if (core.process.isEnd()) {
-          core.process.updateBurseted(core.wps);
-          this.endQueue.push(core.process);
-        }
-        if (core.process.end - core.process.start === this.#timeQuantum) {
-          core.process.updateBurseted(core.wps);
-          this.readyQueue.push(core.process);
+          this.endQueue.push(core.releaseProcess());
+        } else if (core.process.end - core.process.start === this.#timeQuantum) {
+          this.readyQueue.push(core.releaseProcess());
         }
       }
     });

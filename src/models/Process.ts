@@ -40,11 +40,10 @@ export class Process {
 
   setStart(time: number): void {
     this.start = time;
-    this.setEnd(time);
   }
 
-  setEnd(time: number) {
-    this.tt = time - this.at;
+  updateTT() {
+    this.tt += 1;
   }
 
   isEnd(): boolean {
@@ -52,11 +51,7 @@ export class Process {
   }
 
   updateBurseted(wps: number): void {
-    if (this.bursted + wps > this.bt) {
-      this.bursted = this.bt;
-    } else {
-      this.bursted += wps;
-    }
+    this.bursted += Math.min(wps, this.bt - this.bursted);
   }
 
   compare(other: Process): number {

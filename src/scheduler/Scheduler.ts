@@ -82,12 +82,12 @@ export abstract class Scheduler {
   }
 
   #increaseTime(): void {
-    // this.readyQueue.forEach((process) => {
-    //   process.setEnd(this.time);
-    // });
+    this.readyQueue.forEach((process) => {
+      process.updateTT();
+    });
     this.cores.forEach((core) => {
       if (core.process) {
-        core.process.setEnd(this.time);
+        core.process.updateTT();
         core.process.updateBurseted(core.wps);
         core.updatePowerUsage();
       }
@@ -115,8 +115,8 @@ export abstract class Scheduler {
   #start(): void {
     while (!this.#isDone()) {
       this.#updateReadyQueue();
-      this.#tracer.updateGanttChart(this.cores);
       this.releaseProcess();
+      this.#tracer.updateGanttChart(this.cores);
       this.#tracer.updateEndProcesses(this.endQueue);
       this.assignProcess();
       this.#tracer.updateReadyQueue(this.readyQueue);
