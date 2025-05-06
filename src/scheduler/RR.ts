@@ -1,4 +1,3 @@
-import { Core } from '@/models';
 import { Scheduler } from '@/scheduler';
 
 export class RR extends Scheduler {
@@ -9,15 +8,26 @@ export class RR extends Scheduler {
     this.#timeQuantum = timeQuantum;
   }
 
-  protected run(): void {
+  protected assignProcess(): void {
     this.cores.forEach((core) => {
-      if (core.process === undefined) {
+      if (!core.process || core.process.isEnd()) {
         core.setProcess(this.readyQueue.shift());
       }
     });
   }
 
-  protected isOccupancyOver(core: Core): boolean {
-    return core.isOccupancyOver(this.#timeQuantum);
+  protected releaseProcess(): void {
+    this.cores.forEach((core) => {
+      if (core.process) {
+        if (core.process.isEnd()) {
+          core.process.updateBurseted();
+          this.endQueue.push(core.process);
+        }
+        if (core.process.end - core.process.start === this.#timeQuantum) {
+          core.process.updateBurseted();
+          this.readyQueue.push(core.process);
+        }
+      }
+    });
   }
 }

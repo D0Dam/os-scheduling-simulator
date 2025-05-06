@@ -1,50 +1,75 @@
 import { Core, Process } from '@/models';
 
-export interface GanttChartItem {
+/**
+ * 추적(Trace) 해야할 정보들
+ * * readyQueue
+ * * 각 코어별 ganttChart
+ * * 각 코어별 powerUsage
+ * * endProcesses
+ */
+
+interface GanttChartItem {
   name: string;
   start: number;
   end: number;
 }
 
-export class Result {
+interface PowerUsage {
+  usage: number;
+  percentage: number;
+}
+
+export class Tracer {
   readyQueue: Process[][];
 
-  ganttChart: { [coreId: number]: GanttChartItem[] };
+  ganttCharts: { [coreId: number]: GanttChartItem[] };
 
-  powerUsage: { [coreId: number]: number[] };
+  powerUsage: { [coreId: number]: PowerUsage[] };
+
+  endProcesses: Process[][];
 
   constructor() {
     this.readyQueue = [];
-    this.ganttChart = {};
+    this.ganttCharts = {};
     this.powerUsage = {};
+    this.endProcesses = [];
   }
 
   setCore(cores: Core[]): void {
     cores.forEach((core) => {
-      this.ganttChart[core.id] = [];
+      this.ganttCharts[core.id] = [];
       this.powerUsage[core.id] = [];
     });
   }
 
-  updateGanttChart(time: number, cores: Core[]): void {
+  updateGanttChart(cores: Core[]): void {
     cores.forEach((core) => {
-      if (core.process !== undefined) {
-        this.ganttChart[core.id].push({
+      if (core.process) {
+        this.ganttCharts[core.id].push({
           name: core.process.name,
-          start: time - core.occupancyTime,
-          end: time,
+          start: core.process.start,
+          end: core.process.end,
         });
       }
     });
   }
 
   updatePowerUsage(cores: Core[]): void {
+    const totalPowerUsage: number = cores.reduce((sum, core) => sum + core.powerUsage, 0);
+
     cores.forEach((core) => {
-      this.powerUsage[core.id].push(core.powerUsage);
+      this.powerUsage[core.id].push({
+        usage: core.powerUsage,
+        percentage: (core.powerUsage / totalPowerUsage) * 100,
+      });
     });
   }
 
   updateReadyQueue(readyQueue: Process[]): void {
     this.readyQueue.push([...readyQueue]);
+  }
+
+  updateEndProcesses(processes: Process[]): void {
+    this.endProcesses.push([...processes]);
   }
 }
