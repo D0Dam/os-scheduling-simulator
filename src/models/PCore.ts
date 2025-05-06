@@ -10,7 +10,7 @@ export class PCore extends Core {
       props.name,
       2, // workPerSecond
       3.0, // powerConsumption
-      0.1 // idlePowerConsumption
+      0.5 // idlePowerConsumption
     );
   }
 }

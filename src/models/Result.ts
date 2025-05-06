@@ -44,7 +44,6 @@ export class Tracer {
 
   updateGanttChart(cores: Core[]): void {
     cores.forEach((core) => {
-      // TODO : isEnd이면 안됨
       if (core.process && !core.hasProcess) {
         this.ganttCharts[core.id].push({
           name: core.process.name,

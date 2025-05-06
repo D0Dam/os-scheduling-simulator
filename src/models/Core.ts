@@ -28,7 +28,7 @@ export abstract class Core {
   }
 
   setProcess(process: Process | undefined, time: number) {
-    if (!this.#process) {
+    if (!this.#process && process) {
       this.#powerUsage += this.ipc;
     }
     this.#process = process;
@@ -52,8 +52,8 @@ export abstract class Core {
   }
 
   updatePowerUsage(): void {
-    if (this.#process) {
-      this.#powerUsage += this.pc * (this.#process.end - this.#process.start);
+    if (this.hasProcess) {
+      this.#powerUsage += this.pc;
     }
   }
 

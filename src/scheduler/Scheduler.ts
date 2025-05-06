@@ -86,7 +86,7 @@ export abstract class Scheduler {
       process.updateTT();
     });
     this.cores.forEach((core) => {
-      if (core.process) {
+      if (core.process && core.hasProcess) {
         core.process.updateTT();
         core.process.updateBurseted(core.wps);
         core.updatePowerUsage();
