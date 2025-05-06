@@ -124,8 +124,8 @@ function GanttChart({ result, processList }: GanttChartProps) {
                       left,
                       width: scaleLevel,
                     }}
-                    bgColor={colorMap[proc.name]}
-                    afterColor={colorMap[proc.name]}
+                    $bgColor={colorMap[proc.name]}
+                    $afterColor={colorMap[proc.name]}
                   >
                     {proc.name}
                   </S.Block>

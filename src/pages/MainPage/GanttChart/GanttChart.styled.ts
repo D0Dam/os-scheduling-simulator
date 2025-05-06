@@ -96,7 +96,7 @@ export const ScaleLevelWrapper = styled.div`
   gap: 4px;
 `;
 
-export const Block = styled.div<{ bgColor: string; afterColor: string }>`
+export const Block = styled.div<{ $bgColor: string; $afterColor: string }>`
   ${typo['caption-1-m']};
   position: absolute;
   top: 0;
@@ -108,14 +108,14 @@ export const Block = styled.div<{ bgColor: string; afterColor: string }>`
   font-weight: bold;
   width: fit-content;
   padding: 8px 12px;
-  background-color: ${({ bgColor }) => bgColor};
+  background-color: ${({ $bgColor }) => $bgColor};
 
   &::after {
     content: '';
     display: block;
     width: 2px;
     height: 100%;
-    background-color: ${({ afterColor }) => afterColor ?? 'pink'}; // ← 💡 여기서 바꿈
+    background-color: ${({ $afterColor }) => $afterColor ?? 'pink'}; // ← 💡 여기서 바꿈
     position: absolute;
     bottom: -100%;
     left: 0;
