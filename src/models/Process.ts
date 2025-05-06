@@ -7,11 +7,11 @@ export class Process {
 
   readonly color: string;
 
+  public wt: number;
+
   public tt: number;
 
-  public rt: number;
-
-  public bursted: number;
+  public progress: number;
 
   public start: number;
 
@@ -20,14 +20,10 @@ export class Process {
     this.at = props.at;
     this.bt = props.bt;
     this.color = props.color;
+    this.wt = 0;
     this.tt = 0;
-    this.rt = 0;
-    this.bursted = 0;
+    this.progress = 0;
     this.start = 0;
-  }
-
-  get wt(): number {
-    return this.tt - this.bursted;
   }
 
   get ntt(): number {
@@ -38,8 +34,8 @@ export class Process {
     return this.at + this.tt;
   }
 
-  setStart(time: number): void {
-    this.start = time;
+  updateWT(): void {
+    this.wt += 1;
   }
 
   updateTT() {
@@ -47,11 +43,11 @@ export class Process {
   }
 
   isEnd(): boolean {
-    return this.tt - this.wt >= this.bt;
+    return this.progress >= this.bt;
   }
 
-  updateBurseted(wps: number): void {
-    this.bursted += Math.min(wps, this.bt - this.bursted);
+  updateBursted(wps: number): void {
+    this.progress += Math.min(wps, this.bt - this.progress);
   }
 
   compare(other: Process): number {

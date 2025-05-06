@@ -83,12 +83,13 @@ export abstract class Scheduler {
 
   #increaseTime(): void {
     this.readyQueue.forEach((process) => {
+      process.updateWT();
       process.updateTT();
     });
     this.cores.forEach((core) => {
       if (core.process && core.hasProcess) {
         core.process.updateTT();
-        core.process.updateBurseted(core.wps);
+        core.process.updateBursted(core.wps);
         core.updatePowerUsage();
       }
     });
