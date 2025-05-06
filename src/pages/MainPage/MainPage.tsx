@@ -91,7 +91,7 @@ function MainPage() {
 
   useEffect(() => {
     if (!result) return;
-    console.log(result);
+    console.log('11', result);
   }, [result]);
 
   return (

@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Tracer } from '@/models';
 
 import * as S from './GanttChart.styled';
-import { mock1 } from './mock';
 
 import MinusIcon from '@/assets/svg/minus.svg?react';
 import PlusIcon from '@/assets/svg/plus.svg?react';
@@ -115,17 +114,18 @@ function GanttChart({ result, processList }: GanttChartProps) {
           <S.Divider $top={144} />
           <S.LineBlockContainer ref={scrollRef}>
             <S.LineBlockWrapper>
-              {mock1.map((proc) => {
-                const left = proc.start * scaleLevel;
+              {processList.map((proc) => {
+                const left = proc.at * scaleLevel;
 
                 return (
                   <S.Block
-                    key={`${proc.name}${proc.start}${proc.end}`}
+                    key={`${proc.name}${proc.at}${proc.bt}`}
                     style={{
-                      backgroundColor: 'pink',
                       left,
                       width: scaleLevel,
                     }}
+                    bgColor={colorMap[proc.name]}
+                    afterColor={colorMap[proc.name]}
                   >
                     {proc.name}
                   </S.Block>
