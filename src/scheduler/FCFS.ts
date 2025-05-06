@@ -5,6 +5,7 @@ export class FCFS extends Scheduler {
     this.cores.forEach((core) => {
       if (!core.process || core.process.isEnd()) {
         core.setProcess(this.readyQueue.shift());
+        core.process?.setStart(this.time);
       }
     });
   }

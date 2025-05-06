@@ -1,4 +1,16 @@
-import { Core, Tracer, Process, PCore } from '@/models';
+import { Core, Tracer, Process, PCore, ECore } from '@/models';
+
+interface IProcess {
+  name: string;
+  at: number;
+  bt: number;
+}
+
+interface ICore {
+  id: number;
+  name: string;
+  type: 'P' | 'E';
+}
 
 /**
  * 스케줄링 알고리즘의 핵심
@@ -43,15 +55,17 @@ export abstract class Scheduler {
     return this.#tracer;
   }
 
-  addProcess(processes: Process[]): this {
-    this.#createQueue.push(...processes);
+  addProcess(processes: IProcess[]): this {
+    this.#createQueue.push(...processes.map((process) => new Process(process)));
 
     return this;
   }
 
-  setCores(cores: Core[]): this {
+  setCores(cores: ICore[]): this {
     this.cores.length = 0;
-    this.cores.push(...cores);
+    this.cores.push(
+      ...cores.map((core) => (core.type === 'P' ? new PCore(core) : new ECore(core)))
+    );
 
     return this;
   }
