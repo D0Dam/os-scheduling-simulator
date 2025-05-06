@@ -54,7 +54,6 @@ export const CoreItemTitleWrapper = styled.div`
 
 export const CoreItemTitle = styled.h3`
   color: #222;
-  font-family: 'SUIT Variable';
   font-size: 14px;
   font-weight: 700;
   line-height: 20px;
@@ -65,7 +64,6 @@ export const CoreItemValue = styled.h3`
   color: #222;
   text-align: center;
 
-  font-family: 'SUIT Variable';
   font-size: 14px;
   font-weight: 700;
   line-height: 20px;

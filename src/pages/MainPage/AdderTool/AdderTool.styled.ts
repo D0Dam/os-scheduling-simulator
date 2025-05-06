@@ -47,7 +47,6 @@ export const InputTitle = styled.div`
   color: #222;
   white-space: nowrap;
 
-  font-family: 'SUIT Variable';
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -65,7 +64,6 @@ export const Button = styled.button`
   background: #202020;
   color: #f9f9f9;
   white-space: nowrap;
-  font-family: 'SUIT Variable';
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -90,7 +88,6 @@ export const ProcessButton = styled.button`
   background: #202020;
   color: #f9f9f9;
   white-space: nowrap;
-  font-family: 'SUIT Variable';
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
