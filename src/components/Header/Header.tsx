@@ -9,6 +9,7 @@ import TextField from '../common/TextField';
 import * as S from './Header.styled';
 
 import KoreatechIcon from '@/assets/svg/koreatech.svg?react';
+import useToastState from '@/hooks/store/useToastState';
 import { ProcessType } from '@/pages/MainPage/MainPage';
 
 interface HeaderProps {
@@ -20,15 +21,19 @@ interface HeaderProps {
 function Header({ coreList, processList, setResult }: HeaderProps) {
   const [timeQuantum, setTimeQuantum] = useState('');
   const [algorithm, setAlgorithm] = useState('');
+  const openToast = useToastState((state) => state.open);
 
   const handleStart = () => {
+    if (coreList.length === 0) {
+      openToast('모든 코어가 꺼져있습니다. 코어를 켜주세요.', 'warning');
+      return;
+    }
     const scheduler = new FCFS();
 
     scheduler.setCores(coreList);
     scheduler.addProcess(processList);
     setResult(scheduler.result);
   };
-
   return (
     <S.Header>
       <S.HeaderTitleWrapper>

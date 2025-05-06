@@ -41,9 +41,10 @@ interface ProcessType {
 interface GanttChartProps {
   result: Tracer['ganttCharts'] | null;
   processList: ProcessType[];
+  startCoreId: number;
 }
 
-function GanttChart({ result, processList }: GanttChartProps) {
+function GanttChart({ result, processList, startCoreId }: GanttChartProps) {
   const [scaleLevel, setScaleLevel] = useState(24);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -134,10 +135,10 @@ function GanttChart({ result, processList }: GanttChartProps) {
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
               <LineBlock
-                processes={result ? result[1] : []}
+                processes={result ? result[1] || [] : []}
                 xScale={scaleLevel}
-                onTick={handleScrollOnTick}
                 colorMap={colorMap}
+                onTick={startCoreId === 1 ? handleScrollOnTick : undefined}
               />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
@@ -145,6 +146,7 @@ function GanttChart({ result, processList }: GanttChartProps) {
                 processes={result ? result[2] || [] : []}
                 xScale={scaleLevel}
                 colorMap={colorMap}
+                onTick={startCoreId === 2 ? handleScrollOnTick : undefined}
               />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
@@ -152,6 +154,7 @@ function GanttChart({ result, processList }: GanttChartProps) {
                 processes={result ? result[3] || [] : []}
                 xScale={scaleLevel}
                 colorMap={colorMap}
+                onTick={startCoreId === 3 ? handleScrollOnTick : undefined}
               />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
@@ -159,6 +162,7 @@ function GanttChart({ result, processList }: GanttChartProps) {
                 processes={result ? result[4] || [] : []}
                 xScale={scaleLevel}
                 colorMap={colorMap}
+                onTick={startCoreId === 4 ? handleScrollOnTick : undefined}
               />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
