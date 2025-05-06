@@ -5,10 +5,24 @@ import * as S from './AdderTool.styled';
 import TextField from '@/components/common/TextField';
 import useToastState from '@/hooks/store/useToastState';
 
+const PROCESS_COLORS = [
+  '#BAC2E1',
+  '#B3BCDE',
+  '#ABB5DB',
+  '#A3AED7',
+  '#a7a5e5',
+  '#9896D0',
+  '#8A88BD',
+  '#7D7CAC',
+  '#72719C',
+  '#68678E',
+];
+
 interface Process {
   name: string;
   at: number;
   bt: number;
+  color?: string;
 }
 interface AdderToolProps {
   onAddProcess: (process: Process) => void;
@@ -37,6 +51,8 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList }: AdderToolProp
 
   const handleSubmit = () => {
     const nameToUse = processNameValue.trim() || autoName;
+    const colorIndex = processList.length % PROCESS_COLORS.length;
+    const assignedColor = PROCESS_COLORS[colorIndex];
 
     if (processArrivalValue === null) {
       openToast('Arrival Time 에는 숫자만 입력해주세요.', 'warning');
@@ -52,6 +68,7 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList }: AdderToolProp
       name: nameToUse,
       at: processArrivalValue,
       bt: processBurstValue,
+      color: assignedColor,
     });
 
     setProcessNameValue('');

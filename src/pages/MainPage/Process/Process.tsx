@@ -7,6 +7,7 @@ interface ProcessProps {
     name: string;
     at: number;
     bt: number;
+    color?: string;
   }[];
 }
 
@@ -24,9 +25,9 @@ function Process({ processList }: ProcessProps) {
             ))}
           </S.ProcessContainerHeader>
           <S.ProcessWrapper>
-            {processList.map(({ name, at, bt }) => (
+            {processList.map(({ name, at, bt, color }) => (
               <S.ProcessItemList key={name}>
-                <S.ProcessItem>
+                <S.ProcessItem style={{ backgroundColor: color }}>
                   {/* style={{ backgroundColor: color }} */}
                   <span>{name}</span>
                 </S.ProcessItem>

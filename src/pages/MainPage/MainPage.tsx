@@ -5,6 +5,7 @@ import GanttChart from './GanttChart';
 import * as S from './MainPage.styled';
 import Process from './Process';
 import Processor from './Processor';
+import ReadyQueue from './ReadyQueue';
 import ResultChart from './ResultChart';
 
 import Header from '@/components/Header/Header';
@@ -58,8 +59,8 @@ function MainPage() {
           <Process processList={processList} />
           {isXXLarge && <ResultChart />}
         </S.MiddleContainer>
-        {/* <ReadyQueue /> */}
         {!isXXLarge && <ResultChart />}
+        <ReadyQueue />
         <GanttChart />
       </S.ContentContainer>
       <Toast />

@@ -23,3 +23,27 @@ export const MainContainer = styled.div`
   background: #fff;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.04);
 `;
+
+export const LineBlockContainer = styled.div`
+  display: flex;
+  color: #000;
+  width: 100%;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+`;
+
+export const Block = styled.div`
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  background: #000;
+  padding: 0 24px;
+`;
