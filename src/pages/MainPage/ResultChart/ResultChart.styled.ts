@@ -60,7 +60,6 @@ export const TitleWrapper = styled.div`
 
   & > span {
     color: #222;
-    font-family: 'SUIT Variable';
     font-size: 14px;
     font-weight: 700;
     line-height: 20px;
@@ -96,7 +95,6 @@ export const ResultItem = styled.div`
 
   & > span {
     color: #222;
-    font-family: 'SUIT Variable';
     font-size: 14px;
     font-weight: 700;
     line-height: 20px;

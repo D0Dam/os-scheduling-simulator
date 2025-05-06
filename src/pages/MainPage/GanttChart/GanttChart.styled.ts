@@ -55,17 +55,24 @@ export const LineBlockContainerWrapper = styled.div`
   background: #fcfcfc;
   border-radius: 8px;
   border: 1px solid #f0f0f0;
+  overflow: hidden;
 `;
 
 export const LineBlockContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
+`;
 
-  & > *:not(:last-child) {
-    border-bottom: 1px solid #f0f0f0;
-  }
+export const Divider = styled.div<{ $top: number }>`
+  position: absolute;
+  top: ${({ $top }) => `${$top}px`};
+  width: 100%;
+  height: 1px;
+  background: #f0f0f0;
 `;
 
 export const LineBlockWrapper = styled.div`

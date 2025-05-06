@@ -3,6 +3,7 @@ import { useState } from 'react';
 import * as S from './AdderTool.styled';
 
 import TextField from '@/components/common/TextField';
+import useToastState from '@/hooks/store/useToastState';
 
 interface Process {
   name: string;
@@ -11,19 +12,44 @@ interface Process {
 }
 interface AdderToolProps {
   onAddProcess: (process: Process) => void;
+  onDeleteProcess: (name: string) => void;
+  processList: Process[];
 }
 
-function AdderTool({ onAddProcess }: AdderToolProps) {
+const getNextProcessName = (processList: Process[]): string => {
+  const usedNumbers = processList
+    .map((p) => /^p(\d+)$/.exec(p.name))
+    .filter(Boolean)
+    .map((match) => Number(match![1]));
+
+  const nextIndex = usedNumbers.length > 0 ? Math.max(...usedNumbers) + 1 : 0;
+  return `p${nextIndex}`;
+};
+
+function AdderTool({ onAddProcess, onDeleteProcess, processList }: AdderToolProps) {
+  const openToast = useToastState((state) => state.open);
   const [processorValue, setProcessorValue] = useState('');
   const [processNameValue, setProcessNameValue] = useState('');
   const [processArrivalValue, setProcessArrivalValue] = useState<number | null>(null);
   const [processBurstValue, setProcessBurstValue] = useState<number | null>(null);
 
+  const autoName = getNextProcessName(processList);
+
   const handleSubmit = () => {
-    if (!processNameValue || !processArrivalValue || !processBurstValue) return;
+    const nameToUse = processNameValue.trim() || autoName;
+
+    if (processArrivalValue === null) {
+      openToast('Arrival Time 에는 숫자만 입력해주세요.', 'warning');
+      return;
+    }
+
+    if (processBurstValue === null) {
+      openToast('Burst Time 에는 숫자만 입력해주세요.', 'warning');
+      return;
+    }
 
     onAddProcess({
-      name: processNameValue,
+      name: nameToUse,
       at: processArrivalValue,
       bt: processBurstValue,
     });
@@ -31,6 +57,16 @@ function AdderTool({ onAddProcess }: AdderToolProps) {
     setProcessNameValue('');
     setProcessArrivalValue(null);
     setProcessBurstValue(null);
+  };
+
+  const handleDelete = () => {
+    if (!processorValue.trim()) {
+      openToast('삭제할 프로세스 이름을 입력해주세요.', 'warning');
+      return;
+    }
+
+    onDeleteProcess(processorValue.trim());
+    setProcessorValue('');
   };
 
   return (
@@ -46,6 +82,7 @@ function AdderTool({ onAddProcess }: AdderToolProps) {
               name="Process Name"
               required
               maxLength={6}
+              placeholder={autoName}
             />
           </S.InputWrapper>
           <S.InputWrapper>
@@ -76,11 +113,7 @@ function AdderTool({ onAddProcess }: AdderToolProps) {
               type="number"
             />
           </S.InputWrapper>
-          <S.ProcessButton
-            type="button"
-            onClick={() => handleSubmit()}
-            disabled={!processNameValue || !processArrivalValue || !processBurstValue}
-          >
+          <S.ProcessButton type="button" onClick={() => handleSubmit()}>
             Add Process
           </S.ProcessButton>
         </S.ProcessInputWrapper>
@@ -92,7 +125,9 @@ function AdderTool({ onAddProcess }: AdderToolProps) {
             name="Process Name"
             required
           />
-          <S.Button type="button">Delete Process</S.Button>
+          <S.Button type="button" onClick={() => handleDelete()}>
+            Delete Process
+          </S.Button>
         </S.ProcessDeleteWrapper>
       </S.MainContainer>
     </S.Container>

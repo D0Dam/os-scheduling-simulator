@@ -23,7 +23,6 @@ export const HeaderTitle = styled.h1`
   font-style: normal;
   font-weight: 500;
   line-height: 28px;
-  font-family: 'SUIT', sans-serif;
 
   & > strong {
     color: #fcb036;
@@ -32,7 +31,6 @@ export const HeaderTitle = styled.h1`
 
 export const HeaderSubTitle = styled.h2`
   color: #154978;
-  font-family: 'SUIT Variable';
   font-size: 10px;
   font-weight: 400;
   line-height: 14px;
@@ -74,7 +72,6 @@ export const StartButton = styled.button`
   border-radius: 4px;
   background: #202020;
   color: #f9f9f9;
-  font-family: 'SUIT Variable';
   font-size: 18px;
   font-weight: 700;
   line-height: 28px;

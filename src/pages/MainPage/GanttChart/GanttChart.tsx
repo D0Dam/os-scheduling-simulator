@@ -81,6 +81,10 @@ function GanttChart() {
             <S.LineTitle>Core4</S.LineTitle>
             <S.LineTitle>Seconds</S.LineTitle>
           </S.LineBlockTitleContainer>
+          <S.Divider $top={36} />
+          <S.Divider $top={72} />
+          <S.Divider $top={108} />
+          <S.Divider $top={144} />
           <S.LineBlockContainer ref={scrollRef}>
             <S.LineBlockWrapper>
               <LineBlock processes={mock1} xScale={scaleLevel} onTick={handleScrollOnTick} />
