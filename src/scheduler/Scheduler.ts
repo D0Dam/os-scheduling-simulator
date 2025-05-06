@@ -43,7 +43,7 @@ export abstract class Scheduler {
     return this.#tracer;
   }
 
-  addProcess(...processes: Process[]): this {
+  addProcess(processes: Process[]): this {
     this.#createQueue.push(...processes);
 
     return this;
