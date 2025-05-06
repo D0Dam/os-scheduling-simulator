@@ -40,8 +40,30 @@ const mockProcesses = [
   { name: 'P15', at: 17, bt: 13 },
 ];
 
+const makeCoreList = (
+  coreState: Record<string, string>
+): { id: number; name: string; type: 'P' | 'E' }[] =>
+  Object.entries(coreState)
+    .filter(([, value]) => value.startsWith('P-CORE') || value.startsWith('E-CORE'))
+    .map(([key, value]) => {
+      const id = Number(key.replace('core', '')); // core1 → 1
+      const type = value.startsWith('P-CORE') ? 'P' : 'E';
+
+      return {
+        id,
+        name: key,
+        type,
+      };
+    });
+
 function MainPage() {
   const isXXLarge = useMediaQuery(xXLarge);
+  const [coreState, setCoreState] = useState<Record<string, string>>({
+    core1: 'OFF1',
+    core2: 'OFF2',
+    core3: 'OFF3',
+    core4: 'OFF4',
+  });
   const [processList, setProcessList] = useState<ProcessType[]>(mockProcesses);
   const [result, setResult] = useState<Tracer | null>(null);
   const openToast = useToastState((state) => state.open);
@@ -68,7 +90,11 @@ function MainPage() {
 
   return (
     <S.Container>
-      <Header setResult={(r) => setResult(r)} processList={processList} />
+      <Header
+        setResult={(r) => setResult(r)}
+        processList={processList}
+        coreList={makeCoreList(coreState)}
+      />
       <S.ContentContainer>
         <AdderTool
           onAddProcess={handleAddProcess}
@@ -76,7 +102,10 @@ function MainPage() {
           processList={processList}
         />
         <S.MiddleContainer>
-          <Processor />
+          <Processor
+            coreState={coreState}
+            changeCoreState={(name, value) => setCoreState((prev) => ({ ...prev, [name]: value }))}
+          />
           <Process processList={processList} />
           {isXXLarge && <ResultChart />}
         </S.MiddleContainer>

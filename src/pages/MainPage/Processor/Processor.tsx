@@ -30,27 +30,58 @@ const PROCESSOR = [
   },
 ];
 
-function Processor() {
+interface ProcessorProps {
+  coreState: Record<string, string>;
+  changeCoreState: (name: string, value: string) => void;
+}
+
+function Processor({ coreState, changeCoreState }: ProcessorProps) {
+  const handleChange = (name: string, value: string) => {
+    changeCoreState(name, value);
+  };
+
   return (
     <S.Container>
       <S.Title>Processor</S.Title>
       <S.MainContainer>
         <S.CoreContainer>
-          {PROCESSOR.map(({ id, name, w, p }) => (
-            <S.CoreItem key={id}>
-              <S.CoreItemTitleWrapper>
-                <S.CoreItemTitle>{name}</S.CoreItemTitle>
-                <S.CoreItemValue>
-                  {w}W {p} %
-                </S.CoreItemValue>
-              </S.CoreItemTitleWrapper>
-              <RadioGroup gap={28}>
-                <Radio label="OFF" name={`identity${id}`} value={`OFF${id}`} defaultChecked />
-                <Radio label="P-CORE" name={`identity${id}`} value={`P-CORE${id}`} />
-                <Radio label="E-CORE" name={`identity${id}`} value={`E-CORE${id}`} />
-              </RadioGroup>
-            </S.CoreItem>
-          ))}
+          {PROCESSOR.map(({ id, name, w, p }) => {
+            const radioName = `core${id}`;
+
+            return (
+              <S.CoreItem key={id}>
+                <S.CoreItemTitleWrapper>
+                  <S.CoreItemTitle>{name}</S.CoreItemTitle>
+                  <S.CoreItemValue>
+                    {w}W {p} %
+                  </S.CoreItemValue>
+                </S.CoreItemTitleWrapper>
+                <RadioGroup gap={28}>
+                  <Radio
+                    label="OFF"
+                    name={radioName}
+                    value={`OFF${id}`}
+                    checked={coreState[radioName] === `OFF${id}`}
+                    onChange={() => handleChange(radioName, `OFF${id}`)}
+                  />
+                  <Radio
+                    label="P-CORE"
+                    name={radioName}
+                    value={`P-CORE${id}`}
+                    checked={coreState[radioName] === `P-CORE${id}`}
+                    onChange={() => handleChange(radioName, `P-CORE${id}`)}
+                  />
+                  <Radio
+                    label="E-CORE"
+                    name={radioName}
+                    value={`E-CORE${id}`}
+                    checked={coreState[radioName] === `E-CORE${id}`}
+                    onChange={() => handleChange(radioName, `E-CORE${id}`)}
+                  />
+                </RadioGroup>
+              </S.CoreItem>
+            );
+          })}
         </S.CoreContainer>
       </S.MainContainer>
     </S.Container>
