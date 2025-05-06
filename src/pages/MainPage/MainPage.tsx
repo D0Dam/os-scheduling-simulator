@@ -19,13 +19,13 @@ interface ProcessType {
 }
 
 function MainPage() {
+  const isXXLarge = useMediaQuery(xXLarge);
   const [processList, setProcessList] = useState<ProcessType[]>([]);
 
   const handleAddProcess = (process: ProcessType) => {
     setProcessList((prev) => [...prev, process]);
   };
 
-  const isXXLarge = useMediaQuery(xXLarge);
   return (
     <S.Container>
       <Header />

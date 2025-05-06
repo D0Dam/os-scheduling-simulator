@@ -8,7 +8,12 @@ import * as S from './Header.styled';
 import KoreatechIcon from '@/assets/svg/koreatech.svg?react';
 
 function Header() {
-  const [value, setValue] = useState('');
+  const [timeQuantum, setTimeQuantum] = useState('');
+  const [algorithm, setAlgorithm] = useState('');
+
+  const handleStart = () => {
+    console.log('start', algorithm, timeQuantum);
+  };
 
   return (
     <S.Header>
@@ -24,23 +29,33 @@ function Header() {
       <S.AlgorithmSettingWrapper>
         <S.SelectorWrapper>
           <S.AlgorithmSelectorTitle>Algorithm :</S.AlgorithmSelectorTitle>
-          <Select name="example" placeholder="Select Algorithm" required>
-            <Select.Slot value="1">FCFS</Select.Slot>
-            <Select.Slot value="2">RR</Select.Slot>
-            <Select.Slot value="3">SPN</Select.Slot>
-            <Select.Slot value="4">SRTN</Select.Slot>
-            <Select.Slot value="5">HRRN</Select.Slot>
+          <Select
+            name="example"
+            placeholder="Select Algorithm"
+            required
+            onChangeValue={(v) => {
+              setTimeQuantum('');
+              setAlgorithm(v);
+            }}
+          >
+            <Select.Slot value="FCFS">FCFS</Select.Slot>
+            <Select.Slot value="RR">RR</Select.Slot>
+            <Select.Slot value="SPN">SPN</Select.Slot>
+            <Select.Slot value="SRTN">SRTN</Select.Slot>
+            <Select.Slot value="HRRN">HRRN</Select.Slot>
           </Select>
         </S.SelectorWrapper>
 
         <S.AlgorithmSelectorTitle>δ :</S.AlgorithmSelectorTitle>
         <TextField
-          value={value}
-          onChange={(e) => setValue(e.currentTarget.value)}
+          value={timeQuantum}
+          onChange={(e) => setTimeQuantum(e.currentTarget.value)}
           name="δ:"
-          required
+          disabled={algorithm !== 'RR'}
         />
-        <S.StartButton type="button">START</S.StartButton>
+        <S.StartButton type="button" onClick={handleStart}>
+          START
+        </S.StartButton>
       </S.AlgorithmSettingWrapper>
     </S.Header>
   );
