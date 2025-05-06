@@ -57,7 +57,7 @@ export abstract class Scheduler {
   }
 
   #isDone(): boolean {
-    return this.#createQueue.length === 0 && this.cores.every((core) => core.process === null);
+    return this.#createQueue.length === 0 && this.cores.every((core) => !core.process);
   }
 
   #updateReadyQueue() {
@@ -70,6 +70,7 @@ export abstract class Scheduler {
     this.cores.forEach((core) => {
       if (core.process) {
         core.process.setEnd(this.time);
+        core.process.updateBurseted(core.wps);
         core.updatePowerUsage();
       }
     });

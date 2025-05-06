@@ -45,11 +45,15 @@ export class Process {
   }
 
   isEnd(): boolean {
-    return this.tt - this.wt === this.bt;
+    return this.tt - this.wt >= this.bt;
   }
 
-  updateBurseted(): void {
-    this.bursted += this.end - this.start;
+  updateBurseted(wps: number): void {
+    if (this.bursted + wps > this.bt) {
+      this.bursted = this.bt;
+    } else {
+      this.bursted += wps;
+    }
   }
 
   compare(other: Process): number {

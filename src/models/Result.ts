@@ -20,7 +20,7 @@ interface PowerUsage {
 }
 
 export class Tracer {
-  readyQueue: Process[][];
+  readyQueue: string[][];
 
   ganttCharts: { [coreId: number]: GanttChartItem[] };
 
@@ -66,7 +66,7 @@ export class Tracer {
   }
 
   updateReadyQueue(readyQueue: Process[]): void {
-    this.readyQueue.push([...readyQueue]);
+    this.readyQueue.push(readyQueue.map((process) => process.name));
   }
 
   updateEndProcesses(processes: Process[]): void {

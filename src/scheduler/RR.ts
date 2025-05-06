@@ -20,11 +20,9 @@ export class RR extends Scheduler {
     this.cores.forEach((core) => {
       if (core.process) {
         if (core.process.isEnd()) {
-          core.process.updateBurseted();
           this.endQueue.push(core.process);
         }
         if (core.process.end - core.process.start === this.#timeQuantum) {
-          core.process.updateBurseted();
           this.readyQueue.push(core.process);
         }
       }

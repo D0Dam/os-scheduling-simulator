@@ -13,7 +13,7 @@ export class FCFS extends Scheduler {
     this.cores.forEach((core) => {
       if (core.process) {
         if (core.process.isEnd()) {
-          core.process.updateBurseted();
+          core.process.updateBurseted(core.wps);
           this.endQueue.push(core.process);
         }
       }
