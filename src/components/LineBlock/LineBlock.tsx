@@ -59,7 +59,7 @@ function LineBlock({ processes, onTick, interval = 100, xScale = 24 }: LineBlock
           <S.Block
             key={`${proc.name}${proc.start}${proc.end}`}
             style={{
-              backgroundColor: colors[proc.name],
+              backgroundColor: 'pink',
               left,
               width: shownWidth,
               visibility: shownWidth > 0 ? 'visible' : 'hidden',

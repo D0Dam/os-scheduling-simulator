@@ -95,3 +95,28 @@ export const ScaleLevelWrapper = styled.div`
   align-items: center;
   gap: 4px;
 `;
+
+export const Block = styled.div`
+  ${typo['caption-1-m']};
+  position: absolute;
+  top: 0;
+  height: 50%;
+  border-radius: 4px 4px 4px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  width: fit-content;
+  padding: 8px 12px;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 100%;
+    background-color: pink;
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+  }
+`;

@@ -1,7 +1,9 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import { Tracer } from '@/models';
 
 import * as S from './GanttChart.styled';
-import { mock1, mock2, mock3, mock4, mock5 } from './mock';
+import { mock1 } from './mock';
 
 import MinusIcon from '@/assets/svg/minus.svg?react';
 import PlusIcon from '@/assets/svg/plus.svg?react';
@@ -30,7 +32,11 @@ const scrollToLinear = (element: HTMLElement, target: number, duration = 300) =>
   requestAnimationFrame(animateScroll);
 };
 
-function GanttChart() {
+interface GanttChartProps {
+  result: Tracer['ganttCharts'] | null;
+}
+
+function GanttChart({ result }: GanttChartProps) {
   const [scaleLevel, setScaleLevel] = useState(24);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -54,6 +60,12 @@ function GanttChart() {
       scrollToLinear(container, targetScrollLeft, 100);
     }
   };
+
+  useEffect(() => {
+    if (result) {
+      console.log(result);
+    }
+  }, [result]);
 
   return (
     <S.Container>
@@ -87,19 +99,38 @@ function GanttChart() {
           <S.Divider $top={144} />
           <S.LineBlockContainer ref={scrollRef}>
             <S.LineBlockWrapper>
-              <LineBlock processes={mock1} xScale={scaleLevel} onTick={handleScrollOnTick} />
+              {mock1.map((proc) => {
+                const left = proc.start * scaleLevel;
+
+                return (
+                  <S.Block
+                    key={`${proc.name}${proc.start}${proc.end}`}
+                    style={{
+                      backgroundColor: 'pink',
+                      left,
+                      width: scaleLevel,
+                    }}
+                  >
+                    {proc.name}
+                  </S.Block>
+                );
+              })}
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
-              <LineBlock processes={mock2} xScale={scaleLevel} />
+              <LineBlock
+                processes={result ? result[1] : []}
+                xScale={scaleLevel}
+                onTick={handleScrollOnTick}
+              />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
-              <LineBlock processes={mock3} xScale={scaleLevel} />
+              <LineBlock processes={result ? result[2] || [] : []} xScale={scaleLevel} />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
-              <LineBlock processes={mock4} xScale={scaleLevel} />
+              <LineBlock processes={result ? result[3] || [] : []} xScale={scaleLevel} />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
-              <LineBlock processes={mock5} xScale={scaleLevel} />
+              <LineBlock processes={result ? result[4] || [] : []} xScale={scaleLevel} />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
               <Ruler count={100} scale={scaleLevel} />

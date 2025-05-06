@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { Tracer } from '@/models';
+
 import AdderTool from './AdderTool';
 import GanttChart from './GanttChart';
 import * as S from './MainPage.styled';
@@ -14,15 +16,34 @@ import useToastState from '@/hooks/store/useToastState';
 import useMediaQuery from '@/hooks/utils/useMediaQuery';
 import { xXLarge } from '@/styles/mediaQueries';
 
-interface ProcessType {
+export interface ProcessType {
   name: string;
   at: number;
   bt: number;
 }
 
+const mockProcesses = [
+  { name: 'P1', at: 0, bt: 14 },
+  { name: 'P2', at: 1, bt: 15 },
+  { name: 'P3', at: 2, bt: 18 },
+  { name: 'P4', at: 3, bt: 13 },
+  { name: 'P5', at: 4, bt: 16 },
+  { name: 'P6', at: 6, bt: 12 },
+  { name: 'P7', at: 7, bt: 17 },
+  { name: 'P8', at: 9, bt: 14 },
+  { name: 'P9', at: 10, bt: 15 },
+  { name: 'P10', at: 12, bt: 13 },
+  { name: 'P11', at: 13, bt: 16 },
+  { name: 'P12', at: 14, bt: 12 },
+  { name: 'P13', at: 15, bt: 15 },
+  { name: 'P14', at: 16, bt: 14 },
+  { name: 'P15', at: 17, bt: 13 },
+];
+
 function MainPage() {
   const isXXLarge = useMediaQuery(xXLarge);
-  const [processList, setProcessList] = useState<ProcessType[]>([]);
+  const [processList, setProcessList] = useState<ProcessType[]>(mockProcesses);
+  const [result, setResult] = useState<Tracer | null>(null);
   const openToast = useToastState((state) => state.open);
 
   const handleAddProcess = (process: ProcessType) => {
@@ -47,7 +68,7 @@ function MainPage() {
 
   return (
     <S.Container>
-      <Header />
+      <Header setResult={(r) => setResult(r)} processList={processList} />
       <S.ContentContainer>
         <AdderTool
           onAddProcess={handleAddProcess}
@@ -61,7 +82,7 @@ function MainPage() {
         </S.MiddleContainer>
         {!isXXLarge && <ResultChart />}
         <ReadyQueue />
-        <GanttChart />
+        <GanttChart result={result ? result.ganttCharts : null} />
       </S.ContentContainer>
       <Toast />
     </S.Container>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { PCore, Process } from '@/models';
+import { Tracer } from '@/models';
 import { FCFS } from '@/scheduler';
 
 import Select from '../common/Select';
@@ -9,33 +9,27 @@ import TextField from '../common/TextField';
 import * as S from './Header.styled';
 
 import KoreatechIcon from '@/assets/svg/koreatech.svg?react';
+import { ProcessType } from '@/pages/MainPage/MainPage';
 
-function Header() {
+interface HeaderProps {
+  processList: ProcessType[];
+  setResult: (result: Tracer) => void;
+}
+
+function Header({ processList, setResult }: HeaderProps) {
   const [timeQuantum, setTimeQuantum] = useState('');
   const [algorithm, setAlgorithm] = useState('');
 
   const handleStart = () => {
-    console.log('start', algorithm, timeQuantum);
-
     const scheduler = new FCFS();
-    console.log('111');
-    const c1 = new PCore({ id: 1, name: 'core1' });
-    const c2 = new PCore({ id: 1, name: 'core1' });
-    const c3 = new PCore({ id: 1, name: 'core1' });
-    console.log('222');
-    scheduler.setCores([c1, c2, c3]);
-    console.log('333');
-    const process = new Process({ name: 'p0', at: 0, bt: 10 });
-    const process2 = new Process({ name: 'p1', at: 2, bt: 10 });
-    const process3 = new Process({ name: 'p2', at: 3, bt: 10 });
-    const process4 = new Process({ name: 'p3', at: 4, bt: 10 });
-    console.log('444');
-    scheduler.addProcess([process, process2, process3, process4]);
-    console.log('555');
-    const a = scheduler.result;
-    console.log('666');
 
-    console.log(a);
+    scheduler.setCores([
+      { id: 1, name: 'core1', type: 'P' },
+      { id: 2, name: 'core2', type: 'E' },
+      { id: 3, name: 'core3', type: 'E' },
+    ]);
+    scheduler.addProcess(processList);
+    setResult(scheduler.result);
   };
 
   return (
