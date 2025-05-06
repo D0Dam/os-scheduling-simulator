@@ -15,6 +15,7 @@ interface LineBlockProps {
   interval?: number;
   xScale?: number;
   onTick?: (currentTime: number) => void;
+  colorMap?: Record<string, string>;
 }
 
 const getRandomPastelColor = (): string => {
@@ -24,7 +25,7 @@ const getRandomPastelColor = (): string => {
   return `#${r.toString(16)}${g.toString(16)}${b.toString(16)}`.padEnd(7, '0');
 };
 
-function LineBlock({ processes, onTick, interval = 100, xScale = 24 }: LineBlockProps) {
+function LineBlock({ processes, onTick, interval = 100, xScale = 24, colorMap }: LineBlockProps) {
   const [currentTime, setCurrentTime] = useState(0);
   const [colors] = useState<Record<string, string>>(() => {
     const map: Record<string, string> = {};
@@ -59,7 +60,7 @@ function LineBlock({ processes, onTick, interval = 100, xScale = 24 }: LineBlock
           <S.Block
             key={`${proc.name}${proc.start}${proc.end}`}
             style={{
-              backgroundColor: 'pink',
+              backgroundColor: colorMap?.[proc.name] ?? colors[proc.name],
               left,
               width: shownWidth,
               visibility: shownWidth > 0 ? 'visible' : 'hidden',

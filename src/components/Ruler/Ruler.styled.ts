@@ -14,9 +14,9 @@ export const TickWrapper = styled.div`
   transition: all 0.3s linear;
 `;
 
-export const TickLine = styled.div<{ isMajor: boolean }>`
+export const TickLine = styled.div<{ $isMajor: boolean }>`
   width: 1px;
-  height: ${({ isMajor }) => (isMajor ? '20px' : '10px')};
+  height: ${({ $isMajor }) => ($isMajor ? '20px' : '10px')};
   background-color: black;
 `;
 

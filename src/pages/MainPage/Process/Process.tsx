@@ -28,7 +28,6 @@ function Process({ processList }: ProcessProps) {
             {processList.map(({ name, at, bt, color }) => (
               <S.ProcessItemList key={name}>
                 <S.ProcessItem style={{ backgroundColor: color }}>
-                  {/* style={{ backgroundColor: color }} */}
                   <span>{name}</span>
                 </S.ProcessItem>
                 <S.ProcessItem>

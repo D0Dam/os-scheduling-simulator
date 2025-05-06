@@ -1,12 +1,7 @@
 import { useState } from 'react';
 
-<<<<<<< Updated upstream
 import { Tracer } from '@/models';
 import { FCFS } from '@/scheduler';
-=======
-import { PCore, Process } from '@/models';
-import { FCFS, RR } from '@/scheduler';
->>>>>>> Stashed changes
 
 import Select from '../common/Select';
 import TextField from '../common/TextField';
@@ -17,43 +12,19 @@ import KoreatechIcon from '@/assets/svg/koreatech.svg?react';
 import { ProcessType } from '@/pages/MainPage/MainPage';
 
 interface HeaderProps {
+  coreList: { id: number; name: string; type: 'P' | 'E' }[];
   processList: ProcessType[];
   setResult: (result: Tracer) => void;
 }
 
-function Header({ processList, setResult }: HeaderProps) {
+function Header({ coreList, processList, setResult }: HeaderProps) {
   const [timeQuantum, setTimeQuantum] = useState('');
   const [algorithm, setAlgorithm] = useState('');
 
   const handleStart = () => {
-<<<<<<< Updated upstream
     const scheduler = new FCFS();
-=======
-    console.log('start', algorithm, timeQuantum);
 
-    // const scheduler = new RR(2);
-    const scheduler = new FCFS();
-    console.log('111');
-    console.log('222');
-    scheduler.setCores([{ id: 1, name: 'core1', type: 'P' }]);
-    console.log('333');
-    console.log('444');
-    scheduler.addProcess([
-      { name: 'p0', at: 0, bt: 10, color: '#aaaaaa' },
-      { name: 'p1', at: 2, bt: 10, color: '#aaaaaa' },
-      { name: 'p2', at: 3, bt: 10, color: '#aaaaaa' },
-      { name: 'p3', at: 4, bt: 10, color: '#aaaaaa' },
-    ]);
-    console.log('555');
-    const a = scheduler.result;
-    console.log('666');
->>>>>>> Stashed changes
-
-    scheduler.setCores([
-      { id: 1, name: 'core1', type: 'P' },
-      { id: 2, name: 'core2', type: 'E' },
-      { id: 3, name: 'core3', type: 'E' },
-    ]);
+    scheduler.setCores(coreList);
     scheduler.addProcess(processList);
     setResult(scheduler.result);
   };
