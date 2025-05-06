@@ -34,7 +34,7 @@ export abstract class Core {
     this.#process = process;
     if (this.#process) {
       this.#process.start = time;
-        this.#hasProcess = true;
+      this.#hasProcess = true;
     }
   }
 
