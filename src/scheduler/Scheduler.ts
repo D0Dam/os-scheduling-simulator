@@ -97,15 +97,11 @@ export abstract class Scheduler {
 
   #ready(): void {
     this.cores.sort((a: Core, b: Core) => {
-      if (a instanceof PCore && b instanceof PCore) {
+      if (a.constructor === b.constructor) {
         return a.compare(b);
       }
 
-      if (this instanceof PCore) {
-        return -1;
-      }
-
-      return 1;
+      return a instanceof PCore ? -1 : 1;
     });
 
     this.#createQueue.sort((a: Process, b: Process) => a.compare(b));
