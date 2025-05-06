@@ -55,6 +55,7 @@ export const LineBlockContainerWrapper = styled.div`
   background: #fcfcfc;
   border-radius: 8px;
   border: 1px solid #f0f0f0;
+  overflow: hidden;
 `;
 
 export const LineBlockContainer = styled.div`
@@ -63,6 +64,7 @@ export const LineBlockContainer = styled.div`
   flex-direction: column;
   width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
 `;
 
 export const Divider = styled.div<{ $top: number }>`
