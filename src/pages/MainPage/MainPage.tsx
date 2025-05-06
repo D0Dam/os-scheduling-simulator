@@ -113,9 +113,9 @@ function MainPage() {
             changeCoreState={(name, value) => setCoreState((prev) => ({ ...prev, [name]: value }))}
           />
           <Process processList={processList} />
-          {isXXLarge && <ResultChart />}
+          {isXXLarge && <ResultChart result={result ? result.endProcesses : null} />}
         </S.MiddleContainer>
-        {!isXXLarge && <ResultChart />}
+        {!isXXLarge && <ResultChart result={result ? result.endProcesses : null} />}
         <ReadyQueue result={result ? result.readyQueue : null} processList={processList} />
         <GanttChart result={result ? result.ganttCharts : null} processList={processList} />
       </S.ContentContainer>
