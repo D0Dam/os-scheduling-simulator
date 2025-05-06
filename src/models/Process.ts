@@ -5,6 +5,8 @@ export class Process {
 
   readonly bt: number;
 
+  readonly color: string;
+
   public tt: number;
 
   public rt: number;
@@ -13,10 +15,11 @@ export class Process {
 
   public start: number;
 
-  constructor(props: { name: string; at: number; bt: number }) {
+  constructor(props: { name: string; at: number; bt: number; color: string }) {
     this.name = props.name;
     this.at = props.at;
     this.bt = props.bt;
+    this.color = props.color;
     this.tt = 0;
     this.rt = 0;
     this.bursted = 0;

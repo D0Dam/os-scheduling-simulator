@@ -4,6 +4,7 @@ interface IProcess {
   name: string;
   at: number;
   bt: number;
+  color: string;
 }
 
 interface ICore {
@@ -81,6 +82,9 @@ export abstract class Scheduler {
   }
 
   #increaseTime(): void {
+    // this.readyQueue.forEach((process) => {
+    //   process.setEnd(this.time);
+    // });
     this.cores.forEach((core) => {
       if (core.process) {
         core.process.setEnd(this.time);

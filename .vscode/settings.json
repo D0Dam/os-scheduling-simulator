@@ -6,6 +6,7 @@
   },
   "prettier.enable": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
 
   "eslint.enable": true,
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"]
