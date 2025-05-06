@@ -18,19 +18,19 @@ const PROCESS_COLORS = [
   '#68678E',
 ];
 
-interface Process {
+interface ProcessType {
   name: string;
   at: number;
   bt: number;
-  color?: string;
+  color: string;
 }
 interface AdderToolProps {
-  onAddProcess: (process: Process) => void;
+  onAddProcess: (process: ProcessType) => void;
   onDeleteProcess: (name: string) => void;
-  processList: Process[];
+  processList: ProcessType[];
 }
 
-const getNextProcessName = (processList: Process[]): string => {
+const getNextProcessName = (processList: ProcessType[]): string => {
   const usedNumbers = processList
     .map((p) => /^p(\d+)$/.exec(p.name))
     .filter(Boolean)

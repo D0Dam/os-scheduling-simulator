@@ -32,11 +32,19 @@ const scrollToLinear = (element: HTMLElement, target: number, duration = 300) =>
   requestAnimationFrame(animateScroll);
 };
 
-interface GanttChartProps {
-  result: Tracer['ganttCharts'] | null;
+interface ProcessType {
+  name: string;
+  at: number;
+  bt: number;
+  color: string;
 }
 
-function GanttChart({ result }: GanttChartProps) {
+interface GanttChartProps {
+  result: Tracer['ganttCharts'] | null;
+  processList: ProcessType[];
+}
+
+function GanttChart({ result, processList }: GanttChartProps) {
   const [scaleLevel, setScaleLevel] = useState(24);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -47,6 +55,14 @@ function GanttChart({ result }: GanttChartProps) {
   const minusLevel = () => {
     setScaleLevel((prev) => prev - 4);
   };
+
+  const colorMap = processList.reduce(
+    (acc, process) => {
+      acc[process.name] = process.color;
+      return acc;
+    },
+    {} as Record<string, string>
+  );
 
   const handleScrollOnTick = (current: number) => {
     const container = scrollRef.current;
@@ -121,16 +137,29 @@ function GanttChart({ result }: GanttChartProps) {
                 processes={result ? result[1] : []}
                 xScale={scaleLevel}
                 onTick={handleScrollOnTick}
+                colorMap={colorMap}
               />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
-              <LineBlock processes={result ? result[2] || [] : []} xScale={scaleLevel} />
+              <LineBlock
+                processes={result ? result[2] || [] : []}
+                xScale={scaleLevel}
+                colorMap={colorMap}
+              />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
-              <LineBlock processes={result ? result[3] || [] : []} xScale={scaleLevel} />
+              <LineBlock
+                processes={result ? result[3] || [] : []}
+                xScale={scaleLevel}
+                colorMap={colorMap}
+              />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
-              <LineBlock processes={result ? result[4] || [] : []} xScale={scaleLevel} />
+              <LineBlock
+                processes={result ? result[4] || [] : []}
+                xScale={scaleLevel}
+                colorMap={colorMap}
+              />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
               <Ruler count={100} scale={scaleLevel} />

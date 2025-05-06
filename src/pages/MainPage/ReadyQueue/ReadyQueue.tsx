@@ -1,46 +1,42 @@
 import { useState } from 'react';
 
+import { Tracer } from '@/models';
+
 import * as S from './ReadyQueue.styled';
 
 import { useInterval } from '@/hooks/utils/useInterval';
 
-const MOCK_DATA = [
-  ['p1', 'p2'],
-  ['p1', 'p4'],
-  ['p1', 'p2', 'p3'],
-  ['p2'],
-  ['p1'],
-  ['p1'],
-  ['p1', 'p2'],
-  ['p1', 'p4'],
-  ['p1', 'p2', 'p3'],
-  ['p2'],
-  ['p1'],
-  ['p1'],
-  ['p1', 'p2'],
-  ['p1', 'p4'],
-  ['p1', 'p2', 'p3'],
-  ['p2'],
-  ['p1'],
-  ['p1'],
-  ['p1', 'p2'],
-  ['p1', 'p4'],
-  ['p1', 'p2', 'p3'],
-  ['p2'],
-  ['p1'],
-  ['p1'],
-  ['p1', 'p2'],
-];
+interface ProcessType {
+  name: string;
+  at: number;
+  bt: number;
+  color: string;
+}
 
-function ReadyQueue() {
+interface ReadyQueueProps {
+  result: Tracer['readyQueue'] | null;
+  processList: ProcessType[];
+}
+
+function ReadyQueue({ result, processList }: ReadyQueueProps) {
   const [step, setStep] = useState(0);
+
+  const colorMap = processList.reduce(
+    (acc, process) => {
+      acc[process.name] = process.color;
+      return acc;
+    },
+    {} as Record<string, string>
+  );
 
   useInterval(
     () => {
-      setStep((prev) => prev + 1);
+      if (result && step < result.length - 1) {
+        setStep((prev) => prev + 1);
+      }
     },
-    step < MOCK_DATA.length - 1 ? 1000 : null,
-    [step]
+    result && step < result.length - 1 ? 100 : null,
+    [step, result]
   );
 
   return (
@@ -48,8 +44,10 @@ function ReadyQueue() {
       <S.Title>ReadyQueue</S.Title>
       <S.MainContainer>
         <S.LineBlockContainer>
-          {MOCK_DATA[step].map((item, idx) => (
-            <S.Block key={idx}>{item}</S.Block>
+          {result?.[step]?.map((item, idx) => (
+            <S.Block key={idx} style={{ background: colorMap[item] ?? '#ccc' }}>
+              {item}
+            </S.Block>
           ))}
         </S.LineBlockContainer>
       </S.MainContainer>

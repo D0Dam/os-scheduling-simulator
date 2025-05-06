@@ -40,7 +40,7 @@ export const Block = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  color: #fff;
+  color: #222;
   font-size: 14px;
   font-weight: bold;
   text-align: center;
