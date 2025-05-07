@@ -108,7 +108,11 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
           </S.StartButton>
         )}
         {schedule.state === 'running' && (
-          <S.StartButton type="button" onClick={handleStart}>
+          <S.StartButton
+            type="button"
+            onClick={handleStart}
+            disabled={schedule.state === 'running'}
+          >
             START
           </S.StartButton>
         )}
