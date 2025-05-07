@@ -24,14 +24,14 @@ export class Tracer {
 
   ganttCharts: { [coreId: number]: GanttChartItem[]; maxEnd: number };
 
-  powerUsage: { [coreId: number]: PowerUsage[] };
+  powerUsage: { [coreId: number]: PowerUsage[]; total: number[] };
 
   endProcesses: Process[][];
 
   constructor() {
     this.readyQueue = [];
     this.ganttCharts = { maxEnd: 0 };
-    this.powerUsage = {};
+    this.powerUsage = { total: [] };
     this.endProcesses = [];
   }
 
@@ -57,6 +57,7 @@ export class Tracer {
 
   updatePowerUsage(cores: Core[]): void {
     const totalPowerUsage: number = cores.reduce((sum, core) => sum + core.powerUsage, 0);
+    this.powerUsage.total.push(totalPowerUsage);
 
     cores.forEach((core) => {
       this.powerUsage[core.id].push({
