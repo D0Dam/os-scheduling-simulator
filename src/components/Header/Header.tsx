@@ -12,6 +12,7 @@ import * as S from './Header.styled';
 
 import KoreatechIcon from '@/assets/svg/koreatech.svg?react';
 import PauseIcon from '@/assets/svg/pause.svg?react';
+import PlayIcon from '@/assets/svg/play.svg?react';
 import ResetIcon from '@/assets/svg/reset.svg?react';
 import useSchedulerState from '@/hooks/store/useSchedulerState';
 import useToastState from '@/hooks/store/useToastState';
@@ -127,7 +128,7 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
         {schedule.state !== 'finish' && (
           <>
             <S.StartButton type="button" onClick={() => schedule.paused()}>
-              <PauseIcon />
+              {schedule.state === 'paused' ? <PlayIcon /> : <PauseIcon />}
             </S.StartButton>
             <S.StartButton
               type="button"
