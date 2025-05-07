@@ -76,4 +76,9 @@ export const StartButton = styled.button`
   font-weight: 700;
   line-height: 28px;
   border: none;
+
+  &:disabled {
+    background: #f0f0f0;
+    color: #b0b0b0;
+  }
 `;
