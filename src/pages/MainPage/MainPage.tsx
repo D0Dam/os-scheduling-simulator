@@ -61,8 +61,8 @@ const makeCoreList = (
 function MainPage() {
   const isXXLarge = useMediaQuery(xXLarge);
   const openToast = useToastState((state) => state.open);
+  const { value: isAddMock, setTrue: setAddMock, setFalse: setRemoveMock } = useBooleanState(false);
   const [result, setResult] = useState<Tracer | null>(null);
-  const { value: isAddMock, setTrue: setAddMock } = useBooleanState(false);
   const [processList, setProcessList] = useState<ProcessType[]>([]);
   const [coreState, setCoreState] = useState<Record<string, string>>({
     core1: 'OFF1',
@@ -99,8 +99,10 @@ function MainPage() {
   useEffect(() => {
     if (isAddMock) {
       setProcessList(mockProcesses);
-    } else {
-      setProcessList([]);
+
+      setTimeout(() => {
+        setRemoveMock();
+      }, 0);
     }
   }, [isAddMock]);
 
