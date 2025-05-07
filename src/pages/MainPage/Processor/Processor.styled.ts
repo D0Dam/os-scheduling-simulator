@@ -62,9 +62,13 @@ export const CoreItemTitle = styled.h3`
 export const CoreItemValue = styled.h3`
   display: flex;
   color: #222;
-  text-align: center;
-
+  gap: 8px;
+  text-align: right;
   font-size: 14px;
   font-weight: 700;
   line-height: 20px;
+
+  & > div {
+    min-width: 60px;
+  }
 `;

@@ -1,49 +1,61 @@
+import { useState } from 'react';
+
 import { useShallow } from 'zustand/shallow';
+
+import { Tracer } from '@/models';
 
 import * as S from './Processor.styled';
 
 import Radio from '@/components/common/Radio';
 import RadioGroup from '@/components/common/RadioGroup';
 import useSchedulerState from '@/hooks/store/useSchedulerState';
+import { useInterval } from '@/hooks/utils/useInterval';
 
 const PROCESSOR = [
   {
-    id: '1',
+    id: 1,
     name: 'Core 1',
-    w: '123.4',
-    p: '44.4',
   },
   {
-    id: '2',
+    id: 2,
     name: 'Core 2',
-    w: '13.4',
-    p: '42.4',
   },
   {
-    id: '3',
+    id: 3,
     name: 'Core 3',
-    w: '122.4',
-    p: '14.4',
   },
   {
-    id: '4',
+    id: 4,
     name: 'Core 4',
-    w: '111.4',
-    p: '43.4',
   },
 ];
 
 interface ProcessorProps {
   coreState: Record<string, string>;
+  powerUsage: Tracer['powerUsage'] | null;
   changeCoreState: (name: string, value: string) => void;
 }
 
-function Processor({ coreState, changeCoreState }: ProcessorProps) {
+function Processor({ coreState, changeCoreState, powerUsage }: ProcessorProps) {
+  const [count, setCount] = useState(0);
+  const schedule = useSchedulerState(
+    useShallow(({ state, running, paused }) => ({ state, running, paused }))
+  );
+
   const handleChange = (name: string, value: string) => {
     changeCoreState(name, value);
   };
-  const schedule = useSchedulerState(
-    useShallow(({ state, running, paused }) => ({ state, running, paused }))
+
+  const fullCount = powerUsage ? powerUsage[1].length : 0;
+
+  useInterval(
+    () => {
+      if (powerUsage) {
+        setCount((p) => (p < fullCount ? p + 1 : p));
+      }
+    },
+    powerUsage && count <= fullCount && schedule.state !== 'paused' ? 200 : null,
+    [powerUsage]
   );
 
   return (
@@ -51,15 +63,17 @@ function Processor({ coreState, changeCoreState }: ProcessorProps) {
       <S.Title>Processor</S.Title>
       <S.MainContainer>
         <S.CoreContainer>
-          {PROCESSOR.map(({ id, name, w, p }) => {
+          {PROCESSOR.map(({ id, name }) => {
             const radioName = `core${id}`;
+            const powerUsageData = powerUsage?.[id]?.[count - 1] || null;
 
             return (
               <S.CoreItem key={id}>
                 <S.CoreItemTitleWrapper>
                   <S.CoreItemTitle>{name}</S.CoreItemTitle>
                   <S.CoreItemValue>
-                    {w}W {p} %
+                    <div>{powerUsageData?.usage || '00.0'} W</div>
+                    <div>{powerUsageData?.percentage.toFixed(2) || '0.00'} %</div>
                   </S.CoreItemValue>
                 </S.CoreItemTitleWrapper>
                 <RadioGroup gap={28}>

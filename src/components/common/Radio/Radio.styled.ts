@@ -13,6 +13,7 @@ export const Radio = styled.label<{
   display: flex;
   gap: 6px;
   align-items: center;
+  cursor: pointer;
 
   & > div:first-child {
     ${({ $removeTransition }) => !$removeTransition && defaultTransition}

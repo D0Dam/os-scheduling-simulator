@@ -19,6 +19,7 @@ import useToastState from '@/hooks/store/useToastState';
 import { ProcessType } from '@/pages/MainPage/MainPage';
 
 interface HeaderProps {
+  result: Tracer | null;
   coreList: { id: number; name: string; type: 'P' | 'E' }[];
   processList: ProcessType[];
   setResult: (result: Tracer | null) => void;
@@ -44,7 +45,7 @@ const createScheduler = (algorithm: string, timeQuantum?: string) => {
   }
 };
 
-function Header({ coreList, processList, setResult }: HeaderProps) {
+function Header({ coreList, processList, setResult, result }: HeaderProps) {
   const [timeQuantum, setTimeQuantum] = useState('');
   const [algorithm, setAlgorithm] = useState('');
   const prevParamsRef = useRef<{
@@ -87,7 +88,7 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
       timeQuantum,
     };
 
-    if (JSON.stringify(prevParamsRef.current) === JSON.stringify(currentParams)) {
+    if (result && JSON.stringify(prevParamsRef.current) === JSON.stringify(currentParams)) {
       return;
     }
 

@@ -101,6 +101,7 @@ function MainPage() {
   return (
     <S.Container>
       <Header
+        result={result}
         setResult={(r) => setResult(r)}
         processList={processList}
         coreList={makeCoreList(coreState)}
@@ -114,6 +115,8 @@ function MainPage() {
         />
         <S.MiddleContainer>
           <Processor
+            key={JSON.stringify(result?.powerUsage)}
+            powerUsage={result ? result.powerUsage : null}
             coreState={coreState}
             changeCoreState={(name, value) => setCoreState((prev) => ({ ...prev, [name]: value }))}
           />
