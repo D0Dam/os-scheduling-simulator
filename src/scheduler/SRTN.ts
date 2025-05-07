@@ -5,7 +5,7 @@ export class SRTN extends Scheduler {
   protected assignProcess(): void {
     this.#sort();
     this.cores.forEach((core) => {
-      if (!core.hasProcess || this.#canPreempt(core)) {
+      if (!core.hasProcess) {
         core.setProcess(this.readyQueue.shift(), this.time);
       }
     });
