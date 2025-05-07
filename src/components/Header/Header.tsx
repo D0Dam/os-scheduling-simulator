@@ -55,6 +55,21 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
       return;
     }
 
+    if (processList.length === 0) {
+      openToast('프로세스가 없습니다. 프로세스를 추가해주세요.', 'warning');
+      return;
+    }
+
+    if (!algorithm) {
+      openToast('알고리즘을 선택해주세요.', 'warning');
+      return;
+    }
+
+    if (algorithm === 'RR' && !timeQuantum) {
+      openToast('Time quantum을 입력해주세요.', 'warning');
+      return;
+    }
+
     const scheduler = createScheduler(algorithm, timeQuantum);
 
     scheduler.setCores(coreList);
@@ -108,13 +123,14 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
           </S.StartButton>
         )}
         {schedule.state === 'running' && (
-          <S.StartButton
-            type="button"
-            onClick={handleStart}
-            disabled={schedule.state === 'running'}
-          >
-            START
-          </S.StartButton>
+          <>
+            <S.StartButton type="button" onClick={handleStart}>
+              pause
+            </S.StartButton>
+            <S.StartButton type="button" onClick={handleStart}>
+              reset
+            </S.StartButton>
+          </>
         )}
       </S.AlgorithmSettingWrapper>
     </S.Header>

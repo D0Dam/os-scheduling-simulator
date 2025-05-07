@@ -5,6 +5,7 @@ import { Tracer } from '@/models';
 import * as S from './ResultChart.styled';
 
 import { RESULT_HEADER } from '@/constants/mock';
+import useSchedulerState from '@/hooks/store/useSchedulerState';
 import { useInterval } from '@/hooks/utils/useInterval';
 
 interface ResultChartProps {
@@ -13,11 +14,15 @@ interface ResultChartProps {
 
 function ResultChart({ result }: ResultChartProps) {
   const [count, setCount] = useState(0);
+  const finish = useSchedulerState((state) => state.finish);
 
   useInterval(
     () => {
       if (result) {
         setCount((p) => (p < result.length ? p + 1 : p));
+        if (count === result.length) {
+          finish();
+        }
       }
     },
     result && count <= result.length ? 100 : null,
