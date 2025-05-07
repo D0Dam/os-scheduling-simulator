@@ -12,6 +12,8 @@ interface ProcessProps {
 }
 
 function Process({ processList }: ProcessProps) {
+  const sortedProcessList = [...processList].sort((a, b) => a.at - b.at);
+
   return (
     <S.Container>
       <S.Title>Processes</S.Title>
@@ -25,7 +27,7 @@ function Process({ processList }: ProcessProps) {
             ))}
           </S.ProcessContainerHeader>
           <S.ProcessWrapper>
-            {processList.map(({ name, at, bt, color }) => (
+            {sortedProcessList.map(({ name, at, bt, color }) => (
               <S.ProcessItemList key={name}>
                 <S.ProcessItem style={{ backgroundColor: color }}>
                   <span>{name}</span>

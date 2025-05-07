@@ -113,11 +113,30 @@ function MainPage() {
             changeCoreState={(name, value) => setCoreState((prev) => ({ ...prev, [name]: value }))}
           />
           <Process processList={processList} />
-          {isXXLarge && <ResultChart result={result ? result.endProcesses : null} />}
+          {isXXLarge && (
+            <ResultChart
+              key={JSON.stringify(result?.endProcesses)}
+              result={result ? result.endProcesses : null}
+            />
+          )}
         </S.MiddleContainer>
-        {!isXXLarge && <ResultChart result={result ? result.endProcesses : null} />}
-        <ReadyQueue result={result ? result.readyQueue : null} processList={processList} />
-        <GanttChart result={result ? result.ganttCharts : null} processList={processList} />
+        {!isXXLarge && (
+          <ResultChart
+            key={JSON.stringify(result?.endProcesses)}
+            result={result ? result.endProcesses : null}
+          />
+        )}
+        <ReadyQueue
+          key={JSON.stringify(result?.readyQueue)}
+          result={result ? result.readyQueue : null}
+          processList={processList}
+        />
+        <GanttChart
+          key={JSON.stringify(result?.ganttCharts)}
+          result={result ? result.ganttCharts : null}
+          processList={processList}
+          startCoreId={makeCoreList(coreState)[0] ? makeCoreList(coreState)[0].id : 0}
+        />
       </S.ContentContainer>
       <Toast />
     </S.Container>
