@@ -20,7 +20,7 @@ import { ProcessType } from '@/pages/MainPage/MainPage';
 interface HeaderProps {
   coreList: { id: number; name: string; type: 'P' | 'E' }[];
   processList: ProcessType[];
-  setResult: (result: Tracer) => void;
+  setResult: (result: Tracer | null) => void;
 }
 
 const createScheduler = (algorithm: string, timeQuantum?: string) => {
@@ -48,7 +48,7 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
   const [algorithm, setAlgorithm] = useState('');
   const openToast = useToastState((state) => state.open);
   const schedule = useSchedulerState(
-    useShallow(({ state, running, paused }) => ({ state, running, paused }))
+    useShallow(({ state, running, paused, finish }) => ({ state, running, paused, finish }))
   );
 
   const handleStart = () => {
@@ -124,12 +124,18 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
             START
           </S.StartButton>
         )}
-        {schedule.state === 'running' && (
+        {schedule.state !== 'finish' && (
           <>
-            <S.StartButton type="button" onClick={handleStart}>
+            <S.StartButton type="button" onClick={() => schedule.paused()}>
               <PauseIcon />
             </S.StartButton>
-            <S.StartButton type="button" onClick={handleStart}>
+            <S.StartButton
+              type="button"
+              onClick={() => {
+                schedule.finish();
+                setResult(null);
+              }}
+            >
               <ResetIcon />
             </S.StartButton>
           </>
