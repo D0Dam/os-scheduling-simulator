@@ -32,8 +32,10 @@ function ResultChart({ result }: ResultChartProps) {
 
   return (
     <S.Container>
-      <S.Title>Result</S.Title>
-      <span>{count}</span>
+      <S.MainTitleWrapper>
+        <S.Title>Result</S.Title>
+        <span>running time : {count}s</span>
+      </S.MainTitleWrapper>
       <S.MainContainer>
         <S.ResultChartContainer>
           <S.ResultChartHeader>
