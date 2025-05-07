@@ -128,6 +128,7 @@ function MainPage() {
               key={JSON.stringify(result?.endProcesses)}
               result={result ? result.endProcesses : null}
               nttAverage={result ? result.nttAverage : null}
+              powerUsage={result ? result.powerUsage : null}
             />
           )}
         </S.MiddleContainer>
@@ -137,6 +138,7 @@ function MainPage() {
             key={JSON.stringify(result?.endProcesses)}
             result={result ? result.endProcesses : null}
             nttAverage={result ? result.nttAverage : null}
+            powerUsage={result ? result.powerUsage : null}
           />
         )}
         <ReadyQueue

@@ -12,9 +12,10 @@ interface ResultChartProps {
   result: Tracer['endProcesses'] | null;
   nttAverage: Tracer['nttAverage'] | null;
   efficienciesState: Tracer['efficiencies'] | null;
+  powerUsage: Tracer['powerUsage'] | null;
 }
 
-function ResultChart({ result, nttAverage, efficienciesState }: ResultChartProps) {
+function ResultChart({ result, nttAverage, efficienciesState, powerUsage }: ResultChartProps) {
   const [count, setCount] = useState(0);
   const finish = useSchedulerState((state) => state.finish);
   const schedulerState = useSchedulerState(({ state }) => state);
@@ -42,6 +43,7 @@ function ResultChart({ result, nttAverage, efficienciesState }: ResultChartProps
           <span>
             Average Efficiencies: {efficienciesState?.average?.[count - 2]?.toFixed(2) ?? 0}%
           </span>
+          <span>Total Power : {powerUsage?.total?.[count - 1] ?? 0}W</span>
         </div>
       </S.MainTitleWrapper>
       <S.MainContainer>
