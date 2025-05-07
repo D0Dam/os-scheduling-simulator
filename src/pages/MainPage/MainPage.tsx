@@ -119,6 +119,7 @@ function MainPage() {
             powerUsage={result ? result.powerUsage : null}
             coreState={coreState}
             changeCoreState={(name, value) => setCoreState((prev) => ({ ...prev, [name]: value }))}
+            efficienciesState={result ? result.efficiencies : null}
           />
           <Process processList={processList} />
           {isXXLarge && (

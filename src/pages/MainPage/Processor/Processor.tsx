@@ -34,9 +34,10 @@ interface ProcessorProps {
   coreState: Record<string, string>;
   powerUsage: Tracer['powerUsage'] | null;
   changeCoreState: (name: string, value: string) => void;
+  efficienciesState: Tracer['efficiencies'] | null;
 }
 
-function Processor({ coreState, changeCoreState, powerUsage }: ProcessorProps) {
+function Processor({ coreState, changeCoreState, powerUsage, efficienciesState }: ProcessorProps) {
   const [count, setCount] = useState(0);
   const schedule = useSchedulerState(
     useShallow(({ state, running, paused }) => ({ state, running, paused }))
@@ -66,13 +67,15 @@ function Processor({ coreState, changeCoreState, powerUsage }: ProcessorProps) {
           {PROCESSOR.map(({ id, name }) => {
             const radioName = `core${id}`;
             const powerUsageData = powerUsage?.[id]?.[count - 1] || null;
+            const efficienciesDate = efficienciesState?.[id]?.[count - 1] || null;
 
             return (
               <S.CoreItem key={id}>
                 <S.CoreItemTitleWrapper>
                   <S.CoreItemTitle>{name}</S.CoreItemTitle>
                   <S.CoreItemValue>
-                    <div>{powerUsageData?.usage || '00.0'} W</div>
+                    <div>효율성: {efficienciesDate?.toFixed(2) || '0.00'} %</div>
+                    <div>{powerUsageData?.usage.toFixed(1) || '00.0'} W</div>
                     <div>{powerUsageData?.percentage.toFixed(2) || '0.00'} %</div>
                   </S.CoreItemValue>
                 </S.CoreItemTitleWrapper>
