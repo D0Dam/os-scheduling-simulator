@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { Tracer } from '@/models';
-import { FCFS } from '@/scheduler';
+import { FCFS, HRRN, RR, SPN, SRTN } from '@/scheduler';
 
 import Select from '../common/Select';
 import TextField from '../common/TextField';
@@ -18,6 +18,26 @@ interface HeaderProps {
   setResult: (result: Tracer) => void;
 }
 
+const createScheduler = (algorithm: string, timeQuantum?: string) => {
+  switch (algorithm) {
+    case 'FCFS':
+      return new FCFS();
+    case 'RR':
+      if (!timeQuantum) {
+        throw new Error('Time quantum is required for RR algorithm');
+      }
+      return new RR(Number(timeQuantum));
+    case 'SPN':
+      return new SPN();
+    case 'SRTN':
+      return new SRTN();
+    case 'HRRN':
+      return new HRRN();
+    default:
+      throw new Error('Invalid algorithm');
+  }
+};
+
 function Header({ coreList, processList, setResult }: HeaderProps) {
   const [timeQuantum, setTimeQuantum] = useState('');
   const [algorithm, setAlgorithm] = useState('');
@@ -28,7 +48,8 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
       openToast('모든 코어가 꺼져있습니다. 코어를 켜주세요.', 'warning');
       return;
     }
-    const scheduler = new FCFS();
+
+    const scheduler = createScheduler(algorithm, timeQuantum);
 
     scheduler.setCores(coreList);
     scheduler.addProcess(processList);
