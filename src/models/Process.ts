@@ -38,6 +38,10 @@ export class Process {
     return this.#progress >= this.bt;
   }
 
+  get responseRatio(): number {
+    return (this.wt + this.bt) / this.bt;
+  }
+
   get remainProgress(): number {
     return this.bt - this.#progress;
   }
