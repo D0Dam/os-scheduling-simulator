@@ -82,13 +82,14 @@ export abstract class Scheduler {
   }
 
   #increaseTime(): void {
-    // this.readyQueue.forEach((process) => {
-    //   process.setEnd(this.time);
-    // });
+    this.readyQueue.forEach((process) => {
+      process.updateWT();
+      process.updateTT();
+    });
     this.cores.forEach((core) => {
-      if (core.process) {
-        core.process.setEnd(this.time);
-        core.process.updateBurseted(core.wps);
+      if (core.process && core.hasProcess) {
+        core.process.updateTT();
+        core.process.updateProgress(core.wps);
         core.updatePowerUsage();
       }
     });
@@ -97,15 +98,11 @@ export abstract class Scheduler {
 
   #ready(): void {
     this.cores.sort((a: Core, b: Core) => {
-      if (a instanceof PCore && b instanceof PCore) {
+      if (a.constructor === b.constructor) {
         return a.compare(b);
       }
 
-      if (this instanceof PCore) {
-        return -1;
-      }
-
-      return 1;
+      return a instanceof PCore ? -1 : 1;
     });
 
     this.#createQueue.sort((a: Process, b: Process) => a.compare(b));
@@ -115,8 +112,8 @@ export abstract class Scheduler {
   #start(): void {
     while (!this.#isDone()) {
       this.#updateReadyQueue();
-      this.#tracer.updateGanttChart(this.cores);
       this.releaseProcess();
+      this.#tracer.updateGanttChart(this.cores);
       this.#tracer.updateEndProcesses(this.endQueue);
       this.assignProcess();
       this.#tracer.updateReadyQueue(this.readyQueue);

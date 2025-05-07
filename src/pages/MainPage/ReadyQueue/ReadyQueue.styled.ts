@@ -31,6 +31,7 @@ export const LineBlockContainer = styled.div`
   height: 36px;
   border-radius: 8px;
   border: 1px solid #f0f0f0;
+  background: #fcfcfc;
 `;
 
 export const Block = styled.div`

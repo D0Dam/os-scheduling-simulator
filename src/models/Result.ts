@@ -22,7 +22,7 @@ interface PowerUsage {
 export class Tracer {
   readyQueue: string[][];
 
-  ganttCharts: { [coreId: number]: GanttChartItem[] };
+  ganttCharts: { [coreId: number]: GanttChartItem[]; maxEnd: number };
 
   powerUsage: { [coreId: number]: PowerUsage[] };
 
@@ -30,7 +30,7 @@ export class Tracer {
 
   constructor() {
     this.readyQueue = [];
-    this.ganttCharts = {};
+    this.ganttCharts = { maxEnd: 0 };
     this.powerUsage = {};
     this.endProcesses = [];
   }
@@ -44,12 +44,13 @@ export class Tracer {
 
   updateGanttChart(cores: Core[]): void {
     cores.forEach((core) => {
-      if (core.process && core.process.isEnd()) {
+      if (core.process && !core.hasProcess) {
         this.ganttCharts[core.id].push({
           name: core.process.name,
           start: core.process.start,
           end: core.process.end,
         });
+        this.ganttCharts.maxEnd = Math.max(this.ganttCharts.maxEnd, core.process.end);
       }
     });
   }
