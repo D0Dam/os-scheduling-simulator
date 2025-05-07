@@ -118,6 +118,7 @@ export abstract class Scheduler {
       this.assignProcess();
       this.#tracer.updateReadyQueue(this.readyQueue);
       this.#tracer.updatePowerUsage(this.cores);
+      this.#tracer.updateEfficiency(this.cores, this.time);
 
       this.#increaseTime();
     }

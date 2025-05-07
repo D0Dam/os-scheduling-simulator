@@ -19,6 +19,11 @@ interface PowerUsage {
   percentage: number;
 }
 
+interface Efficiencies {
+  [coreId: number]: number[];
+  average: number[];
+}
+
 export class Tracer {
   readyQueue: string[][];
 
@@ -28,17 +33,24 @@ export class Tracer {
 
   endProcesses: Process[][];
 
+  nttAverage: number[];
+
+  readonly #efficiencies: { [coreId: number]: number[] };
+
   constructor() {
     this.readyQueue = [];
     this.ganttCharts = { maxEnd: 0 };
     this.powerUsage = { total: [] };
     this.endProcesses = [];
+    this.nttAverage = [];
+    this.#efficiencies = {};
   }
 
   setCore(cores: Core[]): void {
     cores.forEach((core) => {
       this.ganttCharts[core.id] = [];
       this.powerUsage[core.id] = [];
+      this.#efficiencies[core.id] = [];
     });
   }
 
@@ -51,6 +63,30 @@ export class Tracer {
           end: core.process.end,
         });
         this.ganttCharts.maxEnd = Math.max(this.ganttCharts.maxEnd, core.process.end);
+      }
+    });
+  }
+
+  get efficiencies(): Efficiencies {
+    const result: Efficiencies = { average: [] };
+    const coreIds = Object.keys(this.#efficiencies).map(Number);
+    coreIds.forEach((coreId) => {
+      result[coreId] = this.#efficiencies[coreId].map((value, time) => (value / (time + 1)) * 100);
+    });
+
+    const length = this.#efficiencies[coreIds[0]].length - 1;
+    result.average = Array.from(
+      { length },
+      (_, time) => coreIds.reduce((sum, coreId) => sum + result[coreId][time], 0) / coreIds.length
+    );
+
+    return result;
+  }
+
+  updateEfficiency(cores: Core[], time: number): void {
+    cores.forEach((core) => {
+      if (core.hasProcess) {
+        this.#efficiencies[core.id].push((this.#efficiencies[core.id][time - 1] ?? 0) + 1);
       }
     });
   }
@@ -72,6 +108,8 @@ export class Tracer {
   }
 
   updateEndProcesses(processes: Process[]): void {
+    const nttTotal = processes.reduce((sum, process) => sum + process.ntt, 0);
+    this.nttAverage.push(nttTotal / processes.length);
     this.endProcesses.push([...processes]);
   }
 }
