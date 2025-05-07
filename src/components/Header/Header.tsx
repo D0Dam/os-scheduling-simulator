@@ -19,6 +19,7 @@ interface HeaderProps {
   coreList: { id: number; name: string; type: 'P' | 'E' }[];
   processList: ProcessType[];
   setResult: (result: Tracer) => void;
+  setIsStarted: () => void;
 }
 
 const createScheduler = (algorithm: string, timeQuantum?: string) => {
@@ -41,7 +42,7 @@ const createScheduler = (algorithm: string, timeQuantum?: string) => {
   }
 };
 
-function Header({ coreList, processList, setResult }: HeaderProps) {
+function Header({ coreList, processList, setResult, setIsStarted }: HeaderProps) {
   const [timeQuantum, setTimeQuantum] = useState('');
   const [algorithm, setAlgorithm] = useState('');
   const openToast = useToastState((state) => state.open);
@@ -54,6 +55,7 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
       openToast('모든 코어가 꺼져있습니다. 코어를 켜주세요.', 'warning');
       return;
     }
+    setIsStarted();
 
     const scheduler = createScheduler(algorithm, timeQuantum);
 
@@ -63,6 +65,7 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
 
     schedule.running();
   };
+
   return (
     <S.Header>
       <S.HeaderTitleWrapper>

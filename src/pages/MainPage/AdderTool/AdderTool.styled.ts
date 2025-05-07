@@ -92,6 +92,11 @@ export const ProcessButton = styled.button`
   font-weight: 500;
   line-height: 20px;
   border: none;
+
+  &:disabled {
+    background: #f0f0f0;
+    color: #b0b0b0;
+  }
 `;
 
 export const InputWrapper = styled.div`

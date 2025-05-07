@@ -13,6 +13,7 @@ import ResultChart from './ResultChart';
 import Header from '@/components/Header/Header';
 import Toast from '@/components/common/Toast';
 import useToastState from '@/hooks/store/useToastState';
+import useBooleanState from '@/hooks/utils/useBooleanState';
 import useMediaQuery from '@/hooks/utils/useMediaQuery';
 import { xXLarge } from '@/styles/mediaQueries';
 
@@ -47,7 +48,7 @@ const makeCoreList = (
   Object.entries(coreState)
     .filter(([, value]) => value.startsWith('P-CORE') || value.startsWith('E-CORE'))
     .map(([key, value]) => {
-      const id = Number(key.replace('core', '')); // core1 → 1
+      const id = Number(key.replace('core', ''));
       const type = value.startsWith('P-CORE') ? 'P' : 'E';
 
       return {
@@ -57,17 +58,27 @@ const makeCoreList = (
       };
     });
 
+const TICK_INTERVAL = 100;
+
 function MainPage() {
   const isXXLarge = useMediaQuery(xXLarge);
   const openToast = useToastState((state) => state.open);
-  const [processList, setProcessList] = useState<ProcessType[]>(mockProcesses);
   const [result, setResult] = useState<Tracer | null>(null);
+  const [processList, setProcessList] = useState<ProcessType[]>(mockProcesses);
+  const {
+    value: isStarted,
+    setTrue: setIsStarted,
+    setFalse: setIsStopped,
+  } = useBooleanState(false);
   const [coreState, setCoreState] = useState<Record<string, string>>({
     core1: 'OFF1',
     core2: 'OFF2',
     core3: 'OFF3',
     core4: 'OFF4',
   });
+
+  const endTime = result?.ganttCharts.maxEnd || 0;
+  const endTimeMillis = endTime * TICK_INTERVAL;
 
   const handleAddProcess = (process: ProcessType) => {
     if (processList.some((p) => p.name === process.name)) {
@@ -89,6 +100,17 @@ function MainPage() {
     setProcessList((prev) => prev.filter((process) => process.name !== name));
   };
 
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (isStarted) {
+      const timer = setTimeout(() => {
+        setIsStopped();
+      }, endTimeMillis + TICK_INTERVAL);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isStarted, endTime]);
+
   useEffect(() => {
     if (!result) return;
     console.log('11', result);
@@ -100,15 +122,18 @@ function MainPage() {
         setResult={(r) => setResult(r)}
         processList={processList}
         coreList={makeCoreList(coreState)}
+        setIsStarted={setIsStarted}
       />
       <S.ContentContainer>
         <AdderTool
           onAddProcess={handleAddProcess}
           onDeleteProcess={handleDeleteProcess}
           processList={processList}
+          isStarted={isStarted}
         />
         <S.MiddleContainer>
           <Processor
+            isStarted={isStarted}
             coreState={coreState}
             changeCoreState={(name, value) => setCoreState((prev) => ({ ...prev, [name]: value }))}
           />

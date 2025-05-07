@@ -28,6 +28,7 @@ interface AdderToolProps {
   onAddProcess: (process: ProcessType) => void;
   onDeleteProcess: (name: string) => void;
   processList: ProcessType[];
+  isStarted: boolean;
 }
 
 const getNextProcessName = (processList: ProcessType[]): string => {
@@ -40,7 +41,7 @@ const getNextProcessName = (processList: ProcessType[]): string => {
   return `p${nextIndex}`;
 };
 
-function AdderTool({ onAddProcess, onDeleteProcess, processList }: AdderToolProps) {
+function AdderTool({ onAddProcess, onDeleteProcess, processList, isStarted }: AdderToolProps) {
   const openToast = useToastState((state) => state.open);
   const [processorValue, setProcessorValue] = useState('');
   const [processNameValue, setProcessNameValue] = useState('');
@@ -130,7 +131,7 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList }: AdderToolProp
               type="number"
             />
           </S.InputWrapper>
-          <S.ProcessButton type="button" onClick={() => handleSubmit()}>
+          <S.ProcessButton type="button" onClick={() => handleSubmit()} disabled={isStarted}>
             Add Process
           </S.ProcessButton>
         </S.ProcessInputWrapper>
@@ -142,7 +143,7 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList }: AdderToolProp
             name="Process Name"
             required
           />
-          <S.Button type="button" onClick={() => handleDelete()}>
+          <S.Button type="button" onClick={() => handleDelete()} disabled={isStarted}>
             Delete Process
           </S.Button>
         </S.ProcessDeleteWrapper>

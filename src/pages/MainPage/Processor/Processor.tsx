@@ -33,9 +33,10 @@ const PROCESSOR = [
 interface ProcessorProps {
   coreState: Record<string, string>;
   changeCoreState: (name: string, value: string) => void;
+  isStarted: boolean;
 }
 
-function Processor({ coreState, changeCoreState }: ProcessorProps) {
+function Processor({ coreState, changeCoreState, isStarted }: ProcessorProps) {
   const handleChange = (name: string, value: string) => {
     changeCoreState(name, value);
   };
@@ -61,6 +62,7 @@ function Processor({ coreState, changeCoreState }: ProcessorProps) {
                     label="OFF"
                     name={radioName}
                     value={`OFF${id}`}
+                    disabled={isStarted}
                     checked={coreState[radioName] === `OFF${id}`}
                     onChange={() => handleChange(radioName, `OFF${id}`)}
                   />
@@ -68,6 +70,7 @@ function Processor({ coreState, changeCoreState }: ProcessorProps) {
                     label="P-CORE"
                     name={radioName}
                     value={`P-CORE${id}`}
+                    disabled={isStarted}
                     checked={coreState[radioName] === `P-CORE${id}`}
                     onChange={() => handleChange(radioName, `P-CORE${id}`)}
                   />
@@ -75,6 +78,7 @@ function Processor({ coreState, changeCoreState }: ProcessorProps) {
                     label="E-CORE"
                     name={radioName}
                     value={`E-CORE${id}`}
+                    disabled={isStarted}
                     checked={coreState[radioName] === `E-CORE${id}`}
                     onChange={() => handleChange(radioName, `E-CORE${id}`)}
                   />
