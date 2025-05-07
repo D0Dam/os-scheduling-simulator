@@ -59,15 +59,15 @@ const makeCoreList = (
 
 function MainPage() {
   const isXXLarge = useMediaQuery(xXLarge);
+  const openToast = useToastState((state) => state.open);
+  const [processList, setProcessList] = useState<ProcessType[]>(mockProcesses);
+  const [result, setResult] = useState<Tracer | null>(null);
   const [coreState, setCoreState] = useState<Record<string, string>>({
     core1: 'OFF1',
     core2: 'OFF2',
     core3: 'OFF3',
     core4: 'OFF4',
   });
-  const [processList, setProcessList] = useState<ProcessType[]>(mockProcesses);
-  const [result, setResult] = useState<Tracer | null>(null);
-  const openToast = useToastState((state) => state.open);
 
   const handleAddProcess = (process: ProcessType) => {
     if (processList.some((p) => p.name === process.name)) {

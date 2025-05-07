@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useShallow } from 'zustand/shallow';
+
 import { Tracer } from '@/models';
 import { FCFS, HRRN, RR, SPN, SRTN } from '@/scheduler';
 
@@ -9,6 +11,7 @@ import TextField from '../common/TextField';
 import * as S from './Header.styled';
 
 import KoreatechIcon from '@/assets/svg/koreatech.svg?react';
+import useSchedulerState from '@/hooks/store/useSchedulerState';
 import useToastState from '@/hooks/store/useToastState';
 import { ProcessType } from '@/pages/MainPage/MainPage';
 
@@ -42,6 +45,9 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
   const [timeQuantum, setTimeQuantum] = useState('');
   const [algorithm, setAlgorithm] = useState('');
   const openToast = useToastState((state) => state.open);
+  const schedule = useSchedulerState(
+    useShallow(({ state, running, paused }) => ({ state, running, paused }))
+  );
 
   const handleStart = () => {
     if (coreList.length === 0) {
@@ -54,6 +60,8 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
     scheduler.setCores(coreList);
     scheduler.addProcess(processList);
     setResult(scheduler.result);
+
+    schedule.running();
   };
   return (
     <S.Header>
@@ -93,9 +101,16 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
           name="δ:"
           disabled={algorithm !== 'RR'}
         />
-        <S.StartButton type="button" onClick={handleStart}>
-          START
-        </S.StartButton>
+        {schedule.state === 'finish' && (
+          <S.StartButton type="button" onClick={handleStart}>
+            START
+          </S.StartButton>
+        )}
+        {schedule.state === 'running' && (
+          <S.StartButton type="button" onClick={handleStart}>
+            START
+          </S.StartButton>
+        )}
       </S.AlgorithmSettingWrapper>
     </S.Header>
   );
