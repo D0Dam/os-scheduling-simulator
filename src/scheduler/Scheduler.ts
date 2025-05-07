@@ -89,7 +89,7 @@ export abstract class Scheduler {
     this.cores.forEach((core) => {
       if (core.process && core.hasProcess) {
         core.process.updateTT();
-        core.process.updateBursted(core.wps);
+        core.process.updateProgress(core.wps);
         core.updatePowerUsage();
       }
     });

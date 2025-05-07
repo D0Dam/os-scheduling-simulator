@@ -11,7 +11,7 @@ export class Process {
 
   public tt: number;
 
-  public progress: number;
+  #progress: number;
 
   public start: number;
 
@@ -22,7 +22,7 @@ export class Process {
     this.color = props.color;
     this.wt = 0;
     this.tt = 0;
-    this.progress = 0;
+    this.#progress = 0;
     this.start = 0;
   }
 
@@ -34,20 +34,24 @@ export class Process {
     return this.at + this.tt;
   }
 
+  isEnd(): boolean {
+    return this.#progress >= this.bt;
+  }
+
+  get remainProgress(): number {
+    return this.bt - this.#progress;
+  }
+
+  updateProgress(wps: number): void {
+    this.#progress += Math.min(wps, this.bt - this.#progress);
+  }
+
   updateWT(): void {
     this.wt += 1;
   }
 
   updateTT() {
     this.tt += 1;
-  }
-
-  isEnd(): boolean {
-    return this.progress >= this.bt;
-  }
-
-  updateBursted(wps: number): void {
-    this.progress += Math.min(wps, this.bt - this.progress);
   }
 
   compare(other: Process): number {
