@@ -1,8 +1,11 @@
 import { useState } from 'react';
 
+import { useShallow } from 'zustand/shallow';
+
 import * as S from './AdderTool.styled';
 
 import TextField from '@/components/common/TextField';
+import useSchedulerState from '@/hooks/store/useSchedulerState';
 import useToastState from '@/hooks/store/useToastState';
 
 const PROCESS_COLORS = [
@@ -28,7 +31,6 @@ interface AdderToolProps {
   onAddProcess: (process: ProcessType) => void;
   onDeleteProcess: (name: string) => void;
   processList: ProcessType[];
-  isStarted: boolean;
 }
 
 const getNextProcessName = (processList: ProcessType[]): string => {
@@ -41,7 +43,7 @@ const getNextProcessName = (processList: ProcessType[]): string => {
   return `p${nextIndex}`;
 };
 
-function AdderTool({ onAddProcess, onDeleteProcess, processList, isStarted }: AdderToolProps) {
+function AdderTool({ onAddProcess, onDeleteProcess, processList }: AdderToolProps) {
   const openToast = useToastState((state) => state.open);
   const [processorValue, setProcessorValue] = useState('');
   const [processNameValue, setProcessNameValue] = useState('');
@@ -49,6 +51,9 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList, isStarted }: Ad
   const [processBurstValue, setProcessBurstValue] = useState<number | null>(null);
 
   const autoName = getNextProcessName(processList);
+  const schedule = useSchedulerState(
+    useShallow(({ state, running, paused }) => ({ state, running, paused }))
+  );
 
   const handleSubmit = () => {
     const nameToUse = processNameValue.trim() || autoName;
@@ -131,7 +136,11 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList, isStarted }: Ad
               type="number"
             />
           </S.InputWrapper>
-          <S.ProcessButton type="button" onClick={() => handleSubmit()} disabled={isStarted}>
+          <S.ProcessButton
+            type="button"
+            onClick={() => handleSubmit()}
+            disabled={schedule.state === 'running'}
+          >
             Add Process
           </S.ProcessButton>
         </S.ProcessInputWrapper>
@@ -143,7 +152,11 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList, isStarted }: Ad
             name="Process Name"
             required
           />
-          <S.Button type="button" onClick={() => handleDelete()} disabled={isStarted}>
+          <S.Button
+            type="button"
+            onClick={() => handleDelete()}
+            disabled={schedule.state === 'running'}
+          >
             Delete Process
           </S.Button>
         </S.ProcessDeleteWrapper>

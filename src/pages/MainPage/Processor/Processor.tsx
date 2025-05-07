@@ -1,7 +1,10 @@
+import { useShallow } from 'zustand/shallow';
+
 import * as S from './Processor.styled';
 
 import Radio from '@/components/common/Radio';
 import RadioGroup from '@/components/common/RadioGroup';
+import useSchedulerState from '@/hooks/store/useSchedulerState';
 
 const PROCESSOR = [
   {
@@ -33,13 +36,15 @@ const PROCESSOR = [
 interface ProcessorProps {
   coreState: Record<string, string>;
   changeCoreState: (name: string, value: string) => void;
-  isStarted: boolean;
 }
 
-function Processor({ coreState, changeCoreState, isStarted }: ProcessorProps) {
+function Processor({ coreState, changeCoreState }: ProcessorProps) {
   const handleChange = (name: string, value: string) => {
     changeCoreState(name, value);
   };
+  const schedule = useSchedulerState(
+    useShallow(({ state, running, paused }) => ({ state, running, paused }))
+  );
 
   return (
     <S.Container>
@@ -62,7 +67,7 @@ function Processor({ coreState, changeCoreState, isStarted }: ProcessorProps) {
                     label="OFF"
                     name={radioName}
                     value={`OFF${id}`}
-                    disabled={isStarted}
+                    disabled={schedule.state === 'running'}
                     checked={coreState[radioName] === `OFF${id}`}
                     onChange={() => handleChange(radioName, `OFF${id}`)}
                   />
@@ -70,7 +75,7 @@ function Processor({ coreState, changeCoreState, isStarted }: ProcessorProps) {
                     label="P-CORE"
                     name={radioName}
                     value={`P-CORE${id}`}
-                    disabled={isStarted}
+                    disabled={schedule.state === 'running'}
                     checked={coreState[radioName] === `P-CORE${id}`}
                     onChange={() => handleChange(radioName, `P-CORE${id}`)}
                   />
@@ -78,7 +83,7 @@ function Processor({ coreState, changeCoreState, isStarted }: ProcessorProps) {
                     label="E-CORE"
                     name={radioName}
                     value={`E-CORE${id}`}
-                    disabled={isStarted}
+                    disabled={schedule.state === 'running'}
                     checked={coreState[radioName] === `E-CORE${id}`}
                     onChange={() => handleChange(radioName, `E-CORE${id}`)}
                   />
