@@ -21,18 +21,6 @@ const PROCESS_COLORS = [
   '#68678E',
 ];
 
-interface ProcessType {
-  name: string;
-  at: number;
-  bt: number;
-  color: string;
-}
-interface AdderToolProps {
-  onAddProcess: (process: ProcessType) => void;
-  onDeleteProcess: (name: string) => void;
-  processList: ProcessType[];
-}
-
 const getNextProcessName = (processList: ProcessType[]): string => {
   const usedNumbers = processList
     .map((p) => /^p(\d+)$/.exec(p.name))
@@ -43,7 +31,20 @@ const getNextProcessName = (processList: ProcessType[]): string => {
   return `p${nextIndex}`;
 };
 
-function AdderTool({ onAddProcess, onDeleteProcess, processList }: AdderToolProps) {
+interface ProcessType {
+  name: string;
+  at: number;
+  bt: number;
+  color: string;
+}
+interface AdderToolProps {
+  onAddProcess: (process: ProcessType) => void;
+  onDeleteProcess: (name: string) => void;
+  processList: ProcessType[];
+  setAddMock: () => void;
+}
+
+function AdderTool({ onAddProcess, onDeleteProcess, processList, setAddMock }: AdderToolProps) {
   const openToast = useToastState((state) => state.open);
   const [processorValue, setProcessorValue] = useState('');
   const [processNameValue, setProcessNameValue] = useState('');
@@ -142,6 +143,13 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList }: AdderToolProp
             disabled={schedule.state !== 'finish'}
           >
             Add Process
+          </S.ProcessButton>
+          <S.ProcessButton
+            type="button"
+            onClick={() => setAddMock()}
+            disabled={schedule.state !== 'finish'}
+          >
+            Add Mock
           </S.ProcessButton>
         </S.ProcessInputWrapper>
         <S.ProcessDeleteWrapper>

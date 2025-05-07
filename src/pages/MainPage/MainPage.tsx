@@ -13,6 +13,7 @@ import ResultChart from './ResultChart';
 import Header from '@/components/Header/Header';
 import Toast from '@/components/common/Toast';
 import useToastState from '@/hooks/store/useToastState';
+import useBooleanState from '@/hooks/utils/useBooleanState';
 import useMediaQuery from '@/hooks/utils/useMediaQuery';
 import { xXLarge } from '@/styles/mediaQueries';
 
@@ -61,7 +62,8 @@ function MainPage() {
   const isXXLarge = useMediaQuery(xXLarge);
   const openToast = useToastState((state) => state.open);
   const [result, setResult] = useState<Tracer | null>(null);
-  const [processList, setProcessList] = useState<ProcessType[]>(mockProcesses);
+  const { value: isAddMock, setTrue: setAddMock } = useBooleanState(false);
+  const [processList, setProcessList] = useState<ProcessType[]>([]);
   const [coreState, setCoreState] = useState<Record<string, string>>({
     core1: 'OFF1',
     core2: 'OFF2',
@@ -94,6 +96,14 @@ function MainPage() {
     console.log('11', result);
   }, [result]);
 
+  useEffect(() => {
+    if (isAddMock) {
+      setProcessList(mockProcesses);
+    } else {
+      setProcessList([]);
+    }
+  }, [isAddMock]);
+
   return (
     <S.Container>
       <Header
@@ -106,6 +116,7 @@ function MainPage() {
           onAddProcess={handleAddProcess}
           onDeleteProcess={handleDeleteProcess}
           processList={processList}
+          setAddMock={setAddMock}
         />
         <S.MiddleContainer>
           <Processor
