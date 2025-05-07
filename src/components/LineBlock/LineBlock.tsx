@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import * as S from './LineBlock.styled';
 
+import useSchedulerState from '@/hooks/store/useSchedulerState';
 import { useInterval } from '@/hooks/utils/useInterval';
 
 interface ProcessBlock {
@@ -34,6 +35,7 @@ function LineBlock({ processes, onTick, interval = 100, xScale = 24, colorMap }:
     });
     return map;
   });
+  const schedulerState = useSchedulerState(({ state }) => state);
 
   const maxEnd = Math.max(...processes.map((p) => p.end));
 
@@ -45,7 +47,7 @@ function LineBlock({ processes, onTick, interval = 100, xScale = 24, colorMap }:
         return next;
       });
     },
-    currentTime >= maxEnd ? null : interval,
+    currentTime >= maxEnd || schedulerState === 'paused' ? null : interval,
     [currentTime, maxEnd]
   );
 

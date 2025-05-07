@@ -4,6 +4,7 @@ import { Tracer } from '@/models';
 
 import * as S from './ReadyQueue.styled';
 
+import useSchedulerState from '@/hooks/store/useSchedulerState';
 import { useInterval } from '@/hooks/utils/useInterval';
 
 interface ProcessType {
@@ -20,6 +21,7 @@ interface ReadyQueueProps {
 
 function ReadyQueue({ result, processList }: ReadyQueueProps) {
   const [step, setStep] = useState(0);
+  const schedulerState = useSchedulerState(({ state }) => state);
 
   const colorMap = processList.reduce(
     (acc, process) => {
@@ -35,7 +37,7 @@ function ReadyQueue({ result, processList }: ReadyQueueProps) {
         setStep((prev) => prev + 1);
       }
     },
-    result && step < result.length - 1 ? 100 : null,
+    result && step < result.length - 1 && schedulerState !== 'paused' ? 100 : null,
     [step, result]
   );
 

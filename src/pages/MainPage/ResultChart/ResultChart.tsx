@@ -15,6 +15,7 @@ interface ResultChartProps {
 function ResultChart({ result }: ResultChartProps) {
   const [count, setCount] = useState(0);
   const finish = useSchedulerState((state) => state.finish);
+  const schedulerState = useSchedulerState(({ state }) => state);
 
   useInterval(
     () => {
@@ -25,7 +26,7 @@ function ResultChart({ result }: ResultChartProps) {
         }
       }
     },
-    result && count <= result.length ? 100 : null,
+    result && count <= result.length && schedulerState !== 'paused' ? 100 : null,
     [result]
   );
 

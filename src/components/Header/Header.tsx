@@ -127,7 +127,17 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
         )}
         {schedule.state !== 'finish' && (
           <>
-            <S.StartButton type="button" onClick={() => schedule.paused()}>
+            <S.StartButton
+              type="button"
+              onClick={() => {
+                if (schedule.state === 'running') {
+                  schedule.paused();
+                  return;
+                }
+
+                schedule.running();
+              }}
+            >
               {schedule.state === 'paused' ? <PlayIcon /> : <PauseIcon />}
             </S.StartButton>
             <S.StartButton
