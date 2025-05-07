@@ -85,9 +85,9 @@ export class Tracer {
 
   updateEfficiency(cores: Core[], time: number): void {
     cores.forEach((core) => {
-      if (core.hasProcess) {
-        this.#efficiencies[core.id].push((this.#efficiencies[core.id][time - 1] ?? 0) + 1);
-      }
+      this.#efficiencies[core.id].push(
+        (this.#efficiencies[core.id][time - 1] ?? 0) + Number(core.hasProcess)
+      );
     });
   }
 
