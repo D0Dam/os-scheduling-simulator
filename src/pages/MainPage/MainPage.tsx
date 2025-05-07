@@ -124,6 +124,7 @@ function MainPage() {
           <Process processList={processList} />
           {isXXLarge && (
             <ResultChart
+              efficienciesState={result ? result.efficiencies : null}
               key={JSON.stringify(result?.endProcesses)}
               result={result ? result.endProcesses : null}
               nttAverage={result ? result.nttAverage : null}
@@ -132,6 +133,7 @@ function MainPage() {
         </S.MiddleContainer>
         {!isXXLarge && (
           <ResultChart
+            efficienciesState={result ? result.efficiencies : null}
             key={JSON.stringify(result?.endProcesses)}
             result={result ? result.endProcesses : null}
             nttAverage={result ? result.nttAverage : null}
