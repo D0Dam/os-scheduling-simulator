@@ -35,6 +35,7 @@ function ResultChart({ result }: ResultChartProps) {
       <S.MainTitleWrapper>
         <S.Title>Result</S.Title>
         <span>running time : {count}s</span>
+        {/* <span>average ntt: {averageNTT}</span> */}
       </S.MainTitleWrapper>
       <S.MainContainer>
         <S.ResultChartContainer>

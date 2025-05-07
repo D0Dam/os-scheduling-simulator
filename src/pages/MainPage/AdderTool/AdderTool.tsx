@@ -41,10 +41,10 @@ interface AdderToolProps {
   onAddProcess: (process: ProcessType) => void;
   onDeleteProcess: (name: string) => void;
   processList: ProcessType[];
-  setAddMock: () => void;
+  addMockProcess: () => void;
 }
 
-function AdderTool({ onAddProcess, onDeleteProcess, processList, setAddMock }: AdderToolProps) {
+function AdderTool({ onAddProcess, onDeleteProcess, processList, addMockProcess }: AdderToolProps) {
   const openToast = useToastState((state) => state.open);
   const [processorValue, setProcessorValue] = useState('');
   const [processNameValue, setProcessNameValue] = useState('');
@@ -146,7 +146,7 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList, setAddMock }: A
           </S.ProcessButton>
           <S.ProcessButton
             type="button"
-            onClick={() => setAddMock()}
+            onClick={addMockProcess}
             disabled={schedule.state !== 'finish'}
           >
             Add Mock
