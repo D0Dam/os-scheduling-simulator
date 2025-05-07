@@ -37,7 +37,7 @@ function ReadyQueue({ result, processList }: ReadyQueueProps) {
         setStep((prev) => prev + 1);
       }
     },
-    result && step < result.length - 1 && schedulerState !== 'paused' ? 100 : null,
+    result && step < result.length - 1 && schedulerState !== 'paused' ? 200 : null,
     [step, result]
   );
 

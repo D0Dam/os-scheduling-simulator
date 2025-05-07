@@ -26,7 +26,7 @@ const getRandomPastelColor = (): string => {
   return `#${r.toString(16)}${g.toString(16)}${b.toString(16)}`.padEnd(7, '0');
 };
 
-function LineBlock({ processes, onTick, interval = 100, xScale = 24, colorMap }: LineBlockProps) {
+function LineBlock({ processes, onTick, interval = 200, xScale = 24, colorMap }: LineBlockProps) {
   const [currentTime, setCurrentTime] = useState(0);
   const [colors] = useState<Record<string, string>>(() => {
     const map: Record<string, string> = {};
@@ -64,7 +64,7 @@ function LineBlock({ processes, onTick, interval = 100, xScale = 24, colorMap }:
             style={{
               backgroundColor: colorMap?.[proc.name] ?? colors[proc.name],
               left,
-              width: shownWidth,
+              width: `${shownWidth}px`,
               visibility: shownWidth > 0 ? 'visible' : 'hidden',
             }}
           >

@@ -45,7 +45,7 @@ interface GanttChartProps {
 }
 
 function GanttChart({ result, processList, startCoreId }: GanttChartProps) {
-  const [scaleLevel, setScaleLevel] = useState(24);
+  const [scaleLevel, setScaleLevel] = useState(32);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const plusLevel = () => {
@@ -73,7 +73,7 @@ function GanttChart({ result, processList, startCoreId }: GanttChartProps) {
 
     if (renderedWidth > halfVisibleWidth) {
       const targetScrollLeft = renderedWidth - halfVisibleWidth;
-      scrollToLinear(container, targetScrollLeft, 100);
+      scrollToLinear(container, targetScrollLeft, 200);
     }
   };
 
@@ -166,7 +166,7 @@ function GanttChart({ result, processList, startCoreId }: GanttChartProps) {
               />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
-              <Ruler count={100} scale={scaleLevel} />
+              <Ruler count={result?.maxEnd || 100} scale={scaleLevel} />
             </S.LineBlockWrapper>
           </S.LineBlockContainer>
         </S.LineBlockContainerWrapper>

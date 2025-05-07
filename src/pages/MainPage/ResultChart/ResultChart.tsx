@@ -26,13 +26,14 @@ function ResultChart({ result }: ResultChartProps) {
         }
       }
     },
-    result && count <= result.length && schedulerState !== 'paused' ? 100 : null,
+    result && count <= result.length && schedulerState !== 'paused' ? 200 : null,
     [result]
   );
 
   return (
     <S.Container>
       <S.Title>Result</S.Title>
+      <span>{count}</span>
       <S.MainContainer>
         <S.ResultChartContainer>
           <S.ResultChartHeader>

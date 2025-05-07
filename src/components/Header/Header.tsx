@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { useShallow } from 'zustand/shallow';
 
@@ -47,6 +47,13 @@ const createScheduler = (algorithm: string, timeQuantum?: string) => {
 function Header({ coreList, processList, setResult }: HeaderProps) {
   const [timeQuantum, setTimeQuantum] = useState('');
   const [algorithm, setAlgorithm] = useState('');
+  const prevParamsRef = useRef<{
+    coreList: HeaderProps['coreList'];
+    processList: HeaderProps['processList'];
+    algorithm: string;
+    timeQuantum: string;
+  } | null>(null);
+
   const openToast = useToastState((state) => state.open);
   const schedule = useSchedulerState(
     useShallow(({ state, running, paused, finish }) => ({ state, running, paused, finish }))
@@ -73,10 +80,25 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
       return;
     }
 
+    const currentParams = {
+      coreList,
+      processList,
+      algorithm,
+      timeQuantum,
+    };
+
+    if (JSON.stringify(prevParamsRef.current) === JSON.stringify(currentParams)) {
+      return;
+    }
+
+    // 변경됐을 경우 갱신
+    prevParamsRef.current = currentParams;
+
     const scheduler = createScheduler(algorithm, timeQuantum);
 
     scheduler.setCores(coreList);
     scheduler.addProcess(processList);
+
     setResult(scheduler.result);
 
     schedule.running();

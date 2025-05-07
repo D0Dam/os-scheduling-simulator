@@ -8,7 +8,7 @@ function Ruler({ count, scale }: RulerProps) {
   return (
     <S.RulerTrack style={{ width: `${scale * count}px` }}>
       {Array.from({ length: count + 1 }).map((_, index) => (
-        <S.TickWrapper key={index} style={{ width: `${scale}px` }}>
+        <S.TickWrapper key={index} style={{ width: `${scale}px`, minWidth: `${scale}px` }}>
           <S.TickLine $isMajor={index % 5 === 0} />
           {index % 5 === 0 && <S.TickLabel>{index}</S.TickLabel>}
         </S.TickWrapper>

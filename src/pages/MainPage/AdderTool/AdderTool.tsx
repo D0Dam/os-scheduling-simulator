@@ -94,7 +94,7 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList }: AdderToolProp
 
   return (
     <S.Container>
-      <S.Title>Adder Tool</S.Title>
+      <S.Title>Process Tool</S.Title>
       <S.MainContainer>
         <S.ProcessInputWrapper>
           <S.InputWrapper>
