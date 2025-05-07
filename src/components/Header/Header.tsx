@@ -11,6 +11,8 @@ import TextField from '../common/TextField';
 import * as S from './Header.styled';
 
 import KoreatechIcon from '@/assets/svg/koreatech.svg?react';
+import PauseIcon from '@/assets/svg/pause.svg?react';
+import ResetIcon from '@/assets/svg/reset.svg?react';
 import useSchedulerState from '@/hooks/store/useSchedulerState';
 import useToastState from '@/hooks/store/useToastState';
 import { ProcessType } from '@/pages/MainPage/MainPage';
@@ -125,10 +127,10 @@ function Header({ coreList, processList, setResult }: HeaderProps) {
         {schedule.state === 'running' && (
           <>
             <S.StartButton type="button" onClick={handleStart}>
-              pause
+              <PauseIcon />
             </S.StartButton>
             <S.StartButton type="button" onClick={handleStart}>
-              reset
+              <ResetIcon />
             </S.StartButton>
           </>
         )}

@@ -139,7 +139,7 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList }: AdderToolProp
           <S.ProcessButton
             type="button"
             onClick={() => handleSubmit()}
-            disabled={schedule.state === 'running'}
+            disabled={schedule.state !== 'finish'}
           >
             Add Process
           </S.ProcessButton>
@@ -155,7 +155,7 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList }: AdderToolProp
           <S.Button
             type="button"
             onClick={() => handleDelete()}
-            disabled={schedule.state === 'running'}
+            disabled={schedule.state !== 'finish'}
           >
             Delete Process
           </S.Button>

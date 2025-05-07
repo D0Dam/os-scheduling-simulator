@@ -67,6 +67,7 @@ export const AlgorithmSelectorTitle = styled.div`
 export const StartButton = styled.button`
   min-width: 112px;
   min-height: 36px;
+  display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 4px;
