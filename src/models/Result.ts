@@ -109,7 +109,7 @@ export class Tracer {
 
   updateEndProcesses(processes: Process[]): void {
     const nttTotal = processes.reduce((sum, process) => sum + process.ntt, 0);
-    this.nttAverage.push(nttTotal / processes.length);
+    this.nttAverage.push(processes.length ? nttTotal / processes.length : 0);
     this.endProcesses.push([...processes]);
   }
 }
