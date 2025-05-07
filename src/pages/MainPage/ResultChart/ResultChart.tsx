@@ -10,9 +10,10 @@ import { useInterval } from '@/hooks/utils/useInterval';
 
 interface ResultChartProps {
   result: Tracer['endProcesses'] | null;
+  nttAverage: Tracer['nttAverage'] | null;
 }
 
-function ResultChart({ result }: ResultChartProps) {
+function ResultChart({ result, nttAverage }: ResultChartProps) {
   const [count, setCount] = useState(0);
   const finish = useSchedulerState((state) => state.finish);
   const schedulerState = useSchedulerState(({ state }) => state);
@@ -34,8 +35,10 @@ function ResultChart({ result }: ResultChartProps) {
     <S.Container>
       <S.MainTitleWrapper>
         <S.Title>Result</S.Title>
-        <span>running time : {count}s</span>
-        {/* <span>average ntt: {averageNTT}</span> */}
+        <div>
+          <span>Running Time : {count}s</span>|
+          <span>Average NTT: {nttAverage?.[count - 1]?.toFixed(3) ?? 0}</span>
+        </div>
       </S.MainTitleWrapper>
       <S.MainContainer>
         <S.ResultChartContainer>

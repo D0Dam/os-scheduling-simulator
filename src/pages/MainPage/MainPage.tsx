@@ -125,6 +125,7 @@ function MainPage() {
             <ResultChart
               key={JSON.stringify(result?.endProcesses)}
               result={result ? result.endProcesses : null}
+              nttAverage={result ? result.nttAverage : null}
             />
           )}
         </S.MiddleContainer>
@@ -132,6 +133,7 @@ function MainPage() {
           <ResultChart
             key={JSON.stringify(result?.endProcesses)}
             result={result ? result.endProcesses : null}
+            nttAverage={result ? result.nttAverage : null}
           />
         )}
         <ReadyQueue

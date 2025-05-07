@@ -15,6 +15,11 @@ export const MainTitleWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding-right: 20px;
+
+  & > div {
+    display: flex;
+    gap: 8px;
+  }
 `;
 
 export const Title = styled.h2`
