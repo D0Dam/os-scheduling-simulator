@@ -69,52 +69,52 @@ function Processor({ coreState, changeCoreState, powerUsage, efficienciesState }
         </div>
       </S.MainTitleWrapper>
       <S.MainContainer>
-        <S.CoreContainer>
-          {PROCESSOR.map(({ id, name }) => {
-            const radioName = `core${id}`;
-            const powerUsageData = powerUsage?.[id]?.[count - 1] || null;
-            const efficienciesDate = efficienciesState?.[id]?.[count - 1] || null;
+        {PROCESSOR.map(({ id, name }) => {
+          const radioName = `core${id}`;
+          const powerUsageData = powerUsage?.[id]?.[count - 1] || null;
+          const efficienciesDate = efficienciesState?.[id]?.[count - 1] || null;
 
-            return (
-              <S.CoreItem key={id}>
-                <S.CoreItemTitleWrapper>
-                  <S.CoreItemTitle>{name}</S.CoreItemTitle>
-                  <S.CoreItemValue>
-                    <div>효율성: {efficienciesDate?.toFixed(2) || '0.00'} %</div>
-                    <div>{powerUsageData?.usage.toFixed(1) || '00.0'} W</div>
-                    <div>{powerUsageData?.percentage.toFixed(2) || '0.00'} %</div>
-                  </S.CoreItemValue>
-                </S.CoreItemTitleWrapper>
-                <RadioGroup gap={28}>
-                  <Radio
-                    label="OFF"
-                    name={radioName}
-                    value={`OFF${id}`}
-                    disabled={schedule.state !== 'finish'}
-                    checked={coreState[radioName] === `OFF${id}`}
-                    onChange={() => handleChange(radioName, `OFF${id}`)}
-                  />
-                  <Radio
-                    label="P-CORE"
-                    name={radioName}
-                    value={`P-CORE${id}`}
-                    disabled={schedule.state !== 'finish'}
-                    checked={coreState[radioName] === `P-CORE${id}`}
-                    onChange={() => handleChange(radioName, `P-CORE${id}`)}
-                  />
-                  <Radio
-                    label="E-CORE"
-                    name={radioName}
-                    value={`E-CORE${id}`}
-                    disabled={schedule.state !== 'finish'}
-                    checked={coreState[radioName] === `E-CORE${id}`}
-                    onChange={() => handleChange(radioName, `E-CORE${id}`)}
-                  />
-                </RadioGroup>
-              </S.CoreItem>
-            );
-          })}
-        </S.CoreContainer>
+          return (
+            <S.CoreItem key={id}>
+              <S.CoreItemTitleWrapper>
+                <S.CoreItemTitle>{name}</S.CoreItemTitle>
+              </S.CoreItemTitleWrapper>
+              <RadioGroup gap={2} direction="column">
+                <Radio
+                  label="OFF"
+                  name={radioName}
+                  value={`OFF${id}`}
+                  disabled={schedule.state !== 'finish'}
+                  checked={coreState[radioName] === `OFF${id}`}
+                  onChange={() => handleChange(radioName, `OFF${id}`)}
+                />
+                <Radio
+                  label="P-CORE"
+                  name={radioName}
+                  value={`P-CORE${id}`}
+                  disabled={schedule.state !== 'finish'}
+                  checked={coreState[radioName] === `P-CORE${id}`}
+                  onChange={() => handleChange(radioName, `P-CORE${id}`)}
+                />
+                <Radio
+                  label="E-CORE"
+                  name={radioName}
+                  value={`E-CORE${id}`}
+                  disabled={schedule.state !== 'finish'}
+                  checked={coreState[radioName] === `E-CORE${id}`}
+                  onChange={() => handleChange(radioName, `E-CORE${id}`)}
+                />
+              </RadioGroup>
+              <S.CoreItemValue>
+                <div>Efficiency: {efficienciesDate?.toFixed(2) || '0.00'} %</div>
+                <div>
+                  Power : {powerUsageData?.usage.toFixed(1) || '00.0'} W |{' '}
+                  {powerUsageData?.percentage.toFixed(2) || '0.00'} %
+                </div>
+              </S.CoreItemValue>
+            </S.CoreItem>
+          );
+        })}
       </S.MainContainer>
     </S.Container>
   );

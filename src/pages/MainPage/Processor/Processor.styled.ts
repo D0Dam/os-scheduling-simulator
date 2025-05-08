@@ -28,29 +28,23 @@ export const Title = styled.h2`
 `;
 
 export const MainContainer = styled.div`
-  display: flex;
-  padding: 12px 20px;
-  flex-direction: column;
+  display: grid;
+  padding: 16px;
+  grid-template-columns: repeat(2, 1fr);
   gap: 8px;
   border-radius: 12px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: #fff;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.04);
-  min-height: 320px;
-  max-height: 320px;
+  min-height: 352px;
+  max-height: 352px;
   min-width: 365px;
-`;
-
-export const CoreContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 `;
 
 export const CoreItem = styled.div`
   display: flex;
   width: 100%;
-  max-height: 62px;
+
   padding: 6px 10px;
   flex-direction: column;
   justify-content: space-between;
@@ -73,15 +67,9 @@ export const CoreItemTitle = styled.h3`
 `;
 
 export const CoreItemValue = styled.h3`
+  ${typo['caption-2-m']};
   display: flex;
+  flex-direction: column;
   color: #222;
-  gap: 8px;
-  text-align: right;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 20px;
-
-  & > div {
-    min-width: 60px;
-  }
+  margin-top: 8px;
 `;

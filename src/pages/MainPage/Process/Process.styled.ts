@@ -16,15 +16,15 @@ export const Title = styled.h2`
 
 export const MainContainer = styled.div`
   display: flex;
-  padding: 12px 20px;
+  padding: 16px;
   flex-direction: column;
   gap: 8px;
   border-radius: 12px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: #fff;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.04);
-  min-height: 320px;
-  max-height: 320px;
+  min-height: 352px;
+  max-height: 352px;
   min-width: 340px;
 `;
 
@@ -35,7 +35,7 @@ export const ProcessItemContainer = styled.div`
   border: 1px solid #e8ebef;
   background: #fcfcfc;
   border-radius: 4px;
-  max-height: 300px;
+  height: 100%;
   overflow-x: hidden;
   width: 100%;
 `;
@@ -71,7 +71,7 @@ export const ProcessWrapper = styled.div`
   flex-direction: column;
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 270px;
+  height: 100%;
   width: 100%;
 
   scrollbar-width: none;

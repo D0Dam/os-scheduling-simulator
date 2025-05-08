@@ -15,7 +15,7 @@ export const Title = styled.h2`
 
 export const MainContainer = styled.div`
   display: flex;
-  padding: 12px 20px;
+  padding: 16px;
   flex-direction: column;
   gap: 8px;
   border-radius: 12px;

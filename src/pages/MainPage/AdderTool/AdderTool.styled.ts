@@ -17,7 +17,7 @@ export const Title = styled.h2`
 export const MainContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 12px 20px;
+  padding: 16px;
   gap: 8px;
   border-radius: 12px;
   border: 1px solid rgba(0, 0, 0, 0.08);
