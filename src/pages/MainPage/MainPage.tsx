@@ -71,7 +71,7 @@ function MainPage() {
 
   const handleAddProcess = (process: ProcessType) => {
     if (processList.some((p) => p.name === process.name)) {
-      openToast(`"${process.name}" 프로세스는 이미 존재합니다.`, 'warning');
+      openToast(`"${process.name}" 프로세스는 이미 존재합니다.`, 'default');
       return;
     }
 
@@ -82,7 +82,7 @@ function MainPage() {
     const exists = processList.some((process) => process.name === name);
 
     if (!exists) {
-      openToast(`"${name}" 프로세스를 찾을 수 없습니다.`, 'warning');
+      openToast(`"${name}" 프로세스를 찾을 수 없습니다.`, 'default');
       return;
     }
 

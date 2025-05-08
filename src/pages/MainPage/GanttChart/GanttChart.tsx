@@ -9,6 +9,7 @@ import PlusIcon from '@/assets/svg/plus.svg?react';
 import LineBlock from '@/components/LineBlock';
 import Ruler from '@/components/Ruler';
 import IconButton from '@/components/common/IconButton';
+import useSchedulerState from '@/hooks/store/useSchedulerState';
 import useDragScroll from '@/hooks/utils/useDragScroll';
 
 const scrollToLinear = (element: HTMLElement, target: number, duration = 300) => {
@@ -49,6 +50,7 @@ function GanttChart({ result, processList, startCoreId }: GanttChartProps) {
   const [scaleLevel, setScaleLevel] = useState(32);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { onMouseDown, onMouseMove, onMouseUp, inActive } = useDragScroll();
+  const schedulerInterval = useSchedulerState(({ interval }) => interval);
 
   const plusLevel = () => {
     setScaleLevel((prev) => prev + 4);
@@ -75,7 +77,7 @@ function GanttChart({ result, processList, startCoreId }: GanttChartProps) {
 
     if (renderedWidth > halfVisibleWidth) {
       const targetScrollLeft = renderedWidth - halfVisibleWidth;
-      scrollToLinear(container, targetScrollLeft, 200);
+      scrollToLinear(container, targetScrollLeft, schedulerInterval);
     }
   };
 
@@ -168,7 +170,10 @@ function GanttChart({ result, processList, startCoreId }: GanttChartProps) {
               />
             </S.LineBlockWrapper>
             <S.LineBlockWrapper>
-              <Ruler count={result?.maxEnd || 100} scale={scaleLevel} />
+              <Ruler
+                count={result?.maxEnd || processList?.[processList.length - 1]?.at || 0}
+                scale={scaleLevel}
+              />
             </S.LineBlockWrapper>
           </S.LineBlockContainer>
         </S.LineBlockContainerWrapper>

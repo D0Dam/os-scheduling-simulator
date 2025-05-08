@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useShallow } from 'zustand/shallow';
+
 import { Tracer } from '@/models';
 
 import * as S from './ReadyQueue.styled';
@@ -21,7 +23,9 @@ interface ReadyQueueProps {
 
 function ReadyQueue({ result, processList }: ReadyQueueProps) {
   const [step, setStep] = useState(0);
-  const schedulerState = useSchedulerState(({ state }) => state);
+  const { state: schedulerState, interval } = useSchedulerState(
+    useShallow((state) => ({ state: state.state, interval: state.interval }))
+  );
 
   const colorMap = processList.reduce(
     (acc, process) => {
@@ -37,7 +41,7 @@ function ReadyQueue({ result, processList }: ReadyQueueProps) {
         setStep((prev) => prev + 1);
       }
     },
-    result && step < result.length - 1 && schedulerState !== 'paused' ? 200 : null,
+    result && step < result.length - 1 && schedulerState !== 'paused' ? interval : null,
     [step, result]
   );
 

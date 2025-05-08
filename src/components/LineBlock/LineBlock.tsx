@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useShallow } from 'zustand/shallow';
+
 import * as S from './LineBlock.styled';
 
 import useSchedulerState from '@/hooks/store/useSchedulerState';
@@ -13,7 +15,6 @@ interface ProcessBlock {
 
 interface LineBlockProps {
   processes: ProcessBlock[];
-  interval?: number;
   xScale?: number;
   onTick?: (currentTime: number) => void;
   colorMap?: Record<string, string>;
@@ -26,7 +27,7 @@ const getRandomPastelColor = (): string => {
   return `#${r.toString(16)}${g.toString(16)}${b.toString(16)}`.padEnd(7, '0');
 };
 
-function LineBlock({ processes, onTick, interval = 200, xScale = 24, colorMap }: LineBlockProps) {
+function LineBlock({ processes, onTick, xScale = 24, colorMap }: LineBlockProps) {
   const [currentTime, setCurrentTime] = useState(0);
   const [colors] = useState<Record<string, string>>(() => {
     const map: Record<string, string> = {};
@@ -35,8 +36,9 @@ function LineBlock({ processes, onTick, interval = 200, xScale = 24, colorMap }:
     });
     return map;
   });
-  const schedulerState = useSchedulerState(({ state }) => state);
-
+  const { state: schedulerState, interval } = useSchedulerState(
+    useShallow((state) => ({ state: state.state, interval: state.interval }))
+  );
   const maxEnd = Math.max(...processes.map((p) => p.end));
 
   useInterval(

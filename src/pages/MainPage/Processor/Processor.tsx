@@ -40,7 +40,7 @@ interface ProcessorProps {
 function Processor({ coreState, changeCoreState, powerUsage, efficienciesState }: ProcessorProps) {
   const [count, setCount] = useState(0);
   const schedule = useSchedulerState(
-    useShallow(({ state, running, paused }) => ({ state, running, paused }))
+    useShallow(({ state, running, paused, interval }) => ({ state, running, paused, interval }))
   );
 
   const handleChange = (name: string, value: string) => {
@@ -57,7 +57,7 @@ function Processor({ coreState, changeCoreState, powerUsage, efficienciesState }
         setCount((p) => (p < fullCount ? p + 1 : p));
       }
     },
-    powerUsage && count <= fullCount && schedule.state !== 'paused' ? 200 : null,
+    powerUsage && count <= fullCount && schedule.state !== 'paused' ? schedule.interval : null,
     [powerUsage]
   );
 

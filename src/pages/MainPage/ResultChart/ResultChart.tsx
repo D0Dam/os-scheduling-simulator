@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useShallow } from 'zustand/shallow';
+
 import { Tracer } from '@/models';
 
 import * as S from './ResultChart.styled';
@@ -16,7 +18,9 @@ interface ResultChartProps {
 function ResultChart({ result, nttAverage }: ResultChartProps) {
   const [count, setCount] = useState(0);
   const finish = useSchedulerState((state) => state.finish);
-  const schedulerState = useSchedulerState(({ state }) => state);
+  const { state: schedulerState, interval } = useSchedulerState(
+    useShallow((state) => ({ state: state.state, interval: state.interval }))
+  );
 
   useInterval(
     () => {
@@ -27,7 +31,7 @@ function ResultChart({ result, nttAverage }: ResultChartProps) {
         }
       }
     },
-    result && count <= result.length && schedulerState !== 'paused' ? 200 : null,
+    result && count <= result.length && schedulerState !== 'paused' ? interval : null,
     [result]
   );
 

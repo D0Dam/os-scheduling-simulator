@@ -4,8 +4,9 @@ export const Header = styled.header`
   position: sticky;
   top: 0;
   display: flex;
+  align-items: center;
   padding: 12px 20px;
-  height: 60px;
+  height: 84px;
   justify-content: space-between;
   border-bottom: 1px solid #e0e0e0;
   background: #fff;
@@ -47,7 +48,12 @@ export const SelectorWrapper = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
-  min-width: 252px;
+  min-width: 120px;
+`;
+
+export const TimeQuantumWrapper = styled.div`
+  display: flex;
+  width: 120px;
 `;
 
 export const AlgorithmSettingWrapper = styled.div`
@@ -66,9 +72,18 @@ export const AlgorithmSelectorTitle = styled.div`
   white-space: nowrap;
 `;
 
+export const ButtonWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  min-width: 134px;
+  width: 134px;
+`;
+
 export const StartButton = styled.button`
-  min-width: 112px;
-  min-height: 36px;
+  width: 100%;
+  min-height: 63px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,4 +99,11 @@ export const StartButton = styled.button`
     background: #f0f0f0;
     color: #b0b0b0;
   }
+`;
+
+export const IntervalWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
 `;

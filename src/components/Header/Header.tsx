@@ -60,27 +60,39 @@ function Header({ coreList, processList, setResult, result }: HeaderProps) {
 
   const openToast = useToastState((state) => state.open);
   const schedule = useSchedulerState(
-    useShallow(({ state, running, paused, finish }) => ({ state, running, paused, finish }))
+    useShallow(({ state, running, paused, finish, interval, setInterval }) => ({
+      state,
+      running,
+      paused,
+      finish,
+      interval,
+      setInterval,
+    }))
   );
 
   const handleStart = () => {
     if (coreList.length === 0) {
-      openToast('모든 코어가 꺼져있습니다. 코어를 켜주세요.', 'warning');
+      openToast('모든 코어가 꺼져있습니다. 코어를 켜주세요.', 'default');
       return;
     }
 
     if (processList.length === 0) {
-      openToast('프로세스가 없습니다. 프로세스를 추가해주세요.', 'warning');
+      openToast('프로세스가 없습니다. 프로세스를 추가해주세요.', 'default');
       return;
     }
 
     if (!algorithm) {
-      openToast('알고리즘을 선택해주세요.', 'warning');
+      openToast('알고리즘을 선택해주세요.', 'default');
       return;
     }
 
     if (algorithm === 'RR' && !timeQuantum) {
-      openToast('Time quantum을 입력해주세요.', 'warning');
+      openToast('Time Quantum을 입력해주세요.', 'default');
+      return;
+    }
+
+    if (schedule.interval < 100 || schedule.interval > 1000) {
+      openToast('Interval은 100ms ~ 1000ms 사이여야 합니다.', 'default');
       return;
     }
 
@@ -105,6 +117,10 @@ function Header({ coreList, processList, setResult, result }: HeaderProps) {
     setResult(scheduler.result);
 
     schedule.running();
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth', // 부드럽게 스크롤 (선택사항)
+    });
   };
 
   return (
@@ -120,15 +136,15 @@ function Header({ coreList, processList, setResult, result }: HeaderProps) {
       </S.HeaderTitleWrapper>
       <S.AlgorithmSettingWrapper>
         <S.SelectorWrapper>
-          <S.AlgorithmSelectorTitle>Algorithm :</S.AlgorithmSelectorTitle>
           <Select
+            label="Algorithm"
             name="example"
-            placeholder="Select Algorithm"
-            required
+            placeholder="Select.."
             onChangeValue={(v) => {
               setTimeQuantum('');
               setAlgorithm(v);
             }}
+            disabled={schedule.state !== 'finish'}
           >
             <Select.Slot value="FCFS">FCFS</Select.Slot>
             <Select.Slot value="RR">RR</Select.Slot>
@@ -139,44 +155,61 @@ function Header({ coreList, processList, setResult, result }: HeaderProps) {
           </Select>
         </S.SelectorWrapper>
 
-        <S.AlgorithmSelectorTitle>δ :</S.AlgorithmSelectorTitle>
-        <TextField
-          value={timeQuantum}
-          onChange={(e) => setTimeQuantum(e.currentTarget.value)}
-          name="δ:"
-          disabled={algorithm !== 'RR'}
-        />
-        {schedule.state === 'finish' && (
-          <S.StartButton type="button" onClick={handleStart}>
-            START
-          </S.StartButton>
-        )}
-        {schedule.state !== 'finish' && (
-          <>
-            <S.StartButton
-              type="button"
-              onClick={() => {
-                if (schedule.state === 'running') {
-                  schedule.paused();
-                  return;
-                }
+        <S.TimeQuantumWrapper>
+          <TextField
+            label="Time Quantum"
+            value={timeQuantum}
+            onChange={(e) => setTimeQuantum(e.currentTarget.value)}
+            name="timeQuantum"
+            style={{ textAlign: 'right' }}
+            disabled={algorithm !== 'RR' || schedule.state !== 'finish'}
+          />
+        </S.TimeQuantumWrapper>
+        <S.IntervalWrapper>
+          <TextField
+            name="interval"
+            label="Interval (100ms ~ 1000ms)"
+            value={schedule.interval === 0 ? '' : schedule.interval}
+            onChange={(e) => schedule.setInterval(Number(e.currentTarget.value))}
+            rightItem={<span>ms</span>}
+            style={{ textAlign: 'right' }}
+            disabled={schedule.state !== 'finish'}
+          />
+        </S.IntervalWrapper>
+        <S.ButtonWrapper>
+          {schedule.state === 'finish' && (
+            <S.StartButton type="button" onClick={handleStart}>
+              START
+            </S.StartButton>
+          )}
 
-                schedule.running();
-              }}
-            >
-              {schedule.state === 'paused' ? <PlayIcon /> : <PauseIcon />}
-            </S.StartButton>
-            <S.StartButton
-              type="button"
-              onClick={() => {
-                schedule.finish();
-                setResult(null);
-              }}
-            >
-              <ResetIcon />
-            </S.StartButton>
-          </>
-        )}
+          {schedule.state !== 'finish' && (
+            <>
+              <S.StartButton
+                type="button"
+                onClick={() => {
+                  if (schedule.state === 'running') {
+                    schedule.paused();
+                    return;
+                  }
+
+                  schedule.running();
+                }}
+              >
+                {schedule.state === 'paused' ? <PlayIcon /> : <PauseIcon />}
+              </S.StartButton>
+              <S.StartButton
+                type="button"
+                onClick={() => {
+                  schedule.finish();
+                  setResult(null);
+                }}
+              >
+                <ResetIcon />
+              </S.StartButton>
+            </>
+          )}
+        </S.ButtonWrapper>
       </S.AlgorithmSettingWrapper>
     </S.Header>
   );
