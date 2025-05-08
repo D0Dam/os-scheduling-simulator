@@ -104,6 +104,7 @@ function Header({ coreList, processList, setResult, result }: HeaderProps) {
     };
 
     if (result && JSON.stringify(prevParamsRef.current) === JSON.stringify(currentParams)) {
+      openToast('스케줄링 변경 사항이 없습니다.', 'default');
       return;
     }
 

@@ -121,21 +121,14 @@ function MainPage() {
             efficienciesState={result ? result.efficiencies : null}
           />
           <Process processList={processList} />
-          {isXXLarge && (
-            <ResultChart
-              key={JSON.stringify(result?.endProcesses)}
-              result={result ? result.endProcesses : null}
-              nttAverage={result ? result.nttAverage : null}
-            />
-          )}
-        </S.MiddleContainer>
-        {!isXXLarge && (
+
           <ResultChart
             key={JSON.stringify(result?.endProcesses)}
             result={result ? result.endProcesses : null}
             nttAverage={result ? result.nttAverage : null}
           />
-        )}
+        </S.MiddleContainer>
+
         <ReadyQueue
           key={JSON.stringify(result?.readyQueue)}
           result={result ? result.readyQueue : null}

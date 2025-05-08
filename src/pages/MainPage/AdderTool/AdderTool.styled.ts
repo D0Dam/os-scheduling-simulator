@@ -35,6 +35,7 @@ export const ProcessDeleteWrapper = styled.div`
   width: 372px;
   align-items: center;
   justify-content: center;
+  gap: 8px;
 `;
 
 export const ProcessInputWrapper = styled.div`
@@ -44,13 +45,9 @@ export const ProcessInputWrapper = styled.div`
 `;
 
 export const InputTitle = styled.div`
-  color: #222;
+  ${typo['body-4-sb']};
+  color: #797a86;
   white-space: nowrap;
-
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  margin-right: 8px;
 `;
 
 export const Button = styled.button`

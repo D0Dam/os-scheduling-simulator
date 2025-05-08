@@ -22,4 +22,5 @@ export const MiddleContainer = styled.div`
   gap: 24px;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 `;
