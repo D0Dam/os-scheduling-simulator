@@ -7,19 +7,18 @@ export const Header = styled.header`
   top: 0;
   display: flex;
   align-items: center;
-  padding: 12px 20px;
-  height: 84px;
+  padding: 8px 20px;
   justify-content: space-between;
   border-bottom: 1px solid #e0e0e0;
   background: #fff;
+  height: 72px;
+  z-index: 5;
 `;
 
 export const HeaderWrapper = styled.div`
   display: flex;
   gap: 4px;
-  align-items: center;
   justify-content: center;
-  height: 62px;
 `;
 
 export const HeaderTitleWrapper = styled.div`
@@ -29,7 +28,7 @@ export const HeaderTitleWrapper = styled.div`
 `;
 
 export const HeaderTitle = styled.h1`
-  ${typo['subtitle-2-m']}
+  ${typo['body-1-m']}
   color: #154978;
 
   & > strong {
@@ -38,7 +37,7 @@ export const HeaderTitle = styled.h1`
 `;
 
 export const HeaderSubTitle = styled.h2`
-  ${typo['body-4-m']}
+  ${typo['caption-1-m']}
   color: #154978;
 
   & > strong {
@@ -85,7 +84,7 @@ export const ButtonWrapper = styled.div`
 
 export const StartButton = styled.button`
   width: 100%;
-  min-height: 63px;
+  min-height: 59px;
   display: flex;
   justify-content: center;
   align-items: center;

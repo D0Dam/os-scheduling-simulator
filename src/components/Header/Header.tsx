@@ -126,7 +126,7 @@ function Header({ coreList, processList, setResult, result }: HeaderProps) {
   return (
     <S.Header>
       <S.HeaderWrapper>
-        <KoreatechIcon width={62} height={62} />
+        <KoreatechIcon width={52} height={52} />
         <S.HeaderTitleWrapper>
           <S.HeaderTitle>
             바지사장 <strong>김혜준</strong>
