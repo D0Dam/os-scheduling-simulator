@@ -47,7 +47,9 @@ function Processor({ coreState, changeCoreState, powerUsage, efficienciesState }
     changeCoreState(name, value);
   };
 
-  const fullCount = powerUsage ? powerUsage[1].length : 0;
+  const fullCount = Array.isArray(powerUsage)
+    ? (powerUsage.find((item) => Array.isArray(item))?.length ?? 0)
+    : 0;
 
   useInterval(
     () => {
