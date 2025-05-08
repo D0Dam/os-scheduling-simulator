@@ -59,7 +59,7 @@ export class Process {
   }
 
   compare(other: Process): number {
-    if (this.at !== other.bt) return this.at - other.at;
+    if (this.at !== other.at) return this.at - other.at;
     if (this.bt !== other.bt) return this.bt - other.bt;
     return this.name.localeCompare(other.name);
   }
