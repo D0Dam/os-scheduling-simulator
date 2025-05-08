@@ -73,6 +73,14 @@ export const ProcessWrapper = styled.div`
   overflow-x: hidden;
   height: 270px;
   width: 100%;
+
+  scrollbar-width: none;
+
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const ProcessItemList = styled.div`

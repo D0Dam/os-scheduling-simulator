@@ -65,6 +65,14 @@ export const LineBlockContainer = styled.div`
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
+
+  scrollbar-width: none;
+
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Divider = styled.div<{ $top: number }>`
@@ -115,7 +123,7 @@ export const Block = styled.div<{ $bgColor: string; $afterColor: string }>`
     display: block;
     width: 2px;
     height: 100%;
-    background-color: ${({ $afterColor }) => $afterColor ?? 'pink'}; // ← 💡 여기서 바꿈
+    background-color: ${({ $afterColor }) => $afterColor ?? 'pink'};
     position: absolute;
     bottom: -100%;
     left: 0;
