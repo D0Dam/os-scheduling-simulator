@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import typo from '@/styles/typo';
 
 export const Container = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
+  width: 480px;
+  min-width: 480px;
   gap: 4px;
 `;
 

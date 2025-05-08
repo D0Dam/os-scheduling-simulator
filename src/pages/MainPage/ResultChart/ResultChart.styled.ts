@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import typo from '@/styles/typo';
 
 export const Container = styled.div`
-  flex: 2;
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 4px;
