@@ -9,6 +9,7 @@ import PlusIcon from '@/assets/svg/plus.svg?react';
 import LineBlock from '@/components/LineBlock';
 import Ruler from '@/components/Ruler';
 import IconButton from '@/components/common/IconButton';
+import useDragScroll from '@/hooks/utils/useDragScroll';
 
 const scrollToLinear = (element: HTMLElement, target: number, duration = 300) => {
   const start = element.scrollLeft;
@@ -47,6 +48,7 @@ interface GanttChartProps {
 function GanttChart({ result, processList, startCoreId }: GanttChartProps) {
   const [scaleLevel, setScaleLevel] = useState(32);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { onMouseDown, onMouseMove, onMouseUp, inActive } = useDragScroll();
 
   const plusLevel = () => {
     setScaleLevel((prev) => prev + 4);
@@ -107,7 +109,13 @@ function GanttChart({ result, processList, startCoreId }: GanttChartProps) {
           <S.Divider $top={72} />
           <S.Divider $top={108} />
           <S.Divider $top={144} />
-          <S.LineBlockContainer ref={scrollRef}>
+          <S.LineBlockContainer
+            ref={scrollRef}
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
+            onMouseUp={onMouseUp}
+            onMouseLeave={inActive}
+          >
             <S.LineBlockWrapper>
               {processList.map((proc) => {
                 const left = proc.at * scaleLevel;
