@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { useShallow } from 'zustand/shallow';
 
 import { Tracer } from '@/models';
-import { FCFS, HRRN, RR, SPN, SRTN } from '@/scheduler';
+import { CustomAlgorithm, FCFS, HRRN, RR, SPN, SRTN } from '@/scheduler';
 
 import Select from '../common/Select';
 import TextField from '../common/TextField';
@@ -26,6 +26,7 @@ interface HeaderProps {
 }
 
 const createScheduler = (algorithm: string, timeQuantum?: string) => {
+  console.log('createScheduler', algorithm);
   switch (algorithm) {
     case 'FCFS':
       return new FCFS();
@@ -40,6 +41,8 @@ const createScheduler = (algorithm: string, timeQuantum?: string) => {
       return new SRTN();
     case 'HRRN':
       return new HRRN();
+    case 'CustomAlgorithm':
+      return new CustomAlgorithm();
     default:
       throw new Error('Invalid algorithm');
   }
@@ -99,7 +102,6 @@ function Header({ coreList, processList, setResult, result }: HeaderProps) {
 
     scheduler.setCores(coreList);
     scheduler.addProcess(processList);
-
     setResult(scheduler.result);
 
     schedule.running();
@@ -133,6 +135,7 @@ function Header({ coreList, processList, setResult, result }: HeaderProps) {
             <Select.Slot value="SPN">SPN</Select.Slot>
             <Select.Slot value="SRTN">SRTN</Select.Slot>
             <Select.Slot value="HRRN">HRRN</Select.Slot>
+            <Select.Slot value="CustomAlgorithm">PANTS</Select.Slot>
           </Select>
         </S.SelectorWrapper>
 
