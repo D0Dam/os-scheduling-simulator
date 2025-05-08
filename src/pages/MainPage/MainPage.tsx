@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Tracer } from '@/models';
 
@@ -92,6 +92,10 @@ function MainPage() {
   const addMockProcess = () => {
     setProcessList(mockProcesses);
   };
+
+  useEffect(() => {
+    console.log('1', result);
+  }, [result]);
 
   return (
     <S.Container>
