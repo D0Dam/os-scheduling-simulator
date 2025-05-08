@@ -13,8 +13,6 @@ import ResultChart from './ResultChart';
 import Header from '@/components/Header/Header';
 import Toast from '@/components/common/Toast';
 import useToastState from '@/hooks/store/useToastState';
-import useMediaQuery from '@/hooks/utils/useMediaQuery';
-import { xXLarge } from '@/styles/mediaQueries';
 
 export interface ProcessType {
   name: string;
@@ -58,7 +56,6 @@ const makeCoreList = (
     });
 
 function MainPage() {
-  const isXXLarge = useMediaQuery(xXLarge);
   const openToast = useToastState((state) => state.open);
   const [result, setResult] = useState<Tracer | null>(null);
   const [processList, setProcessList] = useState<ProcessType[]>([]);
