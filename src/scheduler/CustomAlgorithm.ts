@@ -22,7 +22,7 @@ export class CustomAlgorithm extends Scheduler {
     this.cores.forEach((core) => {
       if (core.process?.isEnd()) {
         this.endQueue.push(core.releaseProcess());
-      } else if (this.#canPreempt(core)) {
+      } else if (core.hasProcess && this.#canPreempt(core)) {
         this.readyQueue.push(core.releaseProcess());
       }
     });
@@ -48,7 +48,7 @@ export class CustomAlgorithm extends Scheduler {
 
   #canPreempt(core: Core): boolean {
     this.#sort(core);
-    if (core.hasProcess && core.process && core.process.remainProgress < core.wps) {
+    if (core.process && core.process.remainProgress < core.wps) {
       return true;
     }
     if (!(core instanceof PCore) && this.#pCores.some((pCore) => !pCore.hasProcess)) {
