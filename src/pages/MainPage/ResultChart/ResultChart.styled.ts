@@ -56,7 +56,7 @@ export const ResultChartContainer = styled.div`
 export const ResultChartHeader = styled.div`
   display: flex;
   border-bottom: 1px solid #e8ebef;
-  min-height: 30px;
+  min-height: 31px;
   width: 100%;
 `;
 
@@ -103,7 +103,7 @@ export const ResultItemList = styled.div`
 export const ResultItem = styled.div`
   display: flex;
   flex: 1;
-  height: 30px;
+  height: 31px;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;

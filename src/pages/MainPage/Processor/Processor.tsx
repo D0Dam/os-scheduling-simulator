@@ -61,7 +61,13 @@ function Processor({ coreState, changeCoreState, powerUsage, efficienciesState }
 
   return (
     <S.Container>
-      <S.Title>Processor</S.Title>
+      <S.MainTitleWrapper>
+        <S.Title>Processor</S.Title>
+        <div>
+          <span>Avg Effi: {efficienciesState?.average?.[count - 2]?.toFixed(2) ?? 0}%</span>|
+          <span>Total Power: {powerUsage?.total?.[count - 1]?.toFixed(2) ?? 0}W</span>
+        </div>
+      </S.MainTitleWrapper>
       <S.MainContainer>
         <S.CoreContainer>
           {PROCESSOR.map(({ id, name }) => {

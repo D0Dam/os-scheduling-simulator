@@ -23,12 +23,12 @@ const PROCESS_COLORS = [
 
 const getNextProcessName = (processList: ProcessType[]): string => {
   const usedNumbers = processList
-    .map((p) => /^p(\d+)$/.exec(p.name))
+    .map((p) => /^P(\d+)$/.exec(p.name))
     .filter(Boolean)
     .map((match) => Number(match![1]));
 
   const nextIndex = usedNumbers.length > 0 ? Math.max(...usedNumbers) + 1 : 0;
-  return `p${nextIndex}`;
+  return `P${nextIndex}`;
 };
 
 interface ProcessType {
@@ -114,9 +114,10 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList, addMockProcess 
             <TextField
               value={processArrivalValue ?? ''}
               onChange={(e) =>
-                setProcessArrivalValue(
-                  Number(e.currentTarget.value) === 0 ? null : Number(e.currentTarget.value)
-                )
+                // setProcessArrivalValue(
+                //   Number(e.currentTarget.value) === 0 ? null : Number(e.currentTarget.value)
+                // )
+                setProcessArrivalValue(Number(e.currentTarget.value))
               }
               name="Arrival Time"
               required
