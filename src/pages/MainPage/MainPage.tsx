@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Tracer } from '@/models';
 
@@ -93,11 +93,6 @@ function MainPage() {
     setProcessList(mockProcesses);
   };
 
-  useEffect(() => {
-    if (!result) return;
-    console.log('11', result);
-  }, [result]);
-
   return (
     <S.Container>
       <Header
@@ -124,21 +119,17 @@ function MainPage() {
           <Process processList={processList} />
           {isXXLarge && (
             <ResultChart
-              efficienciesState={result ? result.efficiencies : null}
               key={JSON.stringify(result?.endProcesses)}
               result={result ? result.endProcesses : null}
               nttAverage={result ? result.nttAverage : null}
-              powerUsage={result ? result.powerUsage : null}
             />
           )}
         </S.MiddleContainer>
         {!isXXLarge && (
           <ResultChart
-            efficienciesState={result ? result.efficiencies : null}
             key={JSON.stringify(result?.endProcesses)}
             result={result ? result.endProcesses : null}
             nttAverage={result ? result.nttAverage : null}
-            powerUsage={result ? result.powerUsage : null}
           />
         )}
         <ReadyQueue

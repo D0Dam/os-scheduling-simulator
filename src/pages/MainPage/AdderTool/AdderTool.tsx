@@ -113,12 +113,7 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList, addMockProcess 
             <S.InputTitle>Arrival Time :</S.InputTitle>
             <TextField
               value={processArrivalValue ?? ''}
-              onChange={(e) =>
-                // setProcessArrivalValue(
-                //   Number(e.currentTarget.value) === 0 ? null : Number(e.currentTarget.value)
-                // )
-                setProcessArrivalValue(Number(e.currentTarget.value))
-              }
+              onChange={(e) => setProcessArrivalValue(Number(e.currentTarget.value))}
               name="Arrival Time"
               required
               type="number"

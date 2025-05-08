@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { Tracer } from '@/models';
 
@@ -76,12 +76,6 @@ function GanttChart({ result, processList, startCoreId }: GanttChartProps) {
       scrollToLinear(container, targetScrollLeft, 200);
     }
   };
-
-  useEffect(() => {
-    if (result) {
-      console.log(result);
-    }
-  }, [result]);
 
   return (
     <S.Container>
