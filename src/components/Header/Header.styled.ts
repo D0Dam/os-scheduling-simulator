@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import typo from '@/styles/typo';
+
 export const Header = styled.header`
   position: sticky;
   top: 0;
@@ -12,20 +14,23 @@ export const Header = styled.header`
   background: #fff;
 `;
 
-export const HeaderTitleWrapper = styled.div`
+export const HeaderWrapper = styled.div`
   display: flex;
   gap: 4px;
   align-items: center;
   justify-content: center;
+  height: 62px;
+`;
+
+export const HeaderTitleWrapper = styled.div`
+  display: flex;
+  height: 100%;
+  flex-direction: column;
 `;
 
 export const HeaderTitle = styled.h1`
+  ${typo['subtitle-2-m']}
   color: #154978;
-  text-align: center;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 28px;
 
   & > strong {
     color: #fcb036;
@@ -33,11 +38,8 @@ export const HeaderTitle = styled.h1`
 `;
 
 export const HeaderSubTitle = styled.h2`
+  ${typo['body-4-m']}
   color: #154978;
-  font-size: 10px;
-  font-weight: 400;
-  line-height: 14px;
-  margin-top: 3px;
 
   & > strong {
     color: #fcb036;

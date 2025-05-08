@@ -125,15 +125,17 @@ function Header({ coreList, processList, setResult, result }: HeaderProps) {
 
   return (
     <S.Header>
-      <S.HeaderTitleWrapper>
-        <KoreatechIcon />
-        <S.HeaderTitle>
-          바지사장 <strong>김혜준</strong>
-        </S.HeaderTitle>
-        <S.HeaderSubTitle>
-          Figurehead <strong>Kim Hyejun</strong>
-        </S.HeaderSubTitle>
-      </S.HeaderTitleWrapper>
+      <S.HeaderWrapper>
+        <KoreatechIcon width={62} height={62} />
+        <S.HeaderTitleWrapper>
+          <S.HeaderTitle>
+            바지사장 <strong>김혜준</strong>
+          </S.HeaderTitle>
+          <S.HeaderSubTitle>
+            Figurehead <strong>Kim Hyejun</strong>
+          </S.HeaderSubTitle>
+        </S.HeaderTitleWrapper>
+      </S.HeaderWrapper>
       <S.AlgorithmSettingWrapper>
         <S.SelectorWrapper>
           <Select
@@ -170,7 +172,14 @@ function Header({ coreList, processList, setResult, result }: HeaderProps) {
             name="interval"
             label="Interval (100ms ~ 1000ms)"
             value={schedule.interval === 0 ? '' : schedule.interval}
-            onChange={(e) => schedule.setInterval(Number(e.currentTarget.value))}
+            onChange={(e) => {
+              const { value } = e.currentTarget;
+
+              if (/^\d*$/.test(value)) {
+                const num = Number(value);
+                schedule.setInterval(num);
+              }
+            }}
             rightItem={<span>ms</span>}
             style={{ textAlign: 'right' }}
             disabled={schedule.state !== 'finish'}

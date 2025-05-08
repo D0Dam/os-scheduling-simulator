@@ -38,7 +38,7 @@ export const MainContainer = styled.div`
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.04);
   min-height: 352px;
   max-height: 352px;
-  min-width: 650px;
+  width: 650px;
 `;
 
 export const ResultChartContainer = styled.div`
