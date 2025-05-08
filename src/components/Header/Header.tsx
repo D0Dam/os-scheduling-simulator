@@ -26,7 +26,6 @@ interface HeaderProps {
 }
 
 const createScheduler = (algorithm: string, timeQuantum?: string) => {
-  console.log('createScheduler', algorithm);
   switch (algorithm) {
     case 'FCFS':
       return new FCFS();
