@@ -65,7 +65,7 @@ export const Button = styled.button`
   font-weight: 500;
   line-height: 20px;
 
-  margin-left: 24px;
+  margin-left: 16px;
   border: none;
 
   &:disabled {

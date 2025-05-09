@@ -105,7 +105,7 @@ function GanttChart({ result, processList, startCoreId }: GanttChartProps) {
             <S.LineTitle>Core2</S.LineTitle>
             <S.LineTitle>Core3</S.LineTitle>
             <S.LineTitle>Core4</S.LineTitle>
-            <S.LineTitle>Seconds</S.LineTitle>
+            <S.LineTitle>Running Time</S.LineTitle>
           </S.LineBlockTitleContainer>
           <S.Divider $top={36} />
           <S.Divider $top={72} />

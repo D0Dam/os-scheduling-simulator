@@ -66,8 +66,10 @@ function Processor({ coreState, changeCoreState, powerUsage, efficienciesState }
       <S.MainTitleWrapper>
         <S.Title>Processor</S.Title>
         <div>
-          <span>Avg Effi: {efficienciesState?.average?.[count - 2]?.toFixed(2) ?? 0}%</span>|
-          <span>Total Power: {powerUsage?.total?.[count - 1]?.toFixed(2) ?? 0}W</span>
+          <span>
+            Average Efficiency: {efficienciesState?.average?.[count - 2]?.toFixed(2) ?? 0}%
+          </span>
+          |<span>Total Power: {powerUsage?.total?.[count - 1]?.toFixed(1) ?? 0}W</span>
         </div>
       </S.MainTitleWrapper>
       <S.MainContainer>
@@ -110,7 +112,7 @@ function Processor({ coreState, changeCoreState, powerUsage, efficienciesState }
               <S.CoreItemValue>
                 <div>Efficiency: {efficienciesDate?.toFixed(2) || '0.00'} %</div>
                 <div>
-                  Power : {powerUsageData?.usage.toFixed(1) || '00.0'} W |{' '}
+                  Power : {powerUsageData?.usage.toFixed(1) || '0.0'} W |{' '}
                   {powerUsageData?.percentage.toFixed(2) || '0.00'} %
                 </div>
               </S.CoreItemValue>

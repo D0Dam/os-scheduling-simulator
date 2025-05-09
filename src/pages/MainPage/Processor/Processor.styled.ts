@@ -15,7 +15,7 @@ export const MainTitleWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding-right: 20px;
+  padding-right: 16px;
 
   & > div {
     display: flex;
