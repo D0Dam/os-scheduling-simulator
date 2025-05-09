@@ -176,8 +176,7 @@ function Header({ coreList, processList, setResult, result }: HeaderProps) {
               const { value } = e.currentTarget;
 
               if (/^\d*$/.test(value)) {
-                const num = Number(value);
-                schedule.setInterval(num);
+                schedule.setInterval(Number(value));
               }
             }}
             rightItem={<span>ms</span>}

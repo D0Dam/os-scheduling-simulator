@@ -10,7 +10,7 @@ export const Container = styled.div`
 export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
   padding: 20px;
   width: 100%;
   min-height: calc(100vh - 60px);
@@ -19,7 +19,7 @@ export const ContentContainer = styled.div`
 
 export const MiddleContainer = styled.div`
   display: flex;
-  gap: 24px;
+  gap: 20px;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;

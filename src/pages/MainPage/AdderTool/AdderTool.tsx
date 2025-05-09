@@ -116,25 +116,36 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList, addMockProcess 
           <S.InputWrapper>
             <S.InputTitle>Arrival Time :</S.InputTitle>
             <TextField
-              value={processArrivalValue ?? ''}
-              onChange={(e) => setProcessArrivalValue(Number(e.currentTarget.value))}
+              value={processArrivalValue === null ? '' : processArrivalValue}
+              onChange={(e) => {
+                const { value } = e.currentTarget;
+
+                if (value === '') {
+                  setProcessArrivalValue(null);
+                  return;
+                }
+
+                if (/^\d*$/.test(value)) {
+                  setProcessArrivalValue(Number(value));
+                }
+              }}
               name="Arrival Time"
               required
-              type="number"
             />
           </S.InputWrapper>
           <S.InputWrapper>
             <S.InputTitle>Burst Time :</S.InputTitle>
             <TextField
-              value={processBurstValue ?? ''}
-              onChange={(e) =>
-                setProcessBurstValue(
-                  Number(e.currentTarget.value) === 0 ? null : Number(e.currentTarget.value)
-                )
-              }
+              value={!processBurstValue ? '' : processBurstValue}
+              onChange={(e) => {
+                const { value } = e.currentTarget;
+
+                if (/^\d*$/.test(value)) {
+                  setProcessBurstValue(Number(value));
+                }
+              }}
               name="Burst Time"
               required
-              type="number"
             />
           </S.InputWrapper>
           <S.ProcessButton

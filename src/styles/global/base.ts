@@ -9,6 +9,7 @@ const base = css`
 
   body {
     position: relative;
+    background: #fafafa;
   }
 
   button {
