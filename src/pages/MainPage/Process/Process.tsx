@@ -13,10 +13,14 @@ interface ProcessProps {
 
 function Process({ processList }: ProcessProps) {
   const sortedProcessList = [...processList].sort((a, b) => a.at - b.at);
+  const processCount = processList.length;
 
   return (
     <S.Container>
-      <S.Title>Processes</S.Title>
+      <S.MainTitleWrapper>
+        <S.Title>Processes</S.Title>
+        <span>Count: {processCount}</span>
+      </S.MainTitleWrapper>
       <S.MainContainer>
         <S.ProcessItemContainer>
           <S.ProcessContainerHeader>

@@ -9,6 +9,14 @@ export const Container = styled.div`
   gap: 4px;
 `;
 
+export const MainTitleWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 16px;
+`;
+
 export const Title = styled.h2`
   ${typo['subtitle-3-b']};
   color: #222;
