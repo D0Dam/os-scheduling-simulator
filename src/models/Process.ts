@@ -1,19 +1,19 @@
 export class Process {
-  readonly name: string;
+  name: string;
 
-  readonly at: number;
+  at: number;
 
-  readonly bt: number;
+  bt: number;
 
-  readonly color: string;
+  color: string;
 
-  public wt: number;
+  wt: number;
 
-  public tt: number;
+  tt: number;
 
-  #progress: number;
+  progress: number;
 
-  public start: number;
+  start: number;
 
   constructor(props: { name: string; at: number; bt: number; color: string }) {
     this.name = props.name;
@@ -22,35 +22,35 @@ export class Process {
     this.color = props.color;
     this.wt = 0;
     this.tt = 0;
-    this.#progress = 0;
+    this.progress = 0;
     this.start = 0;
   }
 
-  get ntt(): number {
+  get ntt() {
     return this.tt / this.bt;
   }
 
-  get end(): number {
+  get end() {
     return this.at + this.tt;
   }
 
-  isEnd(): boolean {
-    return this.#progress >= this.bt;
+  isEnd() {
+    return this.progress >= this.bt;
   }
 
-  get responseRatio(): number {
+  get responseRatio() {
     return (this.wt + this.bt) / this.bt;
   }
 
-  get remainProgress(): number {
-    return this.bt - this.#progress;
+  get remainProgress() {
+    return this.bt - this.progress;
   }
 
-  updateProgress(wps: number): void {
-    this.#progress += Math.min(wps, this.bt - this.#progress);
+  updateProgress(wps: number) {
+    this.progress += Math.min(wps, this.bt - this.progress);
   }
 
-  updateWT(): void {
+  updateWT() {
     this.wt += 1;
   }
 
@@ -58,7 +58,7 @@ export class Process {
     this.tt += 1;
   }
 
-  compare(other: Process): number {
+  compare(other: Process) {
     if (this.at !== other.at) return this.at - other.at;
     if (this.bt !== other.bt) return this.bt - other.bt;
     return this.name.localeCompare(other.name);

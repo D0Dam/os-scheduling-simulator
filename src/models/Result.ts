@@ -1,13 +1,5 @@
 import { Core, Process } from '@/models';
 
-/**
- * 추적(Trace) 해야할 정보들
- * * readyQueue
- * * 각 코어별 ganttChart
- * * 각 코어별 powerUsage
- * * endProcesses
- */
-
 interface GanttChartItem {
   name: string;
   start: number;
@@ -35,7 +27,7 @@ export class Tracer {
 
   nttAverage: number[];
 
-  readonly #efficiencies: { [coreId: number]: number[] };
+  #efficiencies: { [coreId: number]: number[] };
 
   constructor() {
     this.readyQueue = [];
@@ -46,28 +38,7 @@ export class Tracer {
     this.#efficiencies = {};
   }
 
-  setCore(cores: Core[]): void {
-    cores.forEach((core) => {
-      this.ganttCharts[core.id] = [];
-      this.powerUsage[core.id] = [];
-      this.#efficiencies[core.id] = [];
-    });
-  }
-
-  updateGanttChart(cores: Core[]): void {
-    cores.forEach((core) => {
-      if (core.process && !core.hasProcess) {
-        this.ganttCharts[core.id].push({
-          name: core.process.name,
-          start: core.process.start,
-          end: core.process.end,
-        });
-        this.ganttCharts.maxEnd = Math.max(this.ganttCharts.maxEnd, core.process.end);
-      }
-    });
-  }
-
-  get efficiencies(): Efficiencies {
+  get efficiencies() {
     const result: Efficiencies = { average: [] };
     const coreIds = Object.keys(this.#efficiencies).map(Number);
     coreIds.forEach((coreId) => {
@@ -83,7 +54,28 @@ export class Tracer {
     return result;
   }
 
-  updateEfficiency(cores: Core[], time: number): void {
+  setCore(cores: Core[]) {
+    cores.forEach((core) => {
+      this.ganttCharts[core.id] = [];
+      this.powerUsage[core.id] = [];
+      this.#efficiencies[core.id] = [];
+    });
+  }
+
+  updateGanttChart(cores: Core[]) {
+    cores.forEach((core) => {
+      if (core.process && !core.hasProcess) {
+        this.ganttCharts[core.id].push({
+          name: core.process.name,
+          start: core.process.start,
+          end: core.process.end,
+        });
+        this.ganttCharts.maxEnd = Math.max(this.ganttCharts.maxEnd, core.process.end);
+      }
+    });
+  }
+
+  updateEfficiency(cores: Core[], time: number) {
     cores.forEach((core) => {
       this.#efficiencies[core.id].push(
         (this.#efficiencies[core.id][time - 1] ?? 0) + Number(core.hasProcess)
@@ -91,7 +83,7 @@ export class Tracer {
     });
   }
 
-  updatePowerUsage(cores: Core[]): void {
+  updatePowerUsage(cores: Core[]) {
     const totalPowerUsage: number = cores.reduce((sum, core) => sum + core.powerUsage, 0);
     this.powerUsage.total.push(totalPowerUsage);
 
@@ -103,11 +95,11 @@ export class Tracer {
     });
   }
 
-  updateReadyQueue(readyQueue: Process[]): void {
+  updateReadyQueue(readyQueue: Process[]) {
     this.readyQueue.push(readyQueue.map((process) => process.name));
   }
 
-  updateEndProcesses(processes: Process[]): void {
+  updateEndProcesses(processes: Process[]) {
     const nttTotal = processes.reduce((sum, process) => sum + process.ntt, 0);
     this.nttAverage.push(processes.length ? nttTotal / processes.length : 0);
     this.endProcesses.push([...processes]);

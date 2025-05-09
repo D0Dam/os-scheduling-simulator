@@ -1,9 +1,9 @@
-import { Core, Process } from '@/models';
+import { Core } from '@/models';
 import { Scheduler } from '@/scheduler';
 
 export class SRTN extends Scheduler {
-  protected assignProcess(): void {
-    this.#sort();
+  protected assignProcess() {
+    this.sort();
     this.cores.forEach((core) => {
       if (!core.hasProcess) {
         core.setProcess(this.readyQueue.shift(), this.time);
@@ -11,22 +11,22 @@ export class SRTN extends Scheduler {
     });
   }
 
-  protected releaseProcess(): void {
-    this.#sort();
+  protected releaseProcess() {
+    this.sort();
     this.cores.forEach((core) => {
       if (core.process?.isEnd()) {
         this.endQueue.push(core.releaseProcess());
-      } else if (this.#canPreempt(core)) {
+      } else if (this.canPreempt(core)) {
         this.readyQueue.push(core.releaseProcess());
       }
     });
   }
 
-  #sort(): void {
-    this.readyQueue.sort((a: Process, b: Process) => a.remainProgress - b.remainProgress);
+  sort() {
+    this.readyQueue.sort((a, b) => a.remainProgress - b.remainProgress);
   }
 
-  #canPreempt(core: Core): boolean {
+  canPreempt(core: Core) {
     return (
       core.process !== undefined &&
       this.readyQueue.length > 0 &&

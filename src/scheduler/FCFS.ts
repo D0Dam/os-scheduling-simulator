@@ -1,7 +1,7 @@
 import { Scheduler } from '@/scheduler';
 
 export class FCFS extends Scheduler {
-  protected assignProcess(): void {
+  protected assignProcess() {
     this.cores.forEach((core) => {
       if (!core.hasProcess) {
         core.setProcess(this.readyQueue.shift(), this.time);
@@ -9,7 +9,7 @@ export class FCFS extends Scheduler {
     });
   }
 
-  protected releaseProcess(): void {
+  protected releaseProcess() {
     this.cores.forEach((core) => {
       if (core.process?.isEnd()) {
         this.endQueue.push(core.releaseProcess());

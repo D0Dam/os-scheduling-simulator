@@ -5,12 +5,6 @@ import { Core } from './Core';
  */
 export class ECore extends Core {
   constructor(props: { id: number; name: string }) {
-    super(
-      props.id,
-      props.name,
-      1, // workPerSecond
-      1.0, // powerConsumption
-      0.1 // idlePowerConsumption
-    );
+    super(props.id, props.name, 1, 1.0, 0.1);
   }
 }
