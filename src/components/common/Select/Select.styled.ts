@@ -124,7 +124,7 @@ export const OptionList = styled.ul<{ $isOpen: boolean; $hasLabel: boolean }>`
   ${({ $hasLabel }) =>
     $hasLabel &&
     css`
-      top: 80px;
+      top: 64px;
     `}
 
   ${({ $isOpen }) =>
