@@ -23,6 +23,7 @@ interface HeaderProps {
   coreList: { id: number; name: string; type: 'P' | 'E' }[];
   processList: ProcessType[];
   setResult: (result: Tracer | null) => void;
+  changeSchedulerOption: (algorithm: string) => void;
 }
 
 const createScheduler = (algorithm: string, timeQuantum?: string) => {
@@ -47,7 +48,7 @@ const createScheduler = (algorithm: string, timeQuantum?: string) => {
   }
 };
 
-function Header({ coreList, processList, setResult, result }: HeaderProps) {
+function Header({ coreList, processList, setResult, result, changeSchedulerOption }: HeaderProps) {
   const [timeQuantum, setTimeQuantum] = useState('');
   const [algorithm, setAlgorithm] = useState('');
   const prevParamsRef = useRef<{
@@ -109,6 +110,7 @@ function Header({ coreList, processList, setResult, result }: HeaderProps) {
 
     // 변경됐을 경우 갱신
     prevParamsRef.current = currentParams;
+    changeSchedulerOption(JSON.stringify(currentParams));
 
     const scheduler = createScheduler(algorithm, timeQuantum);
 

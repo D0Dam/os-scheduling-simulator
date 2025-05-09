@@ -62,17 +62,17 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList, addMockProcess 
     const assignedColor = PROCESS_COLORS[colorIndex];
 
     if (processArrivalValue === null) {
-      openToast('Arrival Time 에는 숫자만 입력해주세요.', 'default');
+      openToast('Arrival Time 에 입력된 값이 없습니다.', 'default');
       return;
     }
 
     if (processBurstValue === null) {
-      openToast('Burst Time 에는 숫자만 입력해주세요.', 'default');
+      openToast('Burst Time 에 입력된 값이 없습니다.', 'default');
       return;
     }
 
     if (processList.length >= 15) {
-      openToast('추가할 수 있는 프로세서의 수는 최대 15개입니다.', 'default');
+      openToast('추가할 수 있는 Process의 수는 최대 15개입니다.', 'default');
       return;
     }
     onAddProcess({
@@ -89,7 +89,7 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList, addMockProcess 
 
   const handleDelete = () => {
     if (!processorValue.trim()) {
-      openToast('삭제할 프로세스 이름을 입력해주세요.', 'default');
+      openToast('삭제할 Process 이름을 입력해주세요.', 'default');
       return;
     }
 

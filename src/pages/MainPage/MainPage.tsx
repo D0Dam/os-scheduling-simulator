@@ -57,6 +57,7 @@ const makeCoreList = (
 
 function MainPage() {
   const openToast = useToastState((state) => state.open);
+  const [schedulerOption, setSchedulerOption] = useState('');
   const [result, setResult] = useState<Tracer | null>(null);
   const [processList, setProcessList] = useState<ProcessType[]>([]);
   const [coreState, setCoreState] = useState<Record<string, string>>({
@@ -97,6 +98,7 @@ function MainPage() {
         setResult={(r) => setResult(r)}
         processList={processList}
         coreList={makeCoreList(coreState)}
+        changeSchedulerOption={(v: string) => setSchedulerOption(v)}
       />
       <S.ContentContainer>
         <AdderTool
@@ -107,7 +109,7 @@ function MainPage() {
         />
         <S.MiddleContainer>
           <Processor
-            key={JSON.stringify(result?.powerUsage)}
+            key={`${JSON.stringify(result)}${schedulerOption}processor`}
             powerUsage={result ? result.powerUsage : null}
             coreState={coreState}
             changeCoreState={(name, value) => setCoreState((prev) => ({ ...prev, [name]: value }))}
@@ -116,19 +118,19 @@ function MainPage() {
           <Process processList={processList} />
 
           <ResultChart
-            key={JSON.stringify(result?.endProcesses)}
+            key={`${JSON.stringify(result)}${schedulerOption}resultChart`}
             result={result ? result.endProcesses : null}
             nttAverage={result ? result.nttAverage : null}
           />
         </S.MiddleContainer>
 
         <ReadyQueue
-          key={JSON.stringify(result?.readyQueue)}
+          key={`${JSON.stringify(result)}${schedulerOption}readyQueue`}
           result={result ? result.readyQueue : null}
           processList={processList}
         />
         <GanttChart
-          key={JSON.stringify(result?.ganttCharts)}
+          key={`${JSON.stringify(result)}${schedulerOption}ganttChart`}
           result={result ? result.ganttCharts : null}
           processList={processList}
           startCoreId={makeCoreList(coreState)[0] ? makeCoreList(coreState)[0].id : 0}
