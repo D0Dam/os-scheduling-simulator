@@ -71,6 +71,10 @@ function AdderTool({ onAddProcess, onDeleteProcess, processList, addMockProcess 
       return;
     }
 
+    if (processList.length >= 15) {
+      openToast('추가할 수 있는 프로세서의 수는 최대 15개입니다.', 'default');
+      return;
+    }
     onAddProcess({
       name: nameToUse,
       at: processArrivalValue,
